@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import confetti from "canvas-confetti";
+
 interface WinModalProps {
   moves: number;
   time: string;
@@ -5,6 +8,30 @@ interface WinModalProps {
 }
 
 const WinModal = ({ moves, time, onClose }: WinModalProps) => {
+  useEffect(() => {
+    const colors = ["#7c3aed", "#ec4899", "#f97316", "#eab308", "#14b8a6", "#3b82f6"];
+    const end = Date.now() + 2000;
+
+    const frame = () => {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.6 },
+        colors,
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.6 },
+        colors,
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+  }, []);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
