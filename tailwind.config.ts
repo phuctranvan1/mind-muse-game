@@ -57,6 +57,8 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        grid: "hsl(var(--grid-bg))",
+        tile: "hsl(var(--tile-bg))",
       },
       borderRadius: {
         lg: "var(--radius)",
