@@ -1,5 +1,6 @@
 import { GameState } from "@/hooks/useShiftGame";
 import PuzzleGrid from "./PuzzleGrid";
+import DarkModeToggle from "./DarkModeToggle";
 
 interface GameScreenProps {
   game: GameState;
@@ -9,9 +10,11 @@ interface GameScreenProps {
   onHint: () => void;
   onRestart: () => void;
   onMenu: () => void;
+  dark: boolean;
+  onToggleDark: () => void;
 }
 
-const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart, onMenu }: GameScreenProps) => {
+const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart, onMenu, dark, onToggleDark }: GameScreenProps) => {
   return (
     <div className="py-8">
       {/* Header */}
