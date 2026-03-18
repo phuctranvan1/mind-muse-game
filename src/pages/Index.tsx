@@ -6,8 +6,26 @@ import GameScreen from "@/components/game/GameScreen";
 import WinModal from "@/components/game/WinModal";
 
 const Index = () => {
-  const { game, startGame, moveTile, restart, showHint, goToMenu, difficultyLabel } = useShiftGame();
+  const { game, startGame, moveTile, moveByDirection, restart, showHint, goToMenu, difficultyLabel } = useShiftGame();
   const { formatted: time } = useTimer(!!game && !game.won);
+
+  // Keyboard support
+  useEffect(() => {
+    if (!game || game.won) return;
+    const handleKey = (e: KeyboardEvent) => {
+      const map: Record<string, "up" | "down" | "left" | "right"> = {
+        ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
+        w: "up", s: "down", a: "left", d: "right",
+      };
+      const dir = map[e.key];
+      if (dir) {
+        e.preventDefault();
+        moveByDirection(dir);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [game, game?.won, moveByDirection]);
 
   // Save progress to localStorage
   useEffect(() => {
