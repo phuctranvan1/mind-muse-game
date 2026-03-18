@@ -48,7 +48,7 @@ const Index = () => {
     exit: { opacity: 0, scale: 0.96, y: -16 },
   };
 
-  const transition = { duration: 0.35, ease: [0.2, 0, 0, 1] };
+  const transition = { duration: 0.35, ease: [0.2, 0, 0, 1] as const };
 
   return (
     <div className="flex min-h-svh items-center justify-center bg-background overflow-hidden">
