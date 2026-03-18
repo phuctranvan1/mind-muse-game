@@ -101,6 +101,25 @@ export function useShiftGame() {
     });
   }, []);
 
+  const moveByDirection = useCallback((direction: "up" | "down" | "left" | "right") => {
+    setGame(prev => {
+      if (!prev || prev.won) return prev;
+      const emptyIdx = prev.tiles.indexOf(null);
+      const row = Math.floor(emptyIdx / prev.gridSize);
+      const col = emptyIdx % prev.gridSize;
+      let tileIdx: number | null = null;
+      // The tile that slides INTO the empty space
+      if (direction === "up" && row < prev.gridSize - 1) tileIdx = emptyIdx + prev.gridSize;
+      if (direction === "down" && row > 0) tileIdx = emptyIdx - prev.gridSize;
+      if (direction === "left" && col < prev.gridSize - 1) tileIdx = emptyIdx + 1;
+      if (direction === "right" && col > 0) tileIdx = emptyIdx - 1;
+      if (tileIdx === null) return prev;
+      const newTiles = [...prev.tiles];
+      [newTiles[tileIdx], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[tileIdx]];
+      return { ...prev, tiles: newTiles, moves: prev.moves + 1, won: isWin(newTiles), hintTile: null };
+    });
+  }, []);
+
   const restart = useCallback(() => {
     setGame(prev => prev ? { ...prev, tiles: generateTiles(prev.gridSize), moves: 0, won: false, hintTile: null } : null);
   }, []);
@@ -114,5 +133,5 @@ export function useShiftGame() {
 
   const goToMenu = useCallback(() => setGame(null), []);
 
-  return { game, startGame, moveTile, restart, showHint, goToMenu, difficultyLabel: game ? LABELS[game.difficulty] : "" };
+  return { game, startGame, moveTile, moveByDirection, restart, showHint, goToMenu, difficultyLabel: game ? LABELS[game.difficulty] : "" };
 }
