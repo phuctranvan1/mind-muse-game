@@ -9,6 +9,7 @@ import WinModal from "@/components/game/WinModal";
 const Index = () => {
   const { game, startGame, moveTile, moveByDirection, restart, showHint, goToMenu, difficultyLabel } = useShiftGame();
   const { formatted: time } = useTimer(!!game && !game.won);
+  const { dark, toggle: toggleDark } = useDarkMode();
 
   // Keyboard support
   useEffect(() => {
