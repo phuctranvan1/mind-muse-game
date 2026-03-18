@@ -62,6 +62,8 @@ const Index = () => {
           onHint={showHint}
           onRestart={restart}
           onMenu={goToMenu}
+          dark={dark}
+          onToggleDark={toggleDark}
         />
         {game.won && (
           <WinModal moves={game.moves} time={time} onClose={goToMenu} />
