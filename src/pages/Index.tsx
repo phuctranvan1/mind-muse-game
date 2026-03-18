@@ -2,6 +2,7 @@ import { useShiftGame, Difficulty } from "@/hooks/useShiftGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import MenuScreen from "@/components/game/MenuScreen";
 import GameScreen from "@/components/game/GameScreen";
 import WinModal from "@/components/game/WinModal";
