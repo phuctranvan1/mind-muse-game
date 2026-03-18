@@ -23,7 +23,8 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
           <h1 className="text-2xl font-bold tracking-tight text-primary">Shift</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{difficultyLabel}</span>
         </div>
-        <div className="flex gap-6">
+        <div className="flex items-end gap-4">
+          <div className="flex gap-6">
           <div>
             <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
             <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
