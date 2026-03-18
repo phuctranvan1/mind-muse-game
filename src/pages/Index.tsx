@@ -45,7 +45,7 @@ const Index = () => {
     return (
       <div className="flex min-h-svh items-center justify-center bg-background">
         <div className="w-full max-w-[440px] px-6">
-          <MenuScreen onSelectDifficulty={startGame} />
+          <MenuScreen onSelectDifficulty={startGame} dark={dark} onToggleDark={toggleDark} />
         </div>
       </div>
     );
