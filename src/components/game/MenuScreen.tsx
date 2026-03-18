@@ -1,4 +1,5 @@
 import { Difficulty } from "@/hooks/useShiftGame";
+import DarkModeToggle from "./DarkModeToggle";
 
 const difficulties: { key: Difficulty; label: string; desc: string; color: string }[] = [
   { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
@@ -8,16 +9,21 @@ const difficulties: { key: Difficulty; label: string; desc: string; color: strin
 
 interface MenuScreenProps {
   onSelectDifficulty: (d: Difficulty) => void;
+  dark: boolean;
+  onToggleDark: () => void;
 }
 
-const MenuScreen = ({ onSelectDifficulty }: MenuScreenProps) => {
+const MenuScreen = ({ onSelectDifficulty, dark, onToggleDark }: MenuScreenProps) => {
   return (
     <div className="py-12">
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          <span className="text-primary">Shift</span>
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">A sliding logic puzzle</p>
+      <div className="mb-10 flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            <span className="text-primary">Shift</span>
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">A sliding logic puzzle</p>
+        </div>
+        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Select Difficulty

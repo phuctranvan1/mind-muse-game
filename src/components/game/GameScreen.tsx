@@ -34,7 +34,9 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
             <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.moves}</span>
           </div>
         </div>
-      </div>
+          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
+        </div>
 
       {/* Grid */}
       <PuzzleGrid tiles={game.tiles} gridSize={game.gridSize} hintTile={game.hintTile} onTileClick={onMoveTile} />
