@@ -2,6 +2,7 @@ import { useShiftGame, Difficulty } from "@/hooks/useShiftGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import MenuScreen from "@/components/game/MenuScreen";
 import GameScreen from "@/components/game/GameScreen";
 import WinModal from "@/components/game/WinModal";
@@ -41,33 +42,55 @@ const Index = () => {
     }
   }, [game?.won]);
 
-  if (!game) {
-    return (
-      <div className="flex min-h-svh items-center justify-center bg-background">
-        <div className="w-full max-w-[440px] px-6">
-          <MenuScreen onSelectDifficulty={startGame} dark={dark} onToggleDark={toggleDark} />
-        </div>
-      </div>
-    );
-  }
+  const pageVariants = {
+    initial: { opacity: 0, scale: 0.96, y: 16 },
+    animate: { opacity: 1, scale: 1, y: 0 },
+    exit: { opacity: 0, scale: 0.96, y: -16 },
+  };
+
+  const transition = { duration: 0.35, ease: [0.2, 0, 0, 1] as const };
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-background">
+    <div className="flex min-h-svh items-center justify-center bg-background overflow-hidden">
       <div className="w-full max-w-[440px] px-6">
-        <GameScreen
-          game={game}
-          time={time}
-          difficultyLabel={difficultyLabel}
-          onMoveTile={moveTile}
-          onHint={showHint}
-          onRestart={restart}
-          onMenu={goToMenu}
-          dark={dark}
-          onToggleDark={toggleDark}
-        />
-        {game.won && (
-          <WinModal moves={game.moves} time={time} onClose={goToMenu} />
-        )}
+        <AnimatePresence mode="wait">
+          {!game ? (
+            <motion.div
+              key="menu"
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={transition}
+            >
+              <MenuScreen onSelectDifficulty={startGame} dark={dark} onToggleDark={toggleDark} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="game"
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={transition}
+            >
+              <GameScreen
+                game={game}
+                time={time}
+                difficultyLabel={difficultyLabel}
+                onMoveTile={moveTile}
+                onHint={showHint}
+                onRestart={restart}
+                onMenu={goToMenu}
+                dark={dark}
+                onToggleDark={toggleDark}
+              />
+              {game.won && (
+                <WinModal moves={game.moves} time={time} onClose={goToMenu} />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
