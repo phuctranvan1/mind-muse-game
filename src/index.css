@@ -2,50 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 240 20% 97%;
+    --foreground: 240 24% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 240 24% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 240 24% 10%;
 
-    --primary: 221 83% 53%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary-foreground: 240 24% 10%;
 
-    --muted: 215 20% 65%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 240 10% 70%;
+    --muted-foreground: 240 10% 46%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 173 80% 40%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 240 12% 90%;
+    --input: 240 12% 90%;
+    --ring: 262 83% 58%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Tile palette */
+    --tile-1: 262 83% 58%;
+    --tile-2: 330 81% 60%;
+    --tile-3: 16 90% 58%;
+    --tile-4: 43 96% 56%;
+    --tile-5: 173 80% 40%;
+    --tile-6: 210 90% 56%;
 
     /* Puzzle-specific tokens */
-    --grid-bg: 214 32% 91%;
+    --grid-bg: 262 30% 92%;
     --tile-bg: 0 0% 100%;
-    --tile-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
-    --tile-shadow-hover: 0 4px 8px rgba(0,0,0,0.08);
-    --overlay-bg: rgba(15, 23, 42, 0.4);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 0 0 1px rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.1);
-    --radius-outer: 16px;
-    --radius-inner: 8px;
+    --tile-shadow: 0 2px 8px rgba(100,60,180,0.10), 0 0 0 1px rgba(100,60,180,0.06);
+    --tile-shadow-hover: 0 6px 16px rgba(100,60,180,0.16);
+    --overlay-bg: rgba(20, 10, 40, 0.5);
+    --shadow-sm: 0 1px 3px rgba(100,60,180,0.06);
+    --shadow-md: 0 0 0 1px rgba(100,60,180,0.06), 0 4px 12px -2px rgba(100,60,180,0.12);
+    --radius-outer: 20px;
+    --radius-inner: 12px;
     --gap: 8px;
     --ease-out: cubic-bezier(0.2, 0, 0, 1);
     --transition-speed: 200ms;
@@ -57,39 +65,41 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 262 83% 58%;
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 18%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 18%;
-    --accent-foreground: 210 40% 98%;
+    --background: 260 25% 8%;
+    --foreground: 240 20% 95%;
+    --card: 260 25% 12%;
+    --card-foreground: 240 20% 95%;
+    --popover: 260 25% 12%;
+    --popover-foreground: 240 20% 95%;
+    --primary: 262 83% 65%;
+    --primary-foreground: 260 25% 8%;
+    --secondary: 260 20% 18%;
+    --secondary-foreground: 240 20% 95%;
+    --muted: 260 15% 22%;
+    --muted-foreground: 240 10% 60%;
+    --accent: 173 80% 45%;
+    --accent-foreground: 260 25% 8%;
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
-    --ring: 213 27% 84%;
-    --grid-bg: 217 33% 18%;
-    --tile-bg: 222 47% 16%;
+    --destructive-foreground: 240 20% 95%;
+    --border: 260 20% 18%;
+    --input: 260 20% 18%;
+    --ring: 262 83% 65%;
+    --grid-bg: 260 20% 14%;
+    --tile-bg: 260 25% 18%;
+    --tile-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
+    --tile-shadow-hover: 0 6px 16px rgba(0,0,0,0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 262 76.3% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 260 10% 16%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-border: 260 10% 16%;
+    --sidebar-ring: 262 83% 65%;
   }
 }
 
@@ -99,7 +109,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 }

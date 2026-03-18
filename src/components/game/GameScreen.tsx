@@ -17,17 +17,17 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
       {/* Header */}
       <div className="flex justify-between items-end mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">Shift</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-primary">Shift</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{difficultyLabel}</span>
         </div>
         <div className="flex gap-6">
           <div>
             <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground">{time}</span>
+            <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
           </div>
           <div>
             <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Moves</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground">{game.moves}</span>
+            <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.moves}</span>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
 
       {/* Controls */}
       <div className="flex justify-center gap-6 mt-6">
-        <button onClick={onHint} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">
+        <button onClick={onHint} className="text-sm font-semibold text-accent hover:brightness-110 transition-all">
           Hint
         </button>
         <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">

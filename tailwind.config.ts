@@ -59,6 +59,12 @@ export default {
         },
         grid: "hsl(var(--grid-bg))",
         tile: "hsl(var(--tile-bg))",
+        "tile-1": "hsl(var(--tile-1))",
+        "tile-2": "hsl(var(--tile-2))",
+        "tile-3": "hsl(var(--tile-3))",
+        "tile-4": "hsl(var(--tile-4))",
+        "tile-5": "hsl(var(--tile-5))",
+        "tile-6": "hsl(var(--tile-6))",
       },
       borderRadius: {
         lg: "var(--radius)",
