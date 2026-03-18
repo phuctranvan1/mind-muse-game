@@ -1,5 +1,6 @@
 import { GameState } from "@/hooks/useShiftGame";
 import PuzzleGrid from "./PuzzleGrid";
+import DarkModeToggle from "./DarkModeToggle";
 
 interface GameScreenProps {
   game: GameState;
@@ -9,9 +10,11 @@ interface GameScreenProps {
   onHint: () => void;
   onRestart: () => void;
   onMenu: () => void;
+  dark: boolean;
+  onToggleDark: () => void;
 }
 
-const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart, onMenu }: GameScreenProps) => {
+const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart, onMenu, dark, onToggleDark }: GameScreenProps) => {
   return (
     <div className="py-8">
       {/* Header */}
@@ -20,7 +23,8 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
           <h1 className="text-2xl font-bold tracking-tight text-primary">Shift</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{difficultyLabel}</span>
         </div>
-        <div className="flex gap-6">
+        <div className="flex items-end gap-4">
+          <div className="flex gap-6">
           <div>
             <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
             <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
@@ -30,7 +34,9 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
             <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.moves}</span>
           </div>
         </div>
-      </div>
+          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
+        </div>
 
       {/* Grid */}
       <PuzzleGrid tiles={game.tiles} gridSize={game.gridSize} hintTile={game.hintTile} onTileClick={onMoveTile} />

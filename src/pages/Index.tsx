@@ -1,5 +1,6 @@
 import { useShiftGame, Difficulty } from "@/hooks/useShiftGame";
 import { useTimer } from "@/hooks/useTimer";
+import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEffect } from "react";
 import MenuScreen from "@/components/game/MenuScreen";
 import GameScreen from "@/components/game/GameScreen";
@@ -8,6 +9,7 @@ import WinModal from "@/components/game/WinModal";
 const Index = () => {
   const { game, startGame, moveTile, moveByDirection, restart, showHint, goToMenu, difficultyLabel } = useShiftGame();
   const { formatted: time } = useTimer(!!game && !game.won);
+  const { dark, toggle: toggleDark } = useDarkMode();
 
   // Keyboard support
   useEffect(() => {
@@ -43,7 +45,7 @@ const Index = () => {
     return (
       <div className="flex min-h-svh items-center justify-center bg-background">
         <div className="w-full max-w-[440px] px-6">
-          <MenuScreen onSelectDifficulty={startGame} />
+          <MenuScreen onSelectDifficulty={startGame} dark={dark} onToggleDark={toggleDark} />
         </div>
       </div>
     );
@@ -60,6 +62,8 @@ const Index = () => {
           onHint={showHint}
           onRestart={restart}
           onMenu={goToMenu}
+          dark={dark}
+          onToggleDark={toggleDark}
         />
         {game.won && (
           <WinModal moves={game.moves} time={time} onClose={goToMenu} />
