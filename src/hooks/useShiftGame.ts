@@ -1,9 +1,10 @@
 import { useState, useCallback } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5 };
-const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard" };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7 };
+const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master" };
+const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null };
 
 function isSolvable(arr: (number | null)[], size: number): boolean {
   const flat = arr.filter((n): n is number => n !== null);
@@ -24,7 +25,6 @@ function generateTiles(size: number): (number | null)[] {
   let arr: (number | null)[] = Array.from({ length: total - 1 }, (_, i) => i + 1);
   arr.push(null);
 
-  // Fisher-Yates shuffle
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -50,7 +50,6 @@ function isWin(tiles: (number | null)[]): boolean {
   return tiles.every((t, i) => (i === tiles.length - 1 ? t === null : t === i + 1));
 }
 
-// Find one hint move: BFS-like, just find a tile adjacent to empty that reduces inversions
 function findHint(tiles: (number | null)[], size: number): number | null {
   const emptyIdx = tiles.indexOf(null);
   const neighbors: number[] = [];
@@ -60,7 +59,6 @@ function findHint(tiles: (number | null)[], size: number): number | null {
   if (col > 0) neighbors.push(emptyIdx - 1);
   if (col < size - 1) neighbors.push(emptyIdx + 1);
 
-  // Prefer tile that should go to emptyIdx+1 position
   const target = emptyIdx < tiles.length - 1 ? emptyIdx + 1 : null;
   const best = neighbors.find(i => tiles[i] === target);
   return best ?? neighbors[0] ?? null;
@@ -72,7 +70,9 @@ export interface GameState {
   difficulty: Difficulty;
   moves: number;
   won: boolean;
+  lost: boolean;
   hintTile: number | null;
+  moveLimit: number | null;
 }
 
 export function useShiftGame() {
@@ -86,29 +86,33 @@ export function useShiftGame() {
       difficulty,
       moves: 0,
       won: false,
+      lost: false,
       hintTile: null,
+      moveLimit: MOVE_LIMITS[difficulty],
     });
   }, []);
 
   const moveTile = useCallback((index: number) => {
     setGame(prev => {
-      if (!prev || prev.won) return prev;
+      if (!prev || prev.won || prev.lost) return prev;
       const emptyIdx = prev.tiles.indexOf(null);
       if (!isAdjacent(index, emptyIdx, prev.gridSize)) return prev;
       const newTiles = [...prev.tiles];
       [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
-      return { ...prev, tiles: newTiles, moves: prev.moves + 1, won: isWin(newTiles), hintTile: null };
+      const newMoves = prev.moves + 1;
+      const won = isWin(newTiles);
+      const lost = !won && prev.moveLimit !== null && newMoves >= prev.moveLimit;
+      return { ...prev, tiles: newTiles, moves: newMoves, won, lost, hintTile: null };
     });
   }, []);
 
   const moveByDirection = useCallback((direction: "up" | "down" | "left" | "right") => {
     setGame(prev => {
-      if (!prev || prev.won) return prev;
+      if (!prev || prev.won || prev.lost) return prev;
       const emptyIdx = prev.tiles.indexOf(null);
       const row = Math.floor(emptyIdx / prev.gridSize);
       const col = emptyIdx % prev.gridSize;
       let tileIdx: number | null = null;
-      // The tile that slides INTO the empty space
       if (direction === "up" && row < prev.gridSize - 1) tileIdx = emptyIdx + prev.gridSize;
       if (direction === "down" && row > 0) tileIdx = emptyIdx - prev.gridSize;
       if (direction === "left" && col < prev.gridSize - 1) tileIdx = emptyIdx + 1;
@@ -116,17 +120,20 @@ export function useShiftGame() {
       if (tileIdx === null) return prev;
       const newTiles = [...prev.tiles];
       [newTiles[tileIdx], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[tileIdx]];
-      return { ...prev, tiles: newTiles, moves: prev.moves + 1, won: isWin(newTiles), hintTile: null };
+      const newMoves = prev.moves + 1;
+      const won = isWin(newTiles);
+      const lost = !won && prev.moveLimit !== null && newMoves >= prev.moveLimit;
+      return { ...prev, tiles: newTiles, moves: newMoves, won, lost, hintTile: null };
     });
   }, []);
 
   const restart = useCallback(() => {
-    setGame(prev => prev ? { ...prev, tiles: generateTiles(prev.gridSize), moves: 0, won: false, hintTile: null } : null);
+    setGame(prev => prev ? { ...prev, tiles: generateTiles(prev.gridSize), moves: 0, won: false, lost: false, hintTile: null } : null);
   }, []);
 
   const showHint = useCallback(() => {
     setGame(prev => {
-      if (!prev || prev.won) return prev;
+      if (!prev || prev.won || prev.lost) return prev;
       return { ...prev, hintTile: findHint(prev.tiles, prev.gridSize) };
     });
   }, []);

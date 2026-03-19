@@ -5,6 +5,8 @@ interface PuzzleGridProps {
   gridSize: number;
   hintTile: number | null;
   onTileClick: (index: number) => void;
+  moveLimit?: number | null;
+  moves?: number;
 }
 
 const TILE_COLORS = [
@@ -14,6 +16,8 @@ const TILE_COLORS = [
   "bg-tile-4",
   "bg-tile-5",
   "bg-tile-6",
+  "bg-tile-7",
+  "bg-tile-8",
 ];
 
 const PuzzleGrid = ({ tiles, gridSize, hintTile, onTileClick }: PuzzleGridProps) => {
@@ -21,7 +25,7 @@ const PuzzleGrid = ({ tiles, gridSize, hintTile, onTileClick }: PuzzleGridProps)
 
   return (
     <div
-      className="bg-grid rounded-[var(--radius-outer)] shadow-[inset_0_2px_6px_rgba(100,60,180,0.08)] aspect-square"
+      className="bg-grid border-2 border-grid-border rounded-[var(--radius-outer)] shadow-[inset_0_2px_6px_rgba(100,60,180,0.08)] aspect-square"
       style={{
         padding: gap,
         display: "grid",
@@ -38,21 +42,22 @@ const PuzzleGrid = ({ tiles, gridSize, hintTile, onTileClick }: PuzzleGridProps)
           <motion.div
             key={value ?? "empty"}
             layout
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={{ type: "spring", stiffness: 400, damping: 28 }}
             onClick={() => !isEmpty && onTileClick(index)}
+            whileHover={!isEmpty ? { scale: 1.05, y: -2 } : undefined}
+            whileTap={!isEmpty ? { scale: 0.92 } : undefined}
             className={`
               flex items-center justify-center rounded-[var(--radius-inner)] font-bold select-none
               ${isEmpty
-                ? "bg-transparent shadow-none cursor-default"
+                ? "bg-transparent shadow-none cursor-default border-transparent"
                 : `${colorClass} text-white shadow-[var(--tile-shadow)] cursor-pointer
-                   hover:-translate-y-0.5 hover:shadow-[var(--tile-shadow-hover)] hover:brightness-110
-                   active:scale-95`
+                   border border-white/15`
               }
-              ${isHint ? "ring-2 ring-accent ring-offset-2 ring-offset-grid" : ""}
-              transition-all duration-150
+              ${isHint ? "ring-2 ring-accent ring-offset-2 ring-offset-grid shadow-[var(--tile-glow)]" : ""}
+              transition-shadow duration-200
             `}
             style={{
-              fontSize: gridSize <= 3 ? "1.5rem" : gridSize <= 4 ? "1.25rem" : "1rem",
+              fontSize: gridSize <= 3 ? "1.5rem" : gridSize <= 4 ? "1.25rem" : gridSize <= 5 ? "1rem" : "0.85rem",
             }}
           >
             {value}
