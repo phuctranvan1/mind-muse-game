@@ -60,11 +60,7 @@ It’s not just about winning — it’s about **how you think**.
 
 ## 📸 Preview
 
-> *(Add screenshots or GIFs here for maximum impact)*
 
-Example:
-
-/public/demo.gif
 
 
 ---
