@@ -95,9 +95,13 @@
     --input: 260 20% 18%;
     --ring: 262 83% 65%;
     --grid-bg: 260 20% 14%;
+    --grid-border: 260 20% 22%;
     --tile-bg: 260 25% 18%;
-    --tile-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
-    --tile-shadow-hover: 0 6px 16px rgba(0,0,0,0.4);
+    --tile-border: 260 15% 28%;
+    --tile-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1.5px hsl(260 15% 28%);
+    --tile-shadow-hover: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 2px hsl(262 60% 55%);
+    --tile-glow: 0 0 14px rgba(124,58,237,0.35);
+    --danger: 0 63% 45%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 262 76.3% 55%;
