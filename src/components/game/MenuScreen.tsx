@@ -1,10 +1,12 @@
 import { Difficulty } from "@/hooks/useShiftGame";
 import DarkModeToggle from "./DarkModeToggle";
 
-const difficulties: { key: Difficulty; label: string; desc: string; color: string }[] = [
+const difficulties: { key: Difficulty; label: string; desc: string; color: string; badge?: string }[] = [
   { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
   { key: "medium", label: "Medium", desc: "4×4 Grid", color: "bg-tile-6" },
-  { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
+  { key: "hard", label: "Hard", desc: "5×5 · 200 moves", color: "bg-tile-1", badge: "Limited" },
+  { key: "expert", label: "Expert", desc: "6×6 · 350 moves", color: "bg-tile-7", badge: "IQ Test" },
+  { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
 ];
 
 interface MenuScreenProps {
@@ -33,13 +35,18 @@ const MenuScreen = ({ onSelectDifficulty, dark, onToggleDark }: MenuScreenProps)
           <button
             key={d.key}
             onClick={() => onSelectDifficulty(d.key)}
-            className="w-full text-left px-5 py-4 rounded-[var(--radius-inner)] bg-card shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-all duration-200 group flex items-center gap-4"
+            className="w-full text-left px-5 py-4 rounded-[var(--radius-inner)] bg-card border border-border shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:border-primary/30 transition-all duration-200 group flex items-center gap-4"
           >
-            <span className={`w-3 h-3 rounded-full ${d.color} shrink-0`} />
-            <div>
+            <span className={`w-3 h-3 rounded-full ${d.color} shrink-0 shadow-sm`} />
+            <div className="flex-1">
               <span className="font-semibold text-foreground group-hover:text-primary transition-colors">{d.label}</span>
               <span className="ml-2 text-sm text-muted-foreground">{d.desc}</span>
             </div>
+            {d.badge && (
+              <span className="text-[0.65rem] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                {d.badge}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -49,8 +56,8 @@ const MenuScreen = ({ onSelectDifficulty, dark, onToggleDark }: MenuScreenProps)
 };
 
 function BestScores() {
-  const keys: Difficulty[] = ["easy", "medium", "hard"];
-  const colors = ["text-tile-5", "text-tile-6", "text-tile-1"];
+  const keys: Difficulty[] = ["easy", "medium", "hard", "expert", "master"];
+  const colors = ["text-tile-5", "text-tile-6", "text-tile-1", "text-tile-7", "text-tile-2"];
   const scores = keys.map((k, i) => {
     const raw = localStorage.getItem(`shift-best-${k}`);
     return raw ? { ...JSON.parse(raw), difficulty: k, color: colors[i] } : null;
