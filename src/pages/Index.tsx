@@ -132,7 +132,7 @@ const Index = () => {
     if (selectedPuzzle === "memory" && memory.game?.won) checkWin(true, memory.game.moves);
     if (selectedPuzzle === "lightsout" && lightsout.game?.won) checkWin(true, lightsout.game.moves);
     if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") checkWin(true, pattern.game.score);
-    if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.questions.length) checkWin(true, math.game.score);
+    if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) checkWin(true, math.game.score);
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) checkWin(true, hanoi.game.moves);
     if (selectedPuzzle === "colorsort" && colorsort.game?.won) checkWin(true, colorsort.game.moves);
   }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game]);
