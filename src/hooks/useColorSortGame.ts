@@ -14,6 +14,7 @@ const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes
 
 const COLOR_NAMES = [
   "red", "blue", "green", "yellow", "purple", "orange", "pink", "teal", "amber", "indigo",
+  "lime", "cyan", "rose", "violet",
 ];
 
 function generateTubes(colors: number, tubeSize: number, extraTubes: number, rand: () => number = Math.random): string[][] {

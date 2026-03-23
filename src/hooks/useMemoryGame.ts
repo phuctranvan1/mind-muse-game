@@ -12,7 +12,7 @@ const GRID_CONFIGS: Record<Difficulty, { pairs: number; cols: number }> = {
   genius: { pairs: 36, cols: 12 },
 };
 
-const SYMBOLS = ["★", "♦", "♠", "♣", "♥", "▲", "●", "■", "◆", "✦", "⬟", "⬡", "☀", "☾", "⚡", "♫", "✿", "⊕", "⊗", "⊞", "⊠", "⬢", "⬣", "⬤"];
+const SYMBOLS = ["★", "♦", "♠", "♣", "♥", "▲", "●", "■", "◆", "✦", "⬟", "⬡", "☀", "☾", "⚡", "♫", "✿", "⊕", "⊗", "⊞", "⊠", "⬢", "⬣", "⬤", "☆", "◇", "△", "□", "○", "⊙", "⊛", "⊜", "⊝", "⊚", "⊘", "⊖"];
 
 export interface MemoryCard {
   id: number;
