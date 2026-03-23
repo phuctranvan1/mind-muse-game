@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
 
 const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes: number }> = {
   easy: { colors: 3, tubeSize: 3, extraTubes: 1 },
@@ -8,6 +8,8 @@ const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes
   hard: { colors: 6, tubeSize: 4, extraTubes: 2 },
   expert: { colors: 8, tubeSize: 4, extraTubes: 2 },
   master: { colors: 10, tubeSize: 4, extraTubes: 2 },
+  grandmaster: { colors: 12, tubeSize: 5, extraTubes: 2 },
+  genius: { colors: 14, tubeSize: 5, extraTubes: 2 },
 };
 
 const COLOR_NAMES = [

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
 
 const CONFIGS: Record<Difficulty, { discs: number; moveLimit: number | null }> = {
   easy: { discs: 3, moveLimit: null },
@@ -8,6 +8,8 @@ const CONFIGS: Record<Difficulty, { discs: number; moveLimit: number | null }> =
   hard: { discs: 5, moveLimit: 40 },
   expert: { discs: 6, moveLimit: 100 },
   master: { discs: 7, moveLimit: 180 },
+  grandmaster: { discs: 8, moveLimit: 350 },
+  genius: { discs: 9, moveLimit: 600 },
 };
 
 export interface HanoiState {
