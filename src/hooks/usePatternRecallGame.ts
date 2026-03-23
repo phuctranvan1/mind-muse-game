@@ -29,11 +29,11 @@ export function usePatternRecallGame() {
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, []);
 
-  const generatePattern = (gridSize: number, length: number) => {
+  const generatePattern = (gridSize: number, length: number, rand: () => number = Math.random) => {
     const total = gridSize * gridSize;
     const pattern: number[] = [];
     for (let i = 0; i < length; i++) {
-      pattern.push(Math.floor(Math.random() * total));
+      pattern.push(Math.floor(rand() * total));
     }
     return pattern;
   };
@@ -55,9 +55,9 @@ export function usePatternRecallGame() {
     show();
   }, []);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
-    const pattern = generatePattern(config.gridSize, config.patternLength);
+    const pattern = generatePattern(config.gridSize, config.patternLength, rand);
     const state: PatternRecallState = {
       gridSize: config.gridSize,
       difficulty,

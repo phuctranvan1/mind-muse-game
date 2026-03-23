@@ -163,16 +163,16 @@ const Index = () => {
     setIsDaily(true);
     setShowDailyWin(false);
     setDailyWinData(null);
-    // Daily challenge is always "hard" difficulty
     const difficulty: Difficulty = "hard";
+    const dailyRandom = daily.getDailyRandom(type);
     switch (type) {
-      case "shift": shift.startGame(difficulty); break;
-      case "memory": memory.startGame(difficulty); break;
-      case "lightsout": lightsout.startGame(difficulty); break;
-      case "pattern": pattern.startGame(difficulty); break;
-      case "mathchain": math.startGame(difficulty); break;
+      case "shift": shift.startGame(difficulty, dailyRandom); break;
+      case "memory": memory.startGame(difficulty, dailyRandom); break;
+      case "lightsout": lightsout.startGame(difficulty, dailyRandom); break;
+      case "pattern": pattern.startGame(difficulty, dailyRandom); break;
+      case "mathchain": math.startGame(difficulty, dailyRandom); break;
       case "hanoi": hanoi.startGame(difficulty); break;
-      case "colorsort": colorsort.startGame(difficulty); break;
+      case "colorsort": colorsort.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };

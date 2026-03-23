@@ -20,13 +20,13 @@ function isSolvable(arr: (number | null)[], size: number): boolean {
   return (rowFromBottom % 2 === 0) === (inversions % 2 !== 0);
 }
 
-function generateTiles(size: number): (number | null)[] {
+function generateTiles(size: number, rand: () => number = Math.random): (number | null)[] {
   const total = size * size;
   let arr: (number | null)[] = Array.from({ length: total - 1 }, (_, i) => i + 1);
   arr.push(null);
 
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 
@@ -78,10 +78,10 @@ export interface GameState {
 export function useShiftGame() {
   const [game, setGame] = useState<GameState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const size = GRID_SIZES[difficulty];
     setGame({
-      tiles: generateTiles(size),
+      tiles: generateTiles(size, rand),
       gridSize: size,
       difficulty,
       moves: 0,

@@ -16,50 +16,57 @@ const CONFIGS: Record<Difficulty, { count: number; maxNum: number; ops: string[]
   master: { count: 20, maxNum: 200, ops: ["+", "-", "×", "÷"], timePerQ: 6 },
 };
 
-function randInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function randInt(min: number, max: number, rand: () => number = Math.random) {
+  return Math.floor(rand() * (max - min + 1)) + min;
 }
 
-function generateProblem(maxNum: number, ops: string[]): MathProblem {
-  const op = ops[Math.floor(Math.random() * ops.length)];
+function shuffle<T>(items: T[], rand: () => number = Math.random) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function generateProblem(maxNum: number, ops: string[], rand: () => number = Math.random): MathProblem {
+  const op = ops[Math.floor(rand() * ops.length)];
   let a: number, b: number, answer: number;
 
   switch (op) {
     case "+":
-      a = randInt(1, maxNum);
-      b = randInt(1, maxNum);
+      a = randInt(1, maxNum, rand);
+      b = randInt(1, maxNum, rand);
       answer = a + b;
       break;
     case "-":
-      a = randInt(1, maxNum);
-      b = randInt(1, a); // ensure positive
+      a = randInt(1, maxNum, rand);
+      b = randInt(1, a, rand);
       answer = a - b;
       break;
     case "×":
-      a = randInt(2, Math.min(maxNum, 12));
-      b = randInt(2, Math.min(maxNum, 12));
+      a = randInt(2, Math.min(maxNum, 12), rand);
+      b = randInt(2, Math.min(maxNum, 12), rand);
       answer = a * b;
       break;
     case "÷":
-      b = randInt(2, Math.min(maxNum, 12));
-      answer = randInt(1, Math.min(maxNum, 12));
-      a = b * answer; // ensure clean division
+      b = randInt(2, Math.min(maxNum, 12), rand);
+      answer = randInt(1, Math.min(maxNum, 12), rand);
+      a = b * answer;
       break;
     default:
       a = 1; b = 1; answer = 2;
   }
 
   const question = `${a} ${op} ${b}`;
-  
-  // Generate 3 wrong options
   const wrongSet = new Set<number>();
   while (wrongSet.size < 3) {
-    const offset = randInt(1, Math.max(5, Math.floor(answer * 0.3) + 1));
-    const wrong = Math.random() > 0.5 ? answer + offset : Math.max(0, answer - offset);
+    const offset = randInt(1, Math.max(5, Math.floor(answer * 0.3) + 1), rand);
+    const wrong = rand() > 0.5 ? answer + offset : Math.max(0, answer - offset);
     if (wrong !== answer) wrongSet.add(wrong);
   }
 
-  const options = [...wrongSet, answer].sort(() => Math.random() - 0.5);
+  const options = shuffle([...wrongSet, answer], rand);
   return { question, answer, options };
 }
 
@@ -77,9 +84,9 @@ export interface MathChainState {
 export function useMathChainGame() {
   const [game, setGame] = useState<MathChainState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
-    const problems = Array.from({ length: config.count }, () => generateProblem(config.maxNum, config.ops));
+    const problems = Array.from({ length: config.count }, () => generateProblem(config.maxNum, config.ops, rand));
     setGame({ problems, currentIndex: 0, difficulty, score: 0, wrong: 0, finished: false, selectedAnswer: null, wasCorrect: null });
   }, []);
 
