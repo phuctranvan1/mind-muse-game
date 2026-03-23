@@ -217,6 +217,8 @@ const Index = () => {
   };
   const transition = { duration: 0.35, ease: [0.2, 0, 0, 1] as const };
 
+  const dailyRestart = () => handleDailyChallenge(selectedPuzzle);
+
   const renderGame = () => {
     const menuAction = isDaily ? goToMenu : handleBackToDifficulty;
 
@@ -227,7 +229,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} onUseHint={shift.showHint} />
             <GameScreen
               game={shift.game} time={time} difficultyLabel={isDaily ? "Daily" : shift.difficultyLabel}
-              onMoveTile={shift.moveTile} onHint={shift.showHint} onRestart={shift.restart}
+              onMoveTile={shift.moveTile} onHint={shift.showHint} onRestart={isDaily ? dailyRestart : shift.restart}
               onMenu={menuAction} dark={dark} onToggleDark={toggleDark}
             />
             {!isDaily && shift.game.won && <WinModal moves={shift.game.moves} time={time} onClose={menuAction} />}
@@ -239,7 +241,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <MemoryGameScreen
               game={memory.game} time={time} onFlip={memory.flipCard}
-              onRestart={memory.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : memory.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
@@ -250,7 +252,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <LightsOutGameScreen
               game={lightsout.game} time={time} onToggleCell={lightsout.toggleCell}
-              onRestart={lightsout.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : lightsout.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
@@ -261,7 +263,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <PatternRecallGameScreen
               game={pattern.game} onTap={pattern.tapCell} onNextRound={pattern.nextRound}
-              onRestart={pattern.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : pattern.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
@@ -272,7 +274,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <MathChainGameScreen
               game={math.game} time={time} onAnswer={math.selectAnswer}
-              onRestart={math.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : math.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
@@ -283,7 +285,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <HanoiGameScreen
               game={hanoi.game} time={time} onSelectPeg={hanoi.selectPeg}
-              onRestart={hanoi.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : hanoi.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
@@ -294,7 +296,7 @@ const Index = () => {
             <RewardsBar rewards={daily.rewards} />
             <ColorSortGameScreen
               game={colorsort.game} time={time} onSelectTube={colorsort.selectTube}
-              onRestart={colorsort.restart} onMenu={menuAction}
+              onRestart={isDaily ? dailyRestart : colorsort.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>
