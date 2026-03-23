@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 import { Rewards } from "@/hooks/useDailyChallenge";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour";
 
 const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; color: string }[] = [
   { key: "shift", label: "Shift", desc: "Sliding tile puzzle", icon: "⬡", color: "bg-tile-1" },
@@ -12,6 +12,9 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "mathchain", label: "Math Chain", desc: "Solve rapid math", icon: "∑", color: "bg-tile-3" },
   { key: "hanoi", label: "Tower of Hanoi", desc: "Move discs strategically", icon: "🗼", color: "bg-tile-7" },
   { key: "colorsort", label: "Color Sort", desc: "Sort colors into tubes", icon: "🎨", color: "bg-tile-4" },
+  { key: "sudoku", label: "Sudoku", desc: "Fill the number grid", icon: "🔢", color: "bg-tile-1" },
+  { key: "nqueens", label: "N-Queens", desc: "Place queens without conflict", icon: "♛", color: "bg-tile-7" },
+  { key: "knighttour", label: "Knight's Tour", desc: "Visit every square", icon: "♞", color: "bg-tile-3" },
 ];
 
 interface Props {
