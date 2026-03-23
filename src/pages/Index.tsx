@@ -6,6 +6,9 @@ import { usePatternRecallGame } from "@/hooks/usePatternRecallGame";
 import { useMathChainGame } from "@/hooks/useMathChainGame";
 import { useHanoiGame } from "@/hooks/useHanoiGame";
 import { useColorSortGame } from "@/hooks/useColorSortGame";
+import { useSudokuGame } from "@/hooks/useSudokuGame";
+import { useNQueensGame } from "@/hooks/useNQueensGame";
+import { useKnightTourGame } from "@/hooks/useKnightTourGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -20,6 +23,9 @@ import PatternRecallGameScreen from "@/components/game/PatternRecallGameScreen";
 import MathChainGameScreen from "@/components/game/MathChainGameScreen";
 import HanoiGameScreen from "@/components/game/HanoiGameScreen";
 import ColorSortGameScreen from "@/components/game/ColorSortGameScreen";
+import SudokuGameScreen from "@/components/game/SudokuGameScreen";
+import NQueensGameScreen from "@/components/game/NQueensGameScreen";
+import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
 import WinModal from "@/components/game/WinModal";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import RewardsBar from "@/components/game/RewardsBar";
@@ -33,6 +39,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "5×5 · 200 moves", color: "bg-tile-1", badge: "Limited" },
     { key: "expert", label: "Expert", desc: "6×6 · 350 moves", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 500 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9×9 · 300 moves", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   memory: [
     { key: "easy", label: "Easy", desc: "4 pairs", color: "bg-tile-5" },
@@ -40,6 +48,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "12 pairs", color: "bg-tile-1" },
     { key: "expert", label: "Expert", desc: "18 pairs", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "24 pairs", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "30 pairs", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "36 pairs", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   lightsout: [
     { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
@@ -47,6 +57,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
     { key: "expert", label: "Expert", desc: "6×6 Grid", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×8 Grid", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9×9 Grid", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   pattern: [
     { key: "easy", label: "Easy", desc: "3×3 · 4 steps", color: "bg-tile-5" },
@@ -54,6 +66,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "4×4 · 8 steps fast", color: "bg-tile-1", badge: "Hard" },
     { key: "expert", label: "Expert", desc: "5×5 · 10 steps", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "5×5 · 14 steps", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "6×6 · 18 steps", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "6×6 · 24 ultra-fast", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   mathchain: [
     { key: "easy", label: "Easy", desc: "5 questions · + −", color: "bg-tile-5" },
@@ -61,6 +75,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "12 questions · + − ×", color: "bg-tile-1" },
     { key: "expert", label: "Expert", desc: "15 questions · all ops", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "20 questions · big nums", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "25 questions · huge", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "30 questions · extreme", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   hanoi: [
     { key: "easy", label: "Easy", desc: "3 discs", color: "bg-tile-5" },
@@ -68,6 +84,8 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "5 discs · 40 moves", color: "bg-tile-1", badge: "Limited" },
     { key: "expert", label: "Expert", desc: "6 discs · 100 moves", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "7 discs · 180 moves", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8 discs · 350 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9 discs · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
   colorsort: [
     { key: "easy", label: "Easy", desc: "3 colors", color: "bg-tile-5" },
@@ -75,6 +93,35 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "hard", label: "Hard", desc: "6 colors", color: "bg-tile-1" },
     { key: "expert", label: "Expert", desc: "8 colors", color: "bg-tile-7", badge: "IQ Test" },
     { key: "master", label: "Master", desc: "10 colors", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "12 colors · tall", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "14 colors · tall", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  sudoku: [
+    { key: "easy", label: "Easy", desc: "4×4 · 4 blanks", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4×4 · 8 blanks", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "9×9 · 35 blanks", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert", label: "Expert", desc: "9×9 · 45 blanks", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "9×9 · 52 blanks", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "9×9 · 56 blanks", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9×9 · 60 blanks", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  nqueens: [
+    { key: "easy", label: "Easy", desc: "4×4 board", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "5×5 board", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "6×6 board", color: "bg-tile-1" },
+    { key: "expert", label: "Expert", desc: "7×7 board", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "8×8 board", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "9×9 board", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "10×10 board", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  knighttour: [
+    { key: "easy", label: "Easy", desc: "5×5 board", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "5×5 no limit", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "6×6 board", color: "bg-tile-1" },
+    { key: "expert", label: "Expert", desc: "6×6 · 50 moves", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7×7 · 60 moves", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 80 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "8×8 · 75 moves", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
 };
 
@@ -86,6 +133,9 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   mathchain: "Math Chain",
   hanoi: "Tower of Hanoi",
   colorsort: "Color Sort",
+  sudoku: "Sudoku",
+  nqueens: "N-Queens",
+  knighttour: "Knight's Tour",
 };
 
 const Index = () => {
@@ -102,6 +152,9 @@ const Index = () => {
   const math = useMathChainGame();
   const hanoi = useHanoiGame();
   const colorsort = useColorSortGame();
+  const sudoku = useSudokuGame();
+  const nqueens = useNQueensGame();
+  const knighttour = useKnightTourGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
 
@@ -112,7 +165,10 @@ const Index = () => {
   const mathActive = isPlaying && selectedPuzzle === "mathchain" && math.game && !math.game.finished;
   const hanoiActive = isPlaying && selectedPuzzle === "hanoi" && hanoi.game && !hanoi.game.won;
   const colorsortActive = isPlaying && selectedPuzzle === "colorsort" && colorsort.game && !colorsort.game.won;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive);
+  const sudokuActive = isPlaying && selectedPuzzle === "sudoku" && sudoku.game && !sudoku.game.won;
+  const nqueensActive = isPlaying && selectedPuzzle === "nqueens" && nqueens.game && !nqueens.game.won;
+  const knighttourActive = isPlaying && selectedPuzzle === "knighttour" && knighttour.game && !knighttour.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -135,7 +191,10 @@ const Index = () => {
     if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) checkWin(true, math.game.score);
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) checkWin(true, hanoi.game.moves);
     if (selectedPuzzle === "colorsort" && colorsort.game?.won) checkWin(true, colorsort.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game]);
+    if (selectedPuzzle === "sudoku" && sudoku.game?.won) checkWin(true, sudoku.game.mistakes);
+    if (selectedPuzzle === "nqueens" && nqueens.game?.won) checkWin(true, 0);
+    if (selectedPuzzle === "knighttour" && knighttour.game?.won) checkWin(true, knighttour.game.path.length);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -158,6 +217,12 @@ const Index = () => {
     setScreen("difficultySelect");
   };
 
+  const allGoToMenu = () => {
+    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
+    pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
+    sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
+  };
+
   const handleDailyChallenge = (type: PuzzleType) => {
     setSelectedPuzzle(type);
     setIsDaily(true);
@@ -173,6 +238,9 @@ const Index = () => {
       case "mathchain": math.startGame(difficulty, dailyRandom); break;
       case "hanoi": hanoi.startGame(difficulty); break;
       case "colorsort": colorsort.startGame(difficulty, dailyRandom); break;
+      case "sudoku": sudoku.startGame(difficulty, dailyRandom); break;
+      case "nqueens": nqueens.startGame(difficulty); break;
+      case "knighttour": knighttour.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -186,20 +254,21 @@ const Index = () => {
       case "mathchain": math.startGame(difficulty); break;
       case "hanoi": hanoi.startGame(difficulty); break;
       case "colorsort": colorsort.startGame(difficulty); break;
+      case "sudoku": sudoku.startGame(difficulty); break;
+      case "nqueens": nqueens.startGame(difficulty); break;
+      case "knighttour": knighttour.startGame(difficulty); break;
     }
     setScreen("playing");
   };
 
   const goToMenu = () => {
-    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
-    pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
+    allGoToMenu();
     setIsDaily(false); setShowDailyWin(false); setDailyWinData(null);
     setScreen("puzzleSelect");
   };
 
   const handleBackToDifficulty = () => {
-    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
-    pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
+    allGoToMenu();
     setIsDaily(false); setShowDailyWin(false); setDailyWinData(null);
     setScreen(isDaily ? "puzzleSelect" : "difficultySelect");
   };
@@ -297,6 +366,41 @@ const Index = () => {
             <ColorSortGameScreen
               game={colorsort.game} time={time} onSelectTube={colorsort.selectTube}
               onRestart={isDaily ? dailyRestart : colorsort.restart} onMenu={menuAction}
+              dark={dark} onToggleDark={toggleDark}
+            />
+          </>
+        );
+      case "sudoku":
+        return sudoku.game && (
+          <>
+            <RewardsBar rewards={daily.rewards} />
+            <SudokuGameScreen
+              game={sudoku.game} time={time} onSelectCell={sudoku.selectCell}
+              onEnterNumber={sudoku.enterNumber} onClear={sudoku.clearCell}
+              onRestart={isDaily ? dailyRestart : sudoku.restart} onMenu={menuAction}
+              dark={dark} onToggleDark={toggleDark}
+            />
+          </>
+        );
+      case "nqueens":
+        return nqueens.game && (
+          <>
+            <RewardsBar rewards={daily.rewards} />
+            <NQueensGameScreen
+              game={nqueens.game} onToggleQueen={nqueens.toggleQueen}
+              onRestart={isDaily ? dailyRestart : nqueens.restart} onMenu={menuAction}
+              dark={dark} onToggleDark={toggleDark}
+            />
+          </>
+        );
+      case "knighttour":
+        return knighttour.game && (
+          <>
+            <RewardsBar rewards={daily.rewards} />
+            <KnightTourGameScreen
+              game={knighttour.game} time={time} onSelectCell={knighttour.selectCell}
+              onUndo={knighttour.undo}
+              onRestart={isDaily ? dailyRestart : knighttour.restart} onMenu={menuAction}
               dark={dark} onToggleDark={toggleDark}
             />
           </>

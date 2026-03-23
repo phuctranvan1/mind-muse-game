@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
 
 const GRID_CONFIGS: Record<Difficulty, { pairs: number; cols: number }> = {
   easy: { pairs: 4, cols: 4 },
@@ -8,9 +8,11 @@ const GRID_CONFIGS: Record<Difficulty, { pairs: number; cols: number }> = {
   hard: { pairs: 12, cols: 6 },
   expert: { pairs: 18, cols: 6 },
   master: { pairs: 24, cols: 8 },
+  grandmaster: { pairs: 30, cols: 10 },
+  genius: { pairs: 36, cols: 12 },
 };
 
-const SYMBOLS = ["★", "♦", "♠", "♣", "♥", "▲", "●", "■", "◆", "✦", "⬟", "⬡", "☀", "☾", "⚡", "♫", "✿", "⊕", "⊗", "⊞", "⊠", "⬢", "⬣", "⬤"];
+const SYMBOLS = ["★", "♦", "♠", "♣", "♥", "▲", "●", "■", "◆", "✦", "⬟", "⬡", "☀", "☾", "⚡", "♫", "✿", "⊕", "⊗", "⊞", "⊠", "⬢", "⬣", "⬤", "☆", "◇", "△", "□", "○", "⊙", "⊛", "⊜", "⊝", "⊚", "⊘", "⊖"];
 
 export interface MemoryCard {
   id: number;
