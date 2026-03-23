@@ -217,6 +217,8 @@ const Index = () => {
   };
   const transition = { duration: 0.35, ease: [0.2, 0, 0, 1] as const };
 
+  const dailyRestart = () => handleDailyChallenge(selectedPuzzle);
+
   const renderGame = () => {
     const menuAction = isDaily ? goToMenu : handleBackToDifficulty;
 
