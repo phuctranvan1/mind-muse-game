@@ -91,8 +91,9 @@ export function useMemoryGame() {
       const config = GRID_CONFIGS[prev.difficulty];
       const symbols = SYMBOLS.slice(0, config.pairs);
       const deck = [...symbols, ...symbols]
-        .sort(() => Math.random() - 0.5)
-        .map((symbol, id) => ({ id, symbol, flipped: false, matched: false }));
+        .map((symbol, index) => ({ symbol, order: Math.random(), index }))
+        .sort((a, b) => a.order - b.order || a.index - b.index)
+        .map(({ symbol }, id) => ({ id, symbol, flipped: false, matched: false }));
       return { cards: deck, cols: config.cols, difficulty: prev.difficulty, moves: 0, won: false, flippedIndices: [], locked: false };
     });
   }, []);
