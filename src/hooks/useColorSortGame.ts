@@ -14,8 +14,7 @@ const COLOR_NAMES = [
   "red", "blue", "green", "yellow", "purple", "orange", "pink", "teal", "amber", "indigo",
 ];
 
-function generateTubes(colors: number, tubeSize: number, extraTubes: number): string[][] {
-  // Create all color segments
+function generateTubes(colors: number, tubeSize: number, extraTubes: number, rand: () => number = Math.random): string[][] {
   const allPieces: string[] = [];
   for (let c = 0; c < colors; c++) {
     for (let s = 0; s < tubeSize; s++) {
@@ -23,13 +22,11 @@ function generateTubes(colors: number, tubeSize: number, extraTubes: number): st
     }
   }
 
-  // Shuffle
   for (let i = allPieces.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [allPieces[i], allPieces[j]] = [allPieces[j], allPieces[i]];
   }
 
-  // Distribute into tubes
   const tubes: string[][] = [];
   let idx = 0;
   for (let t = 0; t < colors; t++) {
@@ -37,7 +34,6 @@ function generateTubes(colors: number, tubeSize: number, extraTubes: number): st
     idx += tubeSize;
   }
 
-  // Add empty tubes
   for (let e = 0; e < extraTubes; e++) {
     tubes.push([]);
   }

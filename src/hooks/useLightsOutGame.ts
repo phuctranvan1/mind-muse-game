@@ -4,16 +4,14 @@ export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
 
 const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7 };
 
-function generateBoard(size: number): boolean[][] {
-  // Start solved (all off), then apply random toggles to create a solvable puzzle
+function generateBoard(size: number, rand: () => number = Math.random): boolean[][] {
   const board = Array.from({ length: size }, () => Array(size).fill(false));
   const presses = Math.max(size * 2, 8);
   for (let p = 0; p < presses; p++) {
-    const r = Math.floor(Math.random() * size);
-    const c = Math.floor(Math.random() * size);
+    const r = Math.floor(rand() * size);
+    const c = Math.floor(rand() * size);
     toggle(board, r, c, size);
   }
-  // Ensure at least some lights are on
   if (board.every(row => row.every(cell => !cell))) {
     toggle(board, 0, 0, size);
   }
