@@ -55,9 +55,9 @@ export function usePatternRecallGame() {
     show();
   }, []);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
-    const pattern = generatePattern(config.gridSize, config.patternLength);
+    const pattern = generatePattern(config.gridSize, config.patternLength, rand);
     const state: PatternRecallState = {
       gridSize: config.gridSize,
       difficulty,

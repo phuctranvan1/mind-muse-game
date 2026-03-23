@@ -62,10 +62,10 @@ export interface ColorSortState {
 export function useColorSortGame() {
   const [game, setGame] = useState<ColorSortState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
     setGame({
-      tubes: generateTubes(config.colors, config.tubeSize, config.extraTubes),
+      tubes: generateTubes(config.colors, config.tubeSize, config.extraTubes, rand),
       tubeSize: config.tubeSize,
       numColors: config.colors,
       difficulty,

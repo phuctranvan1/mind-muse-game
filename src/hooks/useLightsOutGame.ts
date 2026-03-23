@@ -39,9 +39,9 @@ export interface LightsOutState {
 export function useLightsOutGame() {
   const [game, setGame] = useState<LightsOutState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const size = GRID_SIZES[difficulty];
-    setGame({ board: generateBoard(size), gridSize: size, difficulty, moves: 0, won: false });
+    setGame({ board: generateBoard(size, rand), gridSize: size, difficulty, moves: 0, won: false });
   }, []);
 
   const toggleCell = useCallback((row: number, col: number) => {

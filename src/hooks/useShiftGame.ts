@@ -78,10 +78,10 @@ export interface GameState {
 export function useShiftGame() {
   const [game, setGame] = useState<GameState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const size = GRID_SIZES[difficulty];
     setGame({
-      tiles: generateTiles(size),
+      tiles: generateTiles(size, rand),
       gridSize: size,
       difficulty,
       moves: 0,

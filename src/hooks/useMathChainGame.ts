@@ -84,9 +84,9 @@ export interface MathChainState {
 export function useMathChainGame() {
   const [game, setGame] = useState<MathChainState | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
-    const problems = Array.from({ length: config.count }, () => generateProblem(config.maxNum, config.ops));
+    const problems = Array.from({ length: config.count }, () => generateProblem(config.maxNum, config.ops, rand));
     setGame({ problems, currentIndex: 0, difficulty, score: 0, wrong: 0, finished: false, selectedAnswer: null, wasCorrect: null });
   }, []);
 
