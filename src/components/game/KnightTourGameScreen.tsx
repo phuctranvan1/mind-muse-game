@@ -22,26 +22,28 @@ const KnightTourGameScreen = ({ game, time, onSelectCell, onHint, onUndo, onPeek
   const currentPos = game.path.length > 0 ? game.path[game.path.length - 1] : null;
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Knight's Tour</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Knight's Tour</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{game.difficulty} · {game.boardSize}×{game.boardSize}</span>
         </div>
-        <div className="flex items-end gap-4">
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground">{time}</span>
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground">{time}</span>
+            </div>
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Visited</label>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground">{game.path.length}/{totalCells}</span>
+            </div>
           </div>
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Visited</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground">{game.path.length}/{totalCells}</span>
-          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-5 sm:mb-6 overflow-x-auto">
         <div
           className="inline-grid border-2 border-foreground/30 rounded-lg overflow-hidden"
           style={{ gridTemplateColumns: `repeat(${game.boardSize}, 1fr)` }}

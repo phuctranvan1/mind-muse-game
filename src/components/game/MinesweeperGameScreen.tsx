@@ -45,33 +45,35 @@ const MinesweeperGameScreen = ({
   const minesLeft = game.mines - game.flagsPlaced;
 
   return (
-    <div className="py-6">
-      <div className="flex justify-between items-end mb-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Minesweeper</h1>
+    <div className="py-5 sm:py-6">
+      <div className="flex justify-between items-start mb-4 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Minesweeper</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">
             {game.difficulty} · {game.rows}×{game.cols}
           </span>
         </div>
-        <div className="flex items-end gap-3">
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Time</label>
-            <span className="tabular-nums font-semibold text-base text-foreground">{time}</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex gap-2 sm:gap-3">
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Time</label>
+              <span className="tabular-nums font-semibold text-sm text-foreground">{time}</span>
+            </div>
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">💣</label>
+              <span className={`tabular-nums font-semibold text-sm ${minesLeft < 0 ? "text-destructive" : "text-foreground"}`}>
+                {minesLeft}
+              </span>
+            </div>
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Safe</label>
+              <span className="tabular-nums font-semibold text-sm text-foreground">
+                {game.revealedCount}/{game.totalSafe}
+              </span>
+            </div>
           </div>
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">💣</label>
-            <span className={`tabular-nums font-semibold text-base ${minesLeft < 0 ? "text-destructive" : "text-foreground"}`}>
-              {minesLeft}
-            </span>
-          </div>
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Safe</label>
-            <span className="tabular-nums font-semibold text-base text-foreground">
-              {game.revealedCount}/{game.totalSafe}
-            </span>
-          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {/* Flag mode toggle */}

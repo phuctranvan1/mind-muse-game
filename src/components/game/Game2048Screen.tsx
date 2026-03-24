@@ -71,30 +71,32 @@ const Game2048Screen = ({
   const nearLimit = moveLimitPct >= 0.8;
 
   return (
-    <div className="py-6">
+    <div className="py-5 sm:py-6">
       {/* Header */}
-      <div className="flex justify-between items-end mb-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">2048</h1>
+      <div className="flex justify-between items-start mb-4 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">2048</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">
             {game.difficulty} · target {game.target.toLocaleString()}
           </span>
         </div>
-        <div className="flex items-end gap-3">
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Score</label>
-            <span className="tabular-nums font-semibold text-base text-foreground">{game.score.toLocaleString()}</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex gap-2 sm:gap-3">
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Score</label>
+              <span className="tabular-nums font-semibold text-sm text-foreground">{game.score.toLocaleString()}</span>
+            </div>
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Best</label>
+              <span className="tabular-nums font-semibold text-sm text-foreground">{game.bestScore.toLocaleString()}</span>
+            </div>
+            <div>
+              <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Time</label>
+              <span className="tabular-nums font-semibold text-sm text-foreground">{time}</span>
+            </div>
           </div>
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Best</label>
-            <span className="tabular-nums font-semibold text-base text-foreground">{game.bestScore.toLocaleString()}</span>
-          </div>
-          <div>
-            <label className="block text-[0.65rem] uppercase text-muted-foreground mb-0.5">Time</label>
-            <span className="tabular-nums font-semibold text-base text-foreground">{time}</span>
-          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {/* Move limit bar */}
@@ -150,23 +152,23 @@ const Game2048Screen = ({
       </div>
 
       {/* Direction buttons for touch/click */}
-      <div className="flex flex-col items-center gap-1 mb-4">
+      <div className="flex flex-col items-center gap-1.5 mb-4">
         <button
           onClick={() => onSlide("up")}
-          className="w-12 h-8 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 text-lg font-bold transition-colors"
+          className="w-14 h-10 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 active:bg-primary/20 text-lg font-bold transition-colors touch-manipulation"
         >↑</button>
-        <div className="flex gap-1">
+        <div className="flex gap-1.5">
           <button
             onClick={() => onSlide("left")}
-            className="w-12 h-8 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 text-lg font-bold transition-colors"
+            className="w-14 h-10 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 active:bg-primary/20 text-lg font-bold transition-colors touch-manipulation"
           >←</button>
           <button
             onClick={() => onSlide("down")}
-            className="w-12 h-8 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 text-lg font-bold transition-colors"
+            className="w-14 h-10 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 active:bg-primary/20 text-lg font-bold transition-colors touch-manipulation"
           >↓</button>
           <button
             onClick={() => onSlide("right")}
-            className="w-12 h-8 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 text-lg font-bold transition-colors"
+            className="w-14 h-10 flex items-center justify-center rounded-lg bg-card border border-border hover:bg-primary/10 active:bg-primary/20 text-lg font-bold transition-colors touch-manipulation"
           >→</button>
         </div>
       </div>

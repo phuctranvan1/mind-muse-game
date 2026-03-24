@@ -26,25 +26,25 @@ const MemoryGameScreen = ({ game, time, onFlip, onHint, onUndo, onPeek, onRestar
   const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Memory</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Memory</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{diffLabels[game.difficulty]}</span>
         </div>
-        <div className="flex items-end gap-4">
-          <div className="flex gap-6">
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-              <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
             </div>
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Moves</label>
-              <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.moves}</span>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.moves}</span>
             </div>
           </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {game.peeking && (
