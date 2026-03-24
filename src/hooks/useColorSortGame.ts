@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
 
@@ -19,28 +19,20 @@ const COLOR_NAMES = [
 
 function generateTubes(colors: number, tubeSize: number, extraTubes: number, rand: () => number = Math.random): string[][] {
   const allPieces: string[] = [];
-  for (let c = 0; c < colors; c++) {
-    for (let s = 0; s < tubeSize; s++) {
+  for (let c = 0; c < colors; c++)
+    for (let s = 0; s < tubeSize; s++)
       allPieces.push(COLOR_NAMES[c]);
-    }
-  }
-
   for (let i = allPieces.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [allPieces[i], allPieces[j]] = [allPieces[j], allPieces[i]];
   }
-
   const tubes: string[][] = [];
   let idx = 0;
   for (let t = 0; t < colors; t++) {
     tubes.push(allPieces.slice(idx, idx + tubeSize));
     idx += tubeSize;
   }
-
-  for (let e = 0; e < extraTubes; e++) {
-    tubes.push([]);
-  }
-
+  for (let e = 0; e < extraTubes; e++) tubes.push([]);
   return tubes;
 }
 
@@ -52,96 +44,107 @@ function isSorted(tubes: string[][], tubeSize: number): boolean {
   });
 }
 
+function findHintMove(tubes: string[][], tubeSize: number): [number, number] | null {
+  for (let from = 0; from < tubes.length; from++) {
+    if (tubes[from].length === 0) continue;
+    const topColor = tubes[from][tubes[from].length - 1];
+    // Prefer moving to a tube with matching top color
+    for (let to = 0; to < tubes.length; to++) {
+      if (from === to) continue;
+      if (tubes[to].length >= tubeSize) continue;
+      if (tubes[to].length > 0 && tubes[to][tubes[to].length - 1] === topColor) return [from, to];
+    }
+    // Move to empty tube
+    for (let to = 0; to < tubes.length; to++) {
+      if (from === to) continue;
+      if (tubes[to].length === 0) return [from, to];
+    }
+  }
+  return null;
+}
+
 export interface ColorSortState {
-  tubes: string[][];
-  tubeSize: number;
-  numColors: number;
-  difficulty: Difficulty;
-  moves: number;
-  won: boolean;
-  selectedTube: number | null;
+  tubes: string[][]; tubeSize: number; numColors: number; difficulty: Difficulty;
+  moves: number; won: boolean; selectedTube: number | null;
+  hintMove: [number, number] | null; peeking: boolean;
 }
 
 export function useColorSortGame() {
   const [game, setGame] = useState<ColorSortState | null>(null);
+  const historyRef = useRef<ColorSortState[]>([]);
 
   const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const config = CONFIGS[difficulty];
+    historyRef.current = [];
     setGame({
       tubes: generateTubes(config.colors, config.tubeSize, config.extraTubes, rand),
-      tubeSize: config.tubeSize,
-      numColors: config.colors,
-      difficulty,
-      moves: 0,
-      won: false,
-      selectedTube: null,
+      tubeSize: config.tubeSize, numColors: config.colors, difficulty,
+      moves: 0, won: false, selectedTube: null, hintMove: null, peeking: false,
     });
   }, []);
 
   const selectTube = useCallback((tubeIdx: number) => {
     setGame(prev => {
       if (!prev || prev.won) return prev;
-
       if (prev.selectedTube === null) {
         if (prev.tubes[tubeIdx].length === 0) return prev;
-        return { ...prev, selectedTube: tubeIdx };
+        return { ...prev, selectedTube: tubeIdx, hintMove: null };
       }
-
-      if (prev.selectedTube === tubeIdx) {
-        return { ...prev, selectedTube: null };
-      }
+      if (prev.selectedTube === tubeIdx) return { ...prev, selectedTube: null };
 
       const fromTube = [...prev.tubes[prev.selectedTube]];
       const toTube = [...prev.tubes[tubeIdx]];
-
       if (fromTube.length === 0) return { ...prev, selectedTube: null };
       if (toTube.length >= prev.tubeSize) return { ...prev, selectedTube: null };
-
       const topColor = fromTube[fromTube.length - 1];
-      if (toTube.length > 0 && toTube[toTube.length - 1] !== topColor) {
-        return { ...prev, selectedTube: null };
-      }
+      if (toTube.length > 0 && toTube[toTube.length - 1] !== topColor) return { ...prev, selectedTube: null };
 
-      // Pour as many matching colors as possible
+      historyRef.current.push({ ...prev, tubes: prev.tubes.map(t => [...t]) });
       let count = 0;
-      while (
-        fromTube.length > 0 &&
-        fromTube[fromTube.length - 1] === topColor &&
-        toTube.length < prev.tubeSize
-      ) {
+      while (fromTube.length > 0 && fromTube[fromTube.length - 1] === topColor && toTube.length < prev.tubeSize) {
         toTube.push(fromTube.pop()!);
         count++;
       }
-
       if (count === 0) return { ...prev, selectedTube: null };
-
       const newTubes = prev.tubes.map((t, i) => {
         if (i === prev.selectedTube) return fromTube;
         if (i === tubeIdx) return toTube;
         return [...t];
       });
-
       const won = isSorted(newTubes, prev.tubeSize);
-
-      return { ...prev, tubes: newTubes, moves: prev.moves + 1, won, selectedTube: null };
+      return { ...prev, tubes: newTubes, moves: prev.moves + 1, won, selectedTube: null, hintMove: null };
     });
+  }, []);
+
+  const undo = useCallback(() => {
+    const prev = historyRef.current.pop();
+    if (prev) setGame(prev);
+  }, []);
+
+  const hint = useCallback(() => {
+    setGame(prev => {
+      if (!prev || prev.won) return prev;
+      return { ...prev, hintMove: findHintMove(prev.tubes, prev.tubeSize), selectedTube: null };
+    });
+  }, []);
+
+  const peek = useCallback(() => {
+    setGame(prev => prev ? { ...prev, peeking: true } : prev);
+    setTimeout(() => {
+      setGame(prev => prev ? { ...prev, peeking: false } : prev);
+    }, 2000);
   }, []);
 
   const restart = useCallback(() => {
+    historyRef.current = [];
     setGame(prev => {
       if (!prev) return null;
       const config = CONFIGS[prev.difficulty];
-      return {
-        ...prev,
-        tubes: generateTubes(config.colors, config.tubeSize, config.extraTubes),
-        moves: 0,
-        won: false,
-        selectedTube: null,
-      };
+      return { ...prev, tubes: generateTubes(config.colors, config.tubeSize, config.extraTubes), moves: 0, won: false, selectedTube: null, hintMove: null, peeking: false };
     });
   }, []);
 
-  const goToMenu = useCallback(() => setGame(null), []);
+  const goToMenu = useCallback(() => { historyRef.current = []; setGame(null); }, []);
 
-  return { game, startGame, selectTube, restart, goToMenu };
+  return { game, startGame, selectTube, undo, hint, peek, restart, goToMenu };
 }

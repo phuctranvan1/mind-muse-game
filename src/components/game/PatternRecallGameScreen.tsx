@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 import { PatternRecallState } from "@/hooks/usePatternRecallGame";
 import DarkModeToggle from "./DarkModeToggle";
+import PowerUpButtons from "./PowerUpButtons";
 
 interface Props {
   game: PatternRecallState;
   onTap: (index: number) => void;
+  onHint: () => void;
+  onUndo: () => void;
+  onPeek: () => void;
   onNextRound: () => void;
   onRestart: () => void;
   onMenu: () => void;
@@ -12,11 +16,12 @@ interface Props {
   onToggleDark: () => void;
 }
 
-const PatternRecallGameScreen = ({ game, onTap, onNextRound, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master" };
+const PatternRecallGameScreen = ({ game, onTap, onHint, onUndo, onPeek, onNextRound, onRestart, onMenu, dark, onToggleDark }: Props) => {
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
   const total = game.gridSize * game.gridSize;
   const isShowingCell = (idx: number) => game.phase === "showing" && game.pattern[game.currentShowIndex] === idx;
   const isPlayerHit = (idx: number) => game.phase === "input" && game.playerPattern.includes(idx);
+  const isHintCell = (idx: number) => game.hintCell === idx;
 
   return (
     <div className="py-8">
@@ -54,7 +59,9 @@ const PatternRecallGameScreen = ({ game, onTap, onNextRound, onRestart, onMenu, 
             whileTap={game.phase === "input" ? { scale: 0.9 } : undefined}
             animate={isShowingCell(idx) ? { scale: [1, 1.1, 1] } : {}}
             className={`rounded-[var(--radius-inner)] border transition-all duration-200 ${
-              isShowingCell(idx)
+              isHintCell(idx)
+                ? "bg-accent border-accent/50 shadow-[0_0_20px_hsl(var(--accent)/0.6)] animate-pulse"
+                : isShowingCell(idx)
                 ? "bg-primary border-primary/50 shadow-[0_0_20px_hsl(var(--primary)/0.5)]"
                 : isPlayerHit(idx)
                 ? "bg-accent border-accent/50 shadow-[0_0_12px_hsl(var(--accent)/0.4)]"
@@ -66,7 +73,13 @@ const PatternRecallGameScreen = ({ game, onTap, onNextRound, onRestart, onMenu, 
         ))}
       </div>
 
-      <div className="flex justify-center gap-6 mt-6">
+      {game.phase === "input" && (
+        <div className="mt-4 mb-2">
+          <PowerUpButtons onHint={onHint} onUndo={onUndo} onPeek={onPeek} />
+        </div>
+      )}
+
+      <div className="flex justify-center gap-6 mt-4">
         {game.phase === "won" && (
           <button onClick={onNextRound} className="text-sm font-semibold text-accent hover:brightness-110 transition-all">Next Round</button>
         )}

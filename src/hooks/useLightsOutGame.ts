@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
 
@@ -28,37 +28,67 @@ function toggle(board: boolean[][], r: number, c: number, size: number) {
   }
 }
 
+function findHintCell(board: boolean[][], size: number): [number, number] | null {
+  // Find a lit cell to suggest toggling
+  for (let r = 0; r < size; r++)
+    for (let c = 0; c < size; c++)
+      if (board[r][c]) return [r, c];
+  return null;
+}
+
 export interface LightsOutState {
-  board: boolean[][];
-  gridSize: number;
-  difficulty: Difficulty;
-  moves: number;
-  won: boolean;
+  board: boolean[][]; gridSize: number; difficulty: Difficulty;
+  moves: number; won: boolean; hintCell: [number, number] | null; peeking: boolean;
 }
 
 export function useLightsOutGame() {
   const [game, setGame] = useState<LightsOutState | null>(null);
+  const historyRef = useRef<LightsOutState[]>([]);
+  const peekTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const size = GRID_SIZES[difficulty];
-    setGame({ board: generateBoard(size, rand), gridSize: size, difficulty, moves: 0, won: false });
+    historyRef.current = [];
+    setGame({ board: generateBoard(size, rand), gridSize: size, difficulty, moves: 0, won: false, hintCell: null, peeking: false });
   }, []);
 
   const toggleCell = useCallback((row: number, col: number) => {
     setGame(prev => {
       if (!prev || prev.won) return prev;
+      historyRef.current.push({ ...prev, board: prev.board.map(r => [...r]) });
       const newBoard = prev.board.map(r => [...r]);
       toggle(newBoard, row, col, prev.gridSize);
       const won = newBoard.every(r => r.every(c => !c));
-      return { ...prev, board: newBoard, moves: prev.moves + 1, won };
+      return { ...prev, board: newBoard, moves: prev.moves + 1, won, hintCell: null };
     });
   }, []);
 
-  const restart = useCallback(() => {
-    setGame(prev => prev ? { ...prev, board: generateBoard(prev.gridSize), moves: 0, won: false } : null);
+  const undo = useCallback(() => {
+    const prev = historyRef.current.pop();
+    if (prev) setGame(prev);
   }, []);
 
-  const goToMenu = useCallback(() => setGame(null), []);
+  const hint = useCallback(() => {
+    setGame(prev => {
+      if (!prev || prev.won) return prev;
+      return { ...prev, hintCell: findHintCell(prev.board, prev.gridSize) };
+    });
+  }, []);
 
-  return { game, startGame, toggleCell, restart, goToMenu };
+  const peek = useCallback(() => {
+    if (peekTimeout.current) clearTimeout(peekTimeout.current);
+    setGame(prev => prev ? { ...prev, peeking: true } : prev);
+    peekTimeout.current = setTimeout(() => {
+      setGame(prev => prev ? { ...prev, peeking: false } : prev);
+    }, 2000);
+  }, []);
+
+  const restart = useCallback(() => {
+    historyRef.current = [];
+    setGame(prev => prev ? { ...prev, board: generateBoard(prev.gridSize), moves: 0, won: false, hintCell: null, peeking: false } : null);
+  }, []);
+
+  const goToMenu = useCallback(() => { historyRef.current = []; setGame(null); }, []);
+
+  return { game, startGame, toggleCell, undo, hint, peek, restart, goToMenu };
 }
