@@ -60,8 +60,20 @@ It’s not just about winning — it’s about **how you think**.
 
 ## 📸 Preview
 
+### 🏠 Game Selector
+![Game Selector](./screenshots/home.png)
 
+### 🎯 Difficulty Selection
+![Difficulty Menu](./screenshots/difficulty-menu.png)
 
+### ⬡ Shift Puzzle
+![Shift Puzzle](./screenshots/shift-puzzle.png)
+
+### 🃏 Memory Game
+![Memory Game](./screenshots/memory-game.png)
+
+### 🔢 Sudoku
+![Sudoku](./screenshots/sudoku-game.png)
 
 ---
 
