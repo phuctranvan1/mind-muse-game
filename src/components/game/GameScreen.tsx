@@ -61,7 +61,7 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onUndo, o
         <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking at solution...</p>
       )}
 
-      <PuzzleGrid tiles={displayTiles} gridSize={game.gridSize} hintTile={game.hintTile} onTileClick={onMoveTile} />
+      <PuzzleGrid tiles={displayTiles} gridSize={game.gridSize} hintTile={game.peeking ? null : game.hintTile} onTileClick={game.peeking ? () => {} : onMoveTile} />
 
       {game.lost && (
         <div className="mt-4 text-center">

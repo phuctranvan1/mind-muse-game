@@ -26,9 +26,7 @@ import ColorSortGameScreen from "@/components/game/ColorSortGameScreen";
 import SudokuGameScreen from "@/components/game/SudokuGameScreen";
 import NQueensGameScreen from "@/components/game/NQueensGameScreen";
 import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
-import WinModal from "@/components/game/WinModal";
 import DailyWinModal from "@/components/game/DailyWinModal";
-import RewardsBar from "@/components/game/RewardsBar";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
 
