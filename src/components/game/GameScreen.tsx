@@ -2,6 +2,7 @@ import { GameState } from "@/hooks/useShiftGame";
 import PuzzleGrid from "./PuzzleGrid";
 import DarkModeToggle from "./DarkModeToggle";
 import { Progress } from "@/components/ui/progress";
+import PowerUpButtons from "./PowerUpButtons";
 
 interface GameScreenProps {
   game: GameState;
@@ -9,19 +10,25 @@ interface GameScreenProps {
   difficultyLabel: string;
   onMoveTile: (index: number) => void;
   onHint: () => void;
+  onUndo: () => void;
+  onPeek: () => void;
   onRestart: () => void;
   onMenu: () => void;
   dark: boolean;
   onToggleDark: () => void;
 }
 
-const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart, onMenu, dark, onToggleDark }: GameScreenProps) => {
+const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: GameScreenProps) => {
   const movePct = game.moveLimit ? Math.min((game.moves / game.moveLimit) * 100, 100) : null;
   const isLow = movePct !== null && movePct > 80;
 
+  // When peeking, show the solved state
+  const displayTiles = game.peeking
+    ? Array.from({ length: game.gridSize * game.gridSize }, (_, i) => i < game.gridSize * game.gridSize - 1 ? i + 1 : null)
+    : game.tiles;
+
   return (
     <div className="py-8">
-      {/* Header */}
       <div className="flex justify-between items-end mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-primary">Shift</h1>
@@ -44,20 +51,18 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
         <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
-      {/* Move limit bar */}
       {movePct !== null && (
         <div className="mb-4">
-          <Progress
-            value={100 - movePct}
-            className={`h-1.5 ${isLow ? '[&>div]:bg-danger' : '[&>div]:bg-primary'}`}
-          />
+          <Progress value={100 - movePct} className={`h-1.5 ${isLow ? '[&>div]:bg-danger' : '[&>div]:bg-primary'}`} />
         </div>
       )}
 
-      {/* Grid */}
-      <PuzzleGrid tiles={game.tiles} gridSize={game.gridSize} hintTile={game.hintTile} onTileClick={onMoveTile} />
+      {game.peeking && (
+        <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking at solution...</p>
+      )}
 
-      {/* Lost overlay */}
+      <PuzzleGrid tiles={displayTiles} gridSize={game.gridSize} hintTile={game.hintTile} onTileClick={onMoveTile} />
+
       {game.lost && (
         <div className="mt-4 text-center">
           <p className="text-danger font-semibold text-lg">Out of moves!</p>
@@ -65,17 +70,13 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onRestart
         </div>
       )}
 
-      {/* Controls */}
-      <div className="flex justify-center gap-6 mt-6">
-        <button onClick={onHint} className="text-sm font-semibold text-accent hover:brightness-110 transition-all">
-          Hint
-        </button>
-        <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">
-          Restart
-        </button>
-        <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">
-          Menu
-        </button>
+      <div className="mt-4 mb-2">
+        <PowerUpButtons onHint={onHint} onUndo={onUndo} onPeek={onPeek} />
+      </div>
+
+      <div className="flex justify-center gap-6 mt-2">
+        <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Restart</button>
+        <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
     </div>
   );

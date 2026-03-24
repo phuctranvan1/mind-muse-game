@@ -1,18 +1,21 @@
 import { KnightTourState } from "@/hooks/useKnightTourGame";
 import DarkModeToggle from "./DarkModeToggle";
+import PowerUpButtons from "./PowerUpButtons";
 
 interface Props {
   game: KnightTourState;
   time: string;
   onSelectCell: (row: number, col: number) => void;
+  onHint: () => void;
   onUndo: () => void;
+  onPeek: () => void;
   onRestart: () => void;
   onMenu: () => void;
   dark: boolean;
   onToggleDark: () => void;
 }
 
-const KnightTourGameScreen = ({ game, time, onSelectCell, onUndo, onRestart, onMenu, dark, onToggleDark }: Props) => {
+const KnightTourGameScreen = ({ game, time, onSelectCell, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
   const totalCells = game.boardSize * game.boardSize;
   const cellSize = game.boardSize <= 5 ? "w-12 h-12" : game.boardSize <= 6 ? "w-10 h-10" : "w-8 h-8";
   const fontSize = game.boardSize <= 6 ? "text-sm" : "text-xs";
@@ -50,6 +53,7 @@ const KnightTourGameScreen = ({ game, time, onSelectCell, onUndo, onRestart, onM
               const isValidMove = game.validMoves.some(([r, c]) => r === row && c === col);
               const isDarkCell = (row + col) % 2 === 1;
               const moveIndex = game.path.findIndex(([r, c]) => r === row && c === col);
+              const isHint = game.hintCell?.[0] === row && game.hintCell?.[1] === col;
 
               return (
                 <button
@@ -58,16 +62,18 @@ const KnightTourGameScreen = ({ game, time, onSelectCell, onUndo, onRestart, onM
                   className={`${cellSize} ${fontSize} flex items-center justify-center font-bold transition-all border border-border/50 ${
                     isCurrent
                       ? "bg-primary text-primary-foreground ring-2 ring-primary"
+                      : isHint
+                      ? "bg-accent/30 text-accent ring-2 ring-accent animate-pulse"
                       : isVisited
                       ? "bg-primary/20 text-primary/70"
                       : isValidMove
-                      ? "bg-accent/20 border-accent/50 hover:bg-accent/30 animate-pulse"
+                      ? `${game.peeking ? "bg-accent/30 border-accent/50" : "bg-accent/20 border-accent/50 hover:bg-accent/30"} animate-pulse`
                       : isDarkCell
                       ? "bg-muted/60"
                       : "bg-card"
                   } ${!isVisited && game.path.length === 0 ? "hover:bg-primary/10 cursor-pointer" : ""}`}
                 >
-                  {isCurrent ? "♞" : isVisited ? moveIndex + 1 : isValidMove ? "·" : ""}
+                  {isCurrent ? "♞" : isHint ? "★" : isVisited ? moveIndex + 1 : isValidMove ? "·" : ""}
                 </button>
               );
             })
@@ -90,10 +96,11 @@ const KnightTourGameScreen = ({ game, time, onSelectCell, onUndo, onRestart, onM
         {game.path.length === 0 ? "Click any cell to place the knight" : "Visit every cell with knight moves"}
       </p>
 
+      <div className="mb-2">
+        <PowerUpButtons onHint={game.path.length > 0 ? onHint : undefined} onUndo={game.path.length > 0 ? onUndo : undefined} onPeek={onPeek} />
+      </div>
+
       <div className="flex justify-center gap-6">
-        {game.path.length > 0 && (
-          <button onClick={onUndo} className="text-sm font-semibold text-accent hover:brightness-110 transition-all">Undo</button>
-        )}
         <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Restart</button>
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>

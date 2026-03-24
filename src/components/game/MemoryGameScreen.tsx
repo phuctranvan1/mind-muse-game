@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MemoryGameState } from "@/hooks/useMemoryGame";
 import DarkModeToggle from "./DarkModeToggle";
 import WinModal from "./WinModal";
+import PowerUpButtons from "./PowerUpButtons";
 
 const CARD_COLORS = [
   "bg-tile-1", "bg-tile-2", "bg-tile-3", "bg-tile-4",
@@ -12,14 +13,17 @@ interface Props {
   game: MemoryGameState;
   time: string;
   onFlip: (index: number) => void;
+  onHint: () => void;
+  onUndo: () => void;
+  onPeek: () => void;
   onRestart: () => void;
   onMenu: () => void;
   dark: boolean;
   onToggleDark: () => void;
 }
 
-const MemoryGameScreen = ({ game, time, onFlip, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master" };
+const MemoryGameScreen = ({ game, time, onFlip, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
 
   return (
     <div className="py-8">
@@ -43,6 +47,10 @@ const MemoryGameScreen = ({ game, time, onFlip, onRestart, onMenu, dark, onToggl
         <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
+      {game.peeking && (
+        <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking at all cards...</p>
+      )}
+
       <div
         className="bg-grid border-2 border-grid-border rounded-[var(--radius-outer)] p-2 gap-2"
         style={{ display: "grid", gridTemplateColumns: `repeat(${game.cols}, 1fr)` }}
@@ -50,7 +58,6 @@ const MemoryGameScreen = ({ game, time, onFlip, onRestart, onMenu, dark, onToggl
         {game.cards.map((card, i) => {
           const colorIdx = card.symbol.charCodeAt(0) % CARD_COLORS.length;
           const isRevealed = card.flipped || card.matched;
-
           return (
             <motion.div
               key={card.id}
@@ -72,7 +79,11 @@ const MemoryGameScreen = ({ game, time, onFlip, onRestart, onMenu, dark, onToggl
         })}
       </div>
 
-      <div className="flex justify-center gap-6 mt-6">
+      <div className="mt-4 mb-2">
+        <PowerUpButtons onHint={onHint} onUndo={onUndo} onPeek={onPeek} />
+      </div>
+
+      <div className="flex justify-center gap-6 mt-2">
         <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Restart</button>
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
