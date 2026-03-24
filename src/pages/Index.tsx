@@ -11,6 +11,9 @@ import { useNQueensGame } from "@/hooks/useNQueensGame";
 import { useKnightTourGame } from "@/hooks/useKnightTourGame";
 import { useMinesweeperGame } from "@/hooks/useMinesweeperGame";
 import { use2048Game } from "@/hooks/use2048Game";
+import { useMazeGame } from "@/hooks/useMazeGame";
+import { useWordGuessGame } from "@/hooks/useWordGuessGame";
+import { useNonogramGame } from "@/hooks/useNonogramGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -30,6 +33,9 @@ import NQueensGameScreen from "@/components/game/NQueensGameScreen";
 import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
 import MinesweeperGameScreen from "@/components/game/MinesweeperGameScreen";
 import Game2048Screen from "@/components/game/Game2048Screen";
+import MazeGameScreen from "@/components/game/MazeGameScreen";
+import WordGuessGameScreen from "@/components/game/WordGuessGameScreen";
+import NonogramGameScreen from "@/components/game/NonogramGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
@@ -143,6 +149,33 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "5×5 · reach 8192 · 700 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "6×6 · reach 2048 · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
+  maze: [
+    { key: "easy", label: "Easy", desc: "7×7 maze", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "11×11 maze", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "15×15 maze · timed", color: "bg-tile-1", badge: "Timed" },
+    { key: "expert", label: "Expert", desc: "19×19 maze · timed", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "23×23 maze", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "27×27 maze", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "31×31 mega-maze", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  wordguess: [
+    { key: "easy", label: "Easy", desc: "4-letter word · 8 tries", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "5-letter word · 6 tries", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "5-letter word · 5 tries", color: "bg-tile-1", badge: "Wordle" },
+    { key: "expert", label: "Expert", desc: "6-letter word · 6 tries", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7-letter word · 6 tries", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "7-letter word · 5 tries", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "8-letter word · 5 tries", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  nonogram: [
+    { key: "easy", label: "Easy", desc: "5×5 grid", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "7×7 grid", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "10×10 grid", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert", label: "Expert", desc: "12×12 grid", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "15×15 grid", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "18×18 grid", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "20×20 grid", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -158,6 +191,9 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   knighttour: "Knight's Tour",
   minesweeper: "Minesweeper",
   "2048": "2048",
+  maze: "Maze",
+  wordguess: "Word Guess",
+  nonogram: "Nonogram",
 };
 
 const Index = () => {
@@ -179,6 +215,9 @@ const Index = () => {
   const knighttour = useKnightTourGame();
   const minesweeper = useMinesweeperGame();
   const game2048 = use2048Game();
+  const maze = useMazeGame();
+  const wordguess = useWordGuessGame();
+  const nonogram = useNonogramGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
 
@@ -194,7 +233,10 @@ const Index = () => {
   const knighttourActive = isPlaying && selectedPuzzle === "knighttour" && knighttour.game && !knighttour.game.won;
   const minesweeperActive = isPlaying && selectedPuzzle === "minesweeper" && minesweeper.game && !minesweeper.game.won && !minesweeper.game.lost;
   const game2048Active = isPlaying && selectedPuzzle === "2048" && game2048.game && !game2048.game.won && !game2048.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active);
+  const mazeActive = isPlaying && selectedPuzzle === "maze" && maze.game && !maze.game.won;
+  const wordguessActive = isPlaying && selectedPuzzle === "wordguess" && wordguess.game && !wordguess.game.won && !wordguess.game.lost;
+  const nonogramActive = isPlaying && selectedPuzzle === "nonogram" && nonogram.game && !nonogram.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || mazeActive || wordguessActive || nonogramActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -222,7 +264,10 @@ const Index = () => {
     if (selectedPuzzle === "knighttour" && knighttour.game?.won) checkWin(true, knighttour.game.path.length);
     if (selectedPuzzle === "minesweeper" && minesweeper.game?.won) checkWin(true, minesweeper.game.moves);
     if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game]);
+    if (selectedPuzzle === "maze" && maze.game?.won) checkWin(true, maze.game.moves);
+    if (selectedPuzzle === "wordguess" && wordguess.game?.won) checkWin(true, wordguess.game.currentRow);
+    if (selectedPuzzle === "nonogram" && nonogram.game?.won) checkWin(true, nonogram.game.moves);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, maze.game, wordguess.game, nonogram.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -250,6 +295,7 @@ const Index = () => {
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
+    maze.goToMenu(); wordguess.goToMenu(); nonogram.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -272,6 +318,9 @@ const Index = () => {
       case "knighttour": knighttour.startGame(difficulty); break;
       case "minesweeper": minesweeper.startGame(difficulty, dailyRandom); break;
       case "2048": game2048.startGame(difficulty, dailyRandom); break;
+      case "maze": maze.startGame(difficulty, dailyRandom); break;
+      case "wordguess": wordguess.startGame(difficulty, dailyRandom); break;
+      case "nonogram": nonogram.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -290,6 +339,9 @@ const Index = () => {
       case "knighttour": knighttour.startGame(difficulty); break;
       case "minesweeper": minesweeper.startGame(difficulty); break;
       case "2048": game2048.startGame(difficulty); break;
+      case "maze": maze.startGame(difficulty); break;
+      case "wordguess": wordguess.startGame(difficulty); break;
+      case "nonogram": nonogram.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -432,6 +484,34 @@ const Index = () => {
             game={game2048.game} time={time} onSlide={game2048.slide}
             onHint={game2048.hint} onUndo={game2048.undo} onPeek={game2048.peek}
             onRestart={isDaily ? dailyRestart : game2048.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "maze":
+        return maze.game && (
+          <MazeGameScreen
+            game={maze.game} time={time} onMove={maze.movePlayer}
+            onHint={maze.hint} onUndo={maze.undo} onPeek={maze.peek}
+            onRestart={isDaily ? dailyRestart : maze.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "wordguess":
+        return wordguess.game && (
+          <WordGuessGameScreen
+            game={wordguess.game} time={time}
+            onType={wordguess.typeLetter} onDelete={wordguess.deleteLetter} onSubmit={wordguess.submitGuess}
+            onHint={wordguess.hint} onPeek={wordguess.peek}
+            onRestart={isDaily ? dailyRestart : wordguess.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "nonogram":
+        return nonogram.game && (
+          <NonogramGameScreen
+            game={nonogram.game} time={time} onToggleCell={nonogram.toggleCell}
+            onHint={nonogram.hint} onUndo={nonogram.undo} onPeek={nonogram.peek}
+            onRestart={isDaily ? dailyRestart : nonogram.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
