@@ -294,116 +294,94 @@ const Index = () => {
     switch (selectedPuzzle) {
       case "shift":
         return shift.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} onUseHint={shift.showHint} />
-            <GameScreen
-              game={shift.game} time={time} difficultyLabel={isDaily ? "Daily" : shift.difficultyLabel}
-              onMoveTile={shift.moveTile} onHint={shift.showHint} onRestart={isDaily ? dailyRestart : shift.restart}
-              onMenu={menuAction} dark={dark} onToggleDark={toggleDark}
-            />
-            {!isDaily && shift.game.won && <WinModal moves={shift.game.moves} time={time} onClose={menuAction} />}
-          </>
+          <GameScreen
+            game={shift.game} time={time} difficultyLabel={isDaily ? "Daily" : shift.difficultyLabel}
+            onMoveTile={shift.moveTile} onHint={shift.showHint} onUndo={shift.undo} onPeek={shift.peek}
+            onRestart={isDaily ? dailyRestart : shift.restart}
+            onMenu={menuAction} dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "memory":
         return memory.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <MemoryGameScreen
-              game={memory.game} time={time} onFlip={memory.flipCard}
-              onRestart={isDaily ? dailyRestart : memory.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <MemoryGameScreen
+            game={memory.game} time={time} onFlip={memory.flipCard}
+            onHint={memory.hint} onUndo={memory.undo} onPeek={memory.peek}
+            onRestart={isDaily ? dailyRestart : memory.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "lightsout":
         return lightsout.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <LightsOutGameScreen
-              game={lightsout.game} time={time} onToggleCell={lightsout.toggleCell}
-              onRestart={isDaily ? dailyRestart : lightsout.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <LightsOutGameScreen
+            game={lightsout.game} time={time} onToggleCell={lightsout.toggleCell}
+            onHint={lightsout.hint} onUndo={lightsout.undo} onPeek={lightsout.peek}
+            onRestart={isDaily ? dailyRestart : lightsout.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "pattern":
         return pattern.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <PatternRecallGameScreen
-              game={pattern.game} onTap={pattern.tapCell} onNextRound={pattern.nextRound}
-              onRestart={isDaily ? dailyRestart : pattern.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <PatternRecallGameScreen
+            game={pattern.game} onTap={pattern.tapCell} onNextRound={pattern.nextRound}
+            onHint={pattern.hint} onUndo={pattern.undo} onPeek={pattern.peek}
+            onRestart={isDaily ? dailyRestart : pattern.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "mathchain":
         return math.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <MathChainGameScreen
-              game={math.game} time={time} onAnswer={math.selectAnswer}
-              onRestart={isDaily ? dailyRestart : math.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <MathChainGameScreen
+            game={math.game} time={time} onAnswer={math.selectAnswer}
+            onHint={math.hint} onPeek={math.peek}
+            onRestart={isDaily ? dailyRestart : math.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "hanoi":
         return hanoi.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <HanoiGameScreen
-              game={hanoi.game} time={time} onSelectPeg={hanoi.selectPeg}
-              onRestart={isDaily ? dailyRestart : hanoi.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <HanoiGameScreen
+            game={hanoi.game} time={time} onSelectPeg={hanoi.selectPeg}
+            onHint={hanoi.hint} onUndo={hanoi.undo} onPeek={hanoi.peek}
+            onRestart={isDaily ? dailyRestart : hanoi.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "colorsort":
         return colorsort.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <ColorSortGameScreen
-              game={colorsort.game} time={time} onSelectTube={colorsort.selectTube}
-              onRestart={isDaily ? dailyRestart : colorsort.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <ColorSortGameScreen
+            game={colorsort.game} time={time} onSelectTube={colorsort.selectTube}
+            onHint={colorsort.hint} onUndo={colorsort.undo} onPeek={colorsort.peek}
+            onRestart={isDaily ? dailyRestart : colorsort.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "sudoku":
         return sudoku.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <SudokuGameScreen
-              game={sudoku.game} time={time} onSelectCell={sudoku.selectCell}
-              onEnterNumber={sudoku.enterNumber} onClear={sudoku.clearCell}
-              onRestart={isDaily ? dailyRestart : sudoku.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <SudokuGameScreen
+            game={sudoku.game} time={time} onSelectCell={sudoku.selectCell}
+            onEnterNumber={sudoku.enterNumber} onClear={sudoku.clearCell}
+            onHint={sudoku.hint} onUndo={sudoku.undo} onPeek={sudoku.peek}
+            onRestart={isDaily ? dailyRestart : sudoku.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "nqueens":
         return nqueens.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <NQueensGameScreen
-              game={nqueens.game} onToggleQueen={nqueens.toggleQueen}
-              onRestart={isDaily ? dailyRestart : nqueens.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <NQueensGameScreen
+            game={nqueens.game} onToggleQueen={nqueens.toggleQueen}
+            onHint={nqueens.hint} onUndo={nqueens.undo} onPeek={nqueens.peek}
+            onRestart={isDaily ? dailyRestart : nqueens.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
       case "knighttour":
         return knighttour.game && (
-          <>
-            <RewardsBar rewards={daily.rewards} />
-            <KnightTourGameScreen
-              game={knighttour.game} time={time} onSelectCell={knighttour.selectCell}
-              onUndo={knighttour.undo}
-              onRestart={isDaily ? dailyRestart : knighttour.restart} onMenu={menuAction}
-              dark={dark} onToggleDark={toggleDark}
-            />
-          </>
+          <KnightTourGameScreen
+            game={knighttour.game} time={time} onSelectCell={knighttour.selectCell}
+            onHint={knighttour.hint} onUndo={knighttour.undo} onPeek={knighttour.peek}
+            onRestart={isDaily ? dailyRestart : knighttour.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
         );
     }
   };
