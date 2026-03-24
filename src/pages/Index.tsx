@@ -439,8 +439,8 @@ const Index = () => {
   };
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-background overflow-hidden">
-      <div className="w-full max-w-[440px] px-6">
+    <div className="flex min-h-svh items-start sm:items-center justify-center bg-background">
+      <div className="w-full max-w-[440px] sm:max-w-lg px-4 sm:px-6 py-4 sm:py-0">
         <AnimatePresence mode="wait">
           {screen === "puzzleSelect" && (
             <motion.div key="puzzles" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition}>

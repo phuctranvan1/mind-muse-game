@@ -23,57 +23,59 @@ const SudokuGameScreen = ({ game, time, onSelectCell, onEnterNumber, onClear, on
   const displayGrid = game.peeking ? game.solution : game.playerGrid;
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Sudoku</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Sudoku</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{game.difficulty}</span>
         </div>
-        <div className="flex items-end gap-4">
-          <div className="flex gap-6">
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-              <span className="tabular-nums font-semibold text-lg text-foreground">{time}</span>
+              <span className="tabular-nums font-semibold text-base text-foreground">{time}</span>
             </div>
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Errors</label>
-              <span className={`tabular-nums font-semibold text-lg ${game.mistakes > 0 ? "text-destructive" : "text-foreground"}`}>{game.mistakes}</span>
+              <span className={`tabular-nums font-semibold text-base ${game.mistakes > 0 ? "text-destructive" : "text-foreground"}`}>{game.mistakes}</span>
             </div>
           </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {game.peeking && (
         <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking at solution...</p>
       )}
 
-      <div className="flex justify-center mb-6">
-        <div
-          className="inline-grid border-2 border-foreground/40 rounded-lg overflow-hidden"
-          style={{ gridTemplateColumns: `repeat(${game.size}, 1fr)` }}
-        >
-          {displayGrid.map((row, ri) =>
-            row.map((val, ci) => {
-              const isSelected = game.selectedCell?.[0] === ri && game.selectedCell?.[1] === ci;
-              const isFixed = game.fixedCells[ri][ci];
-              const isWrong = !game.peeking && val !== 0 && val !== game.solution[ri][ci];
-              const borderRight = (ci + 1) % blockSize === 0 && ci < game.size - 1 ? "border-r-2 border-r-foreground/30" : "border-r border-r-border";
-              const borderBottom = (ri + 1) % blockSize === 0 && ri < game.size - 1 ? "border-b-2 border-b-foreground/30" : "border-b border-b-border";
+      <div className="flex justify-center mb-5 sm:mb-6 overflow-x-auto">
+        <div className="touch-none">
+          <div
+            className="inline-grid border-2 border-foreground/40 rounded-lg overflow-hidden"
+            style={{ gridTemplateColumns: `repeat(${game.size}, 1fr)` }}
+          >
+            {displayGrid.map((row, ri) =>
+              row.map((val, ci) => {
+                const isSelected = game.selectedCell?.[0] === ri && game.selectedCell?.[1] === ci;
+                const isFixed = game.fixedCells[ri][ci];
+                const isWrong = !game.peeking && val !== 0 && val !== game.solution[ri][ci];
+                const borderRight = (ci + 1) % blockSize === 0 && ci < game.size - 1 ? "border-r-2 border-r-foreground/30" : "border-r border-r-border";
+                const borderBottom = (ri + 1) % blockSize === 0 && ri < game.size - 1 ? "border-b-2 border-b-foreground/30" : "border-b border-b-border";
 
-              return (
-                <button
-                  key={`${ri}-${ci}`}
-                  onClick={() => onSelectCell(ri, ci)}
-                  className={`${cellSize} flex items-center justify-center font-semibold transition-all ${borderRight} ${borderBottom} ${
-                    isSelected ? "bg-primary/20 ring-2 ring-primary" : isFixed ? "bg-muted/50" : "bg-card hover:bg-primary/10"
-                  } ${isWrong ? "text-destructive" : isFixed ? "text-foreground" : game.peeking ? "text-accent" : "text-primary"}`}
-                >
-                  {val !== 0 ? val : ""}
-                </button>
-              );
-            })
-          )}
+                return (
+                  <button
+                    key={`${ri}-${ci}`}
+                    onClick={() => onSelectCell(ri, ci)}
+                    className={`${cellSize} flex items-center justify-center font-semibold transition-all ${borderRight} ${borderBottom} ${
+                      isSelected ? "bg-primary/20 ring-2 ring-primary" : isFixed ? "bg-muted/50" : "bg-card hover:bg-primary/10"
+                    } ${isWrong ? "text-destructive" : isFixed ? "text-foreground" : game.peeking ? "text-accent" : "text-primary"}`}
+                  >
+                    {val !== 0 ? val : ""}
+                  </button>
+                );
+              })
+            )}
+          </div>
         </div>
       </div>
 

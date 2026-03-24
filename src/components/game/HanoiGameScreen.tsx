@@ -32,25 +32,27 @@ const HanoiGameScreen = ({ game, time, onSelectPeg, onHint, onUndo, onPeek, onRe
   const minMoves = Math.pow(2, game.discs) - 1;
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Tower of Hanoi</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Tower of Hanoi</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{game.discs} discs</span>
         </div>
-        <div className="flex gap-6">
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
+            </div>
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Moves</label>
+              <span className={`tabular-nums font-semibold text-base sm:text-lg ${isLow ? 'text-destructive' : 'text-foreground'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                {game.moves}{game.moveLimit ? `/${game.moveLimit}` : ''}
+              </span>
+            </div>
           </div>
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Moves</label>
-            <span className={`tabular-nums font-semibold text-lg ${isLow ? 'text-destructive' : 'text-foreground'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              {game.moves}{game.moveLimit ? `/${game.moveLimit}` : ''}
-            </span>
-          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {movePct !== null && (

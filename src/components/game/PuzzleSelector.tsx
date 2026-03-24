@@ -32,17 +32,17 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
   const totalRewards = rewards.hints + rewards.undos + rewards.peeks;
 
   return (
-    <div className="py-8">
-      <div className="mb-8 flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+    <div className="py-6 sm:py-8">
+      <div className="mb-6 sm:mb-8 flex justify-between items-start gap-2">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             <span className="text-primary">Mind Muse</span>
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Challenge your IQ</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {totalRewards > 0 && (
-            <span className="text-[0.65rem] px-2 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/25 font-semibold">
+            <span className="hidden xs:inline text-[0.65rem] px-2 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/25 font-semibold whitespace-nowrap">
               💡{rewards.hints} ↩{rewards.undos} 👁{rewards.peeks}
             </span>
           )}
@@ -53,7 +53,7 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Choose a Puzzle
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 gap-3">
         {puzzles.map((p, i) => {
           const done = isDailyDone(p.key);
           return (

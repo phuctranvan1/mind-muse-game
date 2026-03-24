@@ -24,23 +24,25 @@ const PatternRecallGameScreen = ({ game, onTap, onHint, onUndo, onPeek, onNextRo
   const isHintCell = (idx: number) => game.hintCell === idx;
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Pattern</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Pattern</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{diffLabels[game.difficulty]} · Round {game.round}</span>
         </div>
-        <div className="flex items-end gap-4">
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Score</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.score}</span>
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Score</label>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.score}</span>
+            </div>
+            <div>
+              <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Progress</label>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.playerPattern.length}/{game.pattern.length}</span>
+            </div>
           </div>
-          <div>
-            <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Progress</label>
-            <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{game.playerPattern.length}/{game.pattern.length}</span>
-          </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       <p className="text-xs text-muted-foreground mb-4 text-center">

@@ -22,15 +22,17 @@ const DifficultyMenu = ({ title, onSelectDifficulty, onBack, dark, onToggleDark,
   const diffs = customDifficulties || difficulties;
 
   return (
-    <div className="py-12">
-      <div className="mb-10 flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+    <div className="py-8 sm:py-12">
+      <div className="mb-8 sm:mb-10 flex justify-between items-start gap-2">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             <span className="text-primary">{title}</span>
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Select difficulty</p>
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
+        <div className="shrink-0">
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
+        </div>
       </div>
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Difficulty

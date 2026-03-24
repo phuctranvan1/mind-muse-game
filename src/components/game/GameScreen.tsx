@@ -28,27 +28,27 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onUndo, o
     : game.tiles;
 
   return (
-    <div className="py-8">
-      <div className="flex justify-between items-end mb-8">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Shift</h1>
+    <div className="py-6 sm:py-8">
+      <div className="flex justify-between items-start mb-6 sm:mb-8 gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Shift</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{difficultyLabel}</span>
         </div>
-        <div className="flex items-end gap-4">
-          <div className="flex gap-6">
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex gap-4">
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Time</label>
-              <span className="tabular-nums font-semibold text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
+              <span className="tabular-nums font-semibold text-base sm:text-lg text-foreground" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{time}</span>
             </div>
             <div>
               <label className="block text-[0.7rem] uppercase text-muted-foreground mb-0.5">Moves</label>
-              <span className={`tabular-nums font-semibold text-lg ${isLow ? 'text-danger' : 'text-foreground'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+              <span className={`tabular-nums font-semibold text-base sm:text-lg ${isLow ? 'text-danger' : 'text-foreground'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                 {game.moves}{game.moveLimit ? `/${game.moveLimit}` : ''}
               </span>
             </div>
           </div>
+          <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
-        <DarkModeToggle dark={dark} onToggle={onToggleDark} />
       </div>
 
       {movePct !== null && (
