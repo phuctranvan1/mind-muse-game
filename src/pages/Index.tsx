@@ -9,6 +9,8 @@ import { useColorSortGame } from "@/hooks/useColorSortGame";
 import { useSudokuGame } from "@/hooks/useSudokuGame";
 import { useNQueensGame } from "@/hooks/useNQueensGame";
 import { useKnightTourGame } from "@/hooks/useKnightTourGame";
+import { useMinesweeperGame } from "@/hooks/useMinesweeperGame";
+import { use2048Game } from "@/hooks/use2048Game";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -26,6 +28,8 @@ import ColorSortGameScreen from "@/components/game/ColorSortGameScreen";
 import SudokuGameScreen from "@/components/game/SudokuGameScreen";
 import NQueensGameScreen from "@/components/game/NQueensGameScreen";
 import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
+import MinesweeperGameScreen from "@/components/game/MinesweeperGameScreen";
+import Game2048Screen from "@/components/game/Game2048Screen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
@@ -121,6 +125,24 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 80 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "8×8 · 75 moves", color: "bg-tile-4", badge: "🔥 Insane" },
   ],
+  minesweeper: [
+    { key: "easy", label: "Easy", desc: "8×8 · 10 mines", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "10×10 · 20 mines", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "12×12 · 30 mines", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert", label: "Expert", desc: "14×14 · 45 mines", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "16×16 · 60 mines", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "18×18 · 80 mines", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "20×20 · 100 mines", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
+  "2048": [
+    { key: "easy", label: "Easy", desc: "4×4 · reach 2048", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4×4 · reach 4096", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "4×4 · reach 8192 · 500 moves", color: "bg-tile-1", badge: "Limited" },
+    { key: "expert", label: "Expert", desc: "5×5 · reach 2048", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "5×5 · reach 4096 · 600 moves", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "5×5 · reach 8192 · 700 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "6×6 · reach 2048 · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -134,6 +156,8 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   sudoku: "Sudoku",
   nqueens: "N-Queens",
   knighttour: "Knight's Tour",
+  minesweeper: "Minesweeper",
+  "2048": "2048",
 };
 
 const Index = () => {
@@ -153,6 +177,8 @@ const Index = () => {
   const sudoku = useSudokuGame();
   const nqueens = useNQueensGame();
   const knighttour = useKnightTourGame();
+  const minesweeper = useMinesweeperGame();
+  const game2048 = use2048Game();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
 
@@ -166,7 +192,9 @@ const Index = () => {
   const sudokuActive = isPlaying && selectedPuzzle === "sudoku" && sudoku.game && !sudoku.game.won;
   const nqueensActive = isPlaying && selectedPuzzle === "nqueens" && nqueens.game && !nqueens.game.won;
   const knighttourActive = isPlaying && selectedPuzzle === "knighttour" && knighttour.game && !knighttour.game.won;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive);
+  const minesweeperActive = isPlaying && selectedPuzzle === "minesweeper" && minesweeper.game && !minesweeper.game.won && !minesweeper.game.lost;
+  const game2048Active = isPlaying && selectedPuzzle === "2048" && game2048.game && !game2048.game.won && !game2048.game.lost;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -192,7 +220,9 @@ const Index = () => {
     if (selectedPuzzle === "sudoku" && sudoku.game?.won) checkWin(true, sudoku.game.mistakes);
     if (selectedPuzzle === "nqueens" && nqueens.game?.won) checkWin(true, 0);
     if (selectedPuzzle === "knighttour" && knighttour.game?.won) checkWin(true, knighttour.game.path.length);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game]);
+    if (selectedPuzzle === "minesweeper" && minesweeper.game?.won) checkWin(true, minesweeper.game.moves);
+    if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -219,6 +249,7 @@ const Index = () => {
     shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
+    minesweeper.goToMenu(); game2048.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -239,6 +270,8 @@ const Index = () => {
       case "sudoku": sudoku.startGame(difficulty, dailyRandom); break;
       case "nqueens": nqueens.startGame(difficulty); break;
       case "knighttour": knighttour.startGame(difficulty); break;
+      case "minesweeper": minesweeper.startGame(difficulty, dailyRandom); break;
+      case "2048": game2048.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -255,6 +288,8 @@ const Index = () => {
       case "sudoku": sudoku.startGame(difficulty); break;
       case "nqueens": nqueens.startGame(difficulty); break;
       case "knighttour": knighttour.startGame(difficulty); break;
+      case "minesweeper": minesweeper.startGame(difficulty); break;
+      case "2048": game2048.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -378,6 +413,25 @@ const Index = () => {
             game={knighttour.game} time={time} onSelectCell={knighttour.selectCell}
             onHint={knighttour.hint} onUndo={knighttour.undo} onPeek={knighttour.peek}
             onRestart={isDaily ? dailyRestart : knighttour.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "minesweeper":
+        return minesweeper.game && (
+          <MinesweeperGameScreen
+            game={minesweeper.game} time={time}
+            onReveal={minesweeper.revealCell} onFlag={minesweeper.toggleFlag}
+            onHint={minesweeper.hint} onUndo={minesweeper.undo} onPeek={minesweeper.peek}
+            onRestart={isDaily ? dailyRestart : minesweeper.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "2048":
+        return game2048.game && (
+          <Game2048Screen
+            game={game2048.game} time={time} onSlide={game2048.slide}
+            onHint={game2048.hint} onUndo={game2048.undo} onPeek={game2048.peek}
+            onRestart={isDaily ? dailyRestart : game2048.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
