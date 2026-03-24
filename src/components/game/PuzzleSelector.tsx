@@ -30,7 +30,7 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
   const totalRewards = rewards.hints + rewards.undos + rewards.peeks;
 
   return (
-    <div className="py-10">
+    <div className="py-8">
       <div className="mb-8 flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
@@ -51,39 +51,68 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Choose a Puzzle
       </h2>
-      <div className="flex flex-col gap-2.5">
-        {puzzles.map((p) => {
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        {puzzles.map((p, i) => {
           const done = isDailyDone(p.key);
           return (
-            <div key={p.key} className="flex gap-2">
-              <motion.button
-                onClick={() => onSelect(p.key)}
-                whileHover={{ scale: 1.02, x: 4 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex-1 text-left px-4 py-3.5 rounded-[var(--radius-inner)] bg-card border border-border shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:border-primary/30 transition-all duration-200 group flex items-center gap-3"
-              >
-                <span className={`w-9 h-9 rounded-lg ${p.color} text-white flex items-center justify-center text-lg shrink-0 shadow-sm`}>
-                  {p.icon}
-                </span>
-                <div>
-                  <span className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">{p.label}</span>
-                  <span className="block text-xs text-muted-foreground">{p.desc}</span>
-                </div>
-              </motion.button>
+            <motion.div
+              key={p.key}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04, duration: 0.25 }}
+              className="relative flex flex-col rounded-[var(--radius-inner)] bg-card border border-border shadow-[var(--shadow-sm)] overflow-hidden group"
+            >
+              {/* Daily badge */}
               <motion.button
                 onClick={() => onDailyChallenge(p.key)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`shrink-0 w-14 flex flex-col items-center justify-center rounded-[var(--radius-inner)] border text-xs font-semibold transition-all ${
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                title={done ? "Daily done" : "Daily challenge"}
+                className={`absolute top-2 right-2 z-10 w-7 h-7 flex flex-col items-center justify-center rounded-full border text-[0.6rem] font-bold transition-all ${
                   done
-                    ? "bg-accent/10 border-accent/30 text-accent"
+                    ? "bg-accent/15 border-accent/40 text-accent"
                     : "bg-primary/10 border-primary/30 text-primary hover:bg-primary/20"
                 }`}
               >
                 {done ? "✓" : "⚡"}
-                <span className="text-[0.55rem] mt-0.5">Daily</span>
               </motion.button>
-            </div>
+
+              {/* Card main area */}
+              <motion.button
+                onClick={() => onSelect(p.key)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex-1 flex flex-col items-center text-center px-3 pt-5 pb-4 gap-3 hover:bg-primary/5 transition-colors duration-200 focus:outline-none"
+              >
+                {/* Icon */}
+                <span
+                  className={`w-14 h-14 rounded-2xl ${p.color} text-white flex items-center justify-center text-3xl shadow-md group-hover:shadow-lg transition-shadow duration-200`}
+                >
+                  {p.icon}
+                </span>
+
+                {/* Text */}
+                <div className="space-y-0.5">
+                  <span className="block font-semibold text-sm text-foreground group-hover:text-primary transition-colors leading-tight">
+                    {p.label}
+                  </span>
+                  <span className="block text-[0.7rem] text-muted-foreground leading-snug">
+                    {p.desc}
+                  </span>
+                </div>
+              </motion.button>
+
+              {/* Daily label strip */}
+              <div
+                className={`text-[0.6rem] font-semibold text-center py-1 border-t transition-colors ${
+                  done
+                    ? "bg-accent/10 border-accent/20 text-accent"
+                    : "bg-muted/40 border-border text-muted-foreground"
+                }`}
+              >
+                {done ? "✓ Daily done" : "⚡ Daily"}
+              </div>
+            </motion.div>
           );
         })}
       </div>
