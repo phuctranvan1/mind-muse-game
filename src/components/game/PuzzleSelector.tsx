@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 import { Rewards } from "@/hooks/useDailyChallenge";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian";
 
 const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; color: string }[] = [
   { key: "shift", label: "Shift", desc: "Sliding tile puzzle", icon: "⬡", color: "bg-tile-1" },
