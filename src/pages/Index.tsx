@@ -217,6 +217,8 @@ const Index = () => {
   const knighttour = useKnightTourGame();
   const minesweeper = useMinesweeperGame();
   const game2048 = use2048Game();
+  const sieve = useSieveGame();
+  const babylonian = useBabylonianGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
 
