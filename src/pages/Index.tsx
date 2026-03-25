@@ -266,7 +266,7 @@ const Index = () => {
     if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
     if (selectedPuzzle === "sieve" && sieve.game?.won) checkWin(true, sieve.game.moves);
     if (selectedPuzzle === "babylonian" && babylonian.game?.won) checkWin(true, babylonian.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game]);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game]);
 
   // Keyboard support for shift
   useEffect(() => {
