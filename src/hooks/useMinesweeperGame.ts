@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
 interface Config { rows: number; cols: number; mines: number }
 
@@ -12,6 +12,7 @@ const CONFIGS: Record<Difficulty, Config> = {
   master:      { rows: 16, cols: 16, mines: 60 },
   grandmaster: { rows: 18, cols: 18, mines: 80 },
   genius:      { rows: 20, cols: 20, mines: 100 },
+  legend:      { rows: 24, cols: 24, mines: 130 },
 };
 
 export interface CellState {

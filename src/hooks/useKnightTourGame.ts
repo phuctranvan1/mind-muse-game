@@ -1,12 +1,12 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
 const BOARD_SIZES: Record<Difficulty, number> = {
-  easy: 5, medium: 5, hard: 6, expert: 6, master: 7, grandmaster: 8, genius: 8,
+  easy: 5, medium: 5, hard: 6, expert: 6, master: 7, grandmaster: 8, genius: 8, legend: 10,
 };
 const MOVE_LIMITS: Record<Difficulty, number | null> = {
-  easy: null, medium: null, hard: null, expert: 50, master: 60, grandmaster: 80, genius: 75,
+  easy: null, medium: null, hard: null, expert: 50, master: 60, grandmaster: 80, genius: 75, legend: 100,
 };
 
 const KNIGHT_MOVES = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];

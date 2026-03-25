@@ -9,6 +9,7 @@ const DISC_COLORS = [
   "hsl(262, 83%, 58%)", "hsl(330, 81%, 60%)", "hsl(16, 90%, 58%)",
   "hsl(43, 96%, 56%)", "hsl(173, 80%, 40%)", "hsl(210, 90%, 56%)",
   "hsl(280, 70%, 55%)", "hsl(0, 80%, 55%)", "hsl(120, 60%, 45%)",
+  "hsl(200, 85%, 50%)",
 ];
 
 interface Props {
@@ -129,7 +130,7 @@ const HanoiGameScreen = ({ game, time, onSelectPeg, onHint, onUndo, onPeek, onRe
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
 
-      {game.won && <WinModal moves={game.moves} time={time} onClose={onMenu} />}
+      {game.won && <WinModal moves={game.moves} time={time} difficulty={game.difficulty} onClose={onMenu} />}
     </div>
   );
 };

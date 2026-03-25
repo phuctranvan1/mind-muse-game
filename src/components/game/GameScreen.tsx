@@ -3,6 +3,7 @@ import PuzzleGrid from "./PuzzleGrid";
 import DarkModeToggle from "./DarkModeToggle";
 import { Progress } from "@/components/ui/progress";
 import PowerUpButtons from "./PowerUpButtons";
+import WinModal from "./WinModal";
 
 interface GameScreenProps {
   game: GameState;
@@ -78,6 +79,8 @@ const GameScreen = ({ game, time, difficultyLabel, onMoveTile, onHint, onUndo, o
         <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Restart</button>
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
+
+      {game.won && <WinModal moves={game.moves} time={time} difficulty={difficultyLabel} onClose={onMenu} />}
     </div>
   );
 };

@@ -19,7 +19,7 @@ interface Props {
 }
 
 const MathChainGameScreen = ({ game, time, onAnswer, onHint, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend" };
   const problem = game.problems[game.currentIndex];
   const progress = ((game.currentIndex) / game.problems.length) * 100;
 

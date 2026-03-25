@@ -1,6 +1,7 @@
 import { KnightTourState } from "@/hooks/useKnightTourGame";
 import DarkModeToggle from "./DarkModeToggle";
 import PowerUpButtons from "./PowerUpButtons";
+import WinModal from "./WinModal";
 
 interface Props {
   game: KnightTourState;
@@ -84,9 +85,7 @@ const KnightTourGameScreen = ({ game, time, onSelectCell, onHint, onUndo, onPeek
       </div>
 
       {game.won && (
-        <div className="text-center mb-4">
-          <p className="text-primary font-bold text-lg">🎉 Complete Tour!</p>
-        </div>
+        <WinModal moves={game.path.length} time={time} difficulty={game.difficulty} onClose={onMenu} />
       )}
       {game.stuck && !game.won && (
         <div className="text-center mb-4">

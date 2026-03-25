@@ -62,7 +62,7 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04, duration: 0.25 }}
-              className="relative flex flex-col rounded-[var(--radius-inner)] bg-card border border-border shadow-[var(--shadow-sm)] overflow-hidden group"
+              className="relative flex flex-col rounded-[var(--radius-inner)] bg-card border border-border shadow-[var(--shadow-sm)] overflow-hidden group hover:shadow-[var(--shadow-md)] hover:border-primary/20 transition-all duration-200"
             >
               {/* Daily badge */}
               <motion.button
@@ -118,6 +118,23 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
           );
         })}
       </div>
+
+      {/* Super Brain Zone CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55, duration: 0.3 }}
+        className="mt-5 rounded-[var(--radius-inner)] border border-orange-500/20 bg-gradient-to-r from-orange-500/5 via-red-500/5 to-orange-500/5 px-4 py-3 flex items-center gap-3"
+      >
+        <span className="text-xl shrink-0">🔥</span>
+        <div className="min-w-0">
+          <p className="text-xs font-bold text-orange-500/90 uppercase tracking-wider">Super Brain Zone</p>
+          <p className="text-[0.7rem] text-muted-foreground mt-0.5">
+            Select any puzzle and choose <span className="font-semibold text-orange-500/80">Legend</span> difficulty for the ultimate challenge
+          </p>
+        </div>
+        <span className="text-xl shrink-0">💀</span>
+      </motion.div>
     </div>
   );
 };

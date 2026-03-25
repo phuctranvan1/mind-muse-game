@@ -9,7 +9,8 @@ const COLOR_MAP: Record<string, string> = {
   yellow: "hsl(48, 95%, 55%)", purple: "hsl(262, 83%, 58%)", orange: "hsl(25, 95%, 55%)",
   pink: "hsl(330, 81%, 60%)", teal: "hsl(173, 80%, 40%)", amber: "hsl(38, 92%, 50%)",
   indigo: "hsl(240, 65%, 52%)", lime: "hsl(82, 70%, 45%)", cyan: "hsl(190, 85%, 45%)",
-  rose: "hsl(350, 75%, 55%)", violet: "hsl(280, 70%, 55%)",
+  rose: "hsl(350, 75%, 55%)", violet: "hsl(280, 70%, 55%)", sky: "hsl(200, 85%, 50%)",
+  fuchsia: "hsl(300, 75%, 55%)",
 };
 
 interface Props {
@@ -111,7 +112,7 @@ const ColorSortGameScreen = ({ game, time, onSelectTube, onHint, onUndo, onPeek,
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
 
-      {game.won && <WinModal moves={game.moves} time={time} onClose={onMenu} />}
+      {game.won && <WinModal moves={game.moves} time={time} difficulty={game.difficulty} onClose={onMenu} />}
     </div>
   );
 };

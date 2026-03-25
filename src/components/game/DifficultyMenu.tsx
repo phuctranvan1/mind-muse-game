@@ -7,7 +7,12 @@ const difficulties: { key: Difficulty; label: string; desc: string; color: strin
   { key: "hard", label: "Hard", desc: "5×5 · 200 moves", color: "bg-tile-1", badge: "Limited" },
   { key: "expert", label: "Expert", desc: "6×6 · 350 moves", color: "bg-tile-7", badge: "IQ Test" },
   { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
+  { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 500 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+  { key: "genius", label: "Genius", desc: "9×9 · 300 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+  { key: "legend", label: "Legend", desc: "10×10 · 150 moves", color: "bg-tile-8", badge: "💀 Legend" },
 ];
+
+const LEGEND_KEYS: Difficulty[] = ["grandmaster", "genius", "legend"];
 
 interface DifficultyMenuProps {
   title: string;
@@ -20,6 +25,8 @@ interface DifficultyMenuProps {
 
 const DifficultyMenu = ({ title, onSelectDifficulty, onBack, dark, onToggleDark, customDifficulties }: DifficultyMenuProps) => {
   const diffs = customDifficulties || difficulties;
+  const normalDiffs = diffs.filter(d => !LEGEND_KEYS.includes(d.key));
+  const hardDiffs = diffs.filter(d => LEGEND_KEYS.includes(d.key));
 
   return (
     <div className="py-8 sm:py-12">
@@ -34,11 +41,12 @@ const DifficultyMenu = ({ title, onSelectDifficulty, onBack, dark, onToggleDark,
           <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
       </div>
+
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Difficulty
       </h2>
-      <div className="flex flex-col gap-3">
-        {diffs.map((d) => (
+      <div className="flex flex-col gap-2.5">
+        {normalDiffs.map((d) => (
           <button
             key={d.key}
             onClick={() => onSelectDifficulty(d.key)}
@@ -57,6 +65,49 @@ const DifficultyMenu = ({ title, onSelectDifficulty, onBack, dark, onToggleDark,
           </button>
         ))}
       </div>
+
+      {hardDiffs.length > 0 && (
+        <>
+          <div className="mt-5 mb-3 flex items-center gap-2">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-orange-500/40 to-red-500/40" />
+            <span className="text-[0.65rem] font-bold uppercase tracking-widest text-orange-500/80 flex items-center gap-1">
+              🔥 Super Brain Zone
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent via-orange-500/40 to-red-500/40" />
+          </div>
+          <div className="flex flex-col gap-2.5">
+            {hardDiffs.map((d) => (
+              <button
+                key={d.key}
+                onClick={() => onSelectDifficulty(d.key)}
+                className={`w-full text-left px-5 py-4 rounded-[var(--radius-inner)] border transition-all duration-200 group flex items-center gap-4 ${
+                  d.key === "legend"
+                    ? "bg-gradient-to-r from-tile-8/10 to-tile-8/5 border-tile-8/30 shadow-[0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] hover:border-tile-8/60"
+                    : "bg-card border-border shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:border-primary/30"
+                }`}
+              >
+                <span className={`w-3 h-3 rounded-full ${d.color} shrink-0 shadow-sm`} />
+                <div className="flex-1">
+                  <span className={`font-semibold transition-colors ${d.key === "legend" ? "text-tile-8 group-hover:brightness-110" : "text-foreground group-hover:text-primary"}`}>
+                    {d.label}
+                  </span>
+                  <span className="ml-2 text-sm text-muted-foreground">{d.desc}</span>
+                </div>
+                {d.badge && (
+                  <span className={`text-[0.65rem] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                    d.key === "legend"
+                      ? "bg-tile-8/15 text-tile-8 border-tile-8/30"
+                      : "bg-primary/10 text-primary border-primary/20"
+                  }`}>
+                    {d.badge}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
       <button onClick={onBack} className="mt-6 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">
         ← Back to puzzles
       </button>

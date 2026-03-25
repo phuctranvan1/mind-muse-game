@@ -1,9 +1,9 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
 const BOARD_SIZES: Record<Difficulty, number> = {
-  easy: 4, medium: 5, hard: 6, expert: 7, master: 8, grandmaster: 9, genius: 10,
+  easy: 4, medium: 5, hard: 6, expert: 7, master: 8, grandmaster: 9, genius: 10, legend: 12,
 };
 
 function getConflicts(queens: (number | null)[]): Set<number> {
