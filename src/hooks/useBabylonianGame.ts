@@ -21,15 +21,15 @@ export interface BabylonianState {
 
 function getConfig(difficulty: Difficulty): { count: number; maxVal: number; tolerance: number } {
   switch (difficulty) {
-    case "easy": return { count: 3, maxVal: 25, tolerance: 0.5 };
-    case "medium": return { count: 4, maxVal: 100, tolerance: 0.2 };
-    case "hard": return { count: 5, maxVal: 500, tolerance: 0.1 };
-    case "expert": return { count: 6, maxVal: 1000, tolerance: 0.05 };
-    case "master": return { count: 7, maxVal: 5000, tolerance: 0.01 };
-    case "grandmaster": return { count: 8, maxVal: 10000, tolerance: 0.005 };
-    case "genius": return { count: 9, maxVal: 50000, tolerance: 0.001 };
-    case "legend": return { count: 10, maxVal: 100000, tolerance: 0.0005 };
-    default: return { count: 3, maxVal: 25, tolerance: 0.5 };
+    case "easy": return { count: 3, maxVal: 50, tolerance: 1.0 };
+    case "medium": return { count: 5, maxVal: 200, tolerance: 0.5 };
+    case "hard": return { count: 7, maxVal: 1000, tolerance: 0.1 };
+    case "expert": return { count: 9, maxVal: 5000, tolerance: 0.05 };
+    case "master": return { count: 12, maxVal: 25000, tolerance: 0.01 };
+    case "grandmaster": return { count: 15, maxVal: 100000, tolerance: 0.001 };
+    case "genius": return { count: 18, maxVal: 500000, tolerance: 0.0001 };
+    case "legend": return { count: 25, maxVal: 1000000, tolerance: 0.00001 };
+    default: return { count: 3, maxVal: 50, tolerance: 1.0 };
   }
 }
 

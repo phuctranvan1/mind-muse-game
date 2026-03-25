@@ -18,7 +18,7 @@ interface Props {
 
 const SieveGameScreen = ({ game, time, onToggleMark, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
   // Determine grid columns based on limit
-  const cols = game.limit <= 30 ? 5 : game.limit <= 50 ? 7 : game.limit <= 100 ? 10 : game.limit <= 200 ? 10 : 15;
+  const cols = game.limit <= 30 ? 5 : game.limit <= 50 ? 7 : game.limit <= 100 ? 10 : game.limit <= 200 ? 14 : game.limit <= 500 ? 20 : 25;
 
   return (
     <div className="py-6 sm:py-8">
