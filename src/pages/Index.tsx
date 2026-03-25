@@ -194,6 +194,8 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   knighttour: "Knight's Tour",
   minesweeper: "Minesweeper",
   "2048": "2048",
+  sieve: "Sieve of Eratosthenes",
+  babylonian: "Babylonian Method",
 };
 
 const Index = () => {
