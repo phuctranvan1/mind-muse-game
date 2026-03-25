@@ -294,6 +294,7 @@ const Index = () => {
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
+    sieve.goToMenu(); babylonian.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
