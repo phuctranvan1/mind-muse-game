@@ -11,6 +11,8 @@ import { useNQueensGame } from "@/hooks/useNQueensGame";
 import { useKnightTourGame } from "@/hooks/useKnightTourGame";
 import { useMinesweeperGame } from "@/hooks/useMinesweeperGame";
 import { use2048Game } from "@/hooks/use2048Game";
+import { useSieveGame } from "@/hooks/useSieveGame";
+import { useBabylonianGame } from "@/hooks/useBabylonianGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
