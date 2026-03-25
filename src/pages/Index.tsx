@@ -484,6 +484,25 @@ const Index = () => {
             dark={dark} onToggleDark={toggleDark}
           />
         );
+      case "sieve":
+        return sieve.game && (
+          <SieveGameScreen
+            game={sieve.game} time={time} onToggleMark={sieve.toggleMark}
+            onHint={sieve.showHint} onUndo={sieve.undo} onPeek={sieve.peek}
+            onRestart={isDaily ? dailyRestart : sieve.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "babylonian":
+        return babylonian.game && (
+          <BabylonianGameScreen
+            game={babylonian.game} time={time}
+            onSetGuess={babylonian.setCurrentGuess} onSubmit={babylonian.submitGuess}
+            onHint={babylonian.showHint} onUndo={babylonian.undo} onPeek={babylonian.peek}
+            onRestart={isDaily ? dailyRestart : babylonian.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
     }
   };
 
