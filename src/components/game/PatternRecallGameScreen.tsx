@@ -17,7 +17,7 @@ interface Props {
 }
 
 const PatternRecallGameScreen = ({ game, onTap, onHint, onUndo, onPeek, onNextRound, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend" };
   const total = game.gridSize * game.gridSize;
   const isShowingCell = (idx: number) => game.phase === "showing" && game.pattern[game.currentShowIndex] === idx;
   const isPlayerHit = (idx: number) => game.phase === "input" && game.playerPattern.includes(idx);

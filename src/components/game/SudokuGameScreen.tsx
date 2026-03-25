@@ -1,6 +1,7 @@
 import { SudokuState } from "@/hooks/useSudokuGame";
 import DarkModeToggle from "./DarkModeToggle";
 import PowerUpButtons from "./PowerUpButtons";
+import WinModal from "./WinModal";
 
 interface Props {
   game: SudokuState;
@@ -97,12 +98,6 @@ const SudokuGameScreen = ({ game, time, onSelectCell, onEnterNumber, onClear, on
         </button>
       </div>
 
-      {game.won && (
-        <div className="text-center mb-4">
-          <p className="text-primary font-bold text-lg">🎉 Puzzle Solved!</p>
-        </div>
-      )}
-
       <div className="mb-2">
         <PowerUpButtons onHint={onHint} onUndo={onUndo} onPeek={onPeek} />
       </div>
@@ -111,6 +106,8 @@ const SudokuGameScreen = ({ game, time, onSelectCell, onEnterNumber, onClear, on
         <button onClick={onRestart} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Restart</button>
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
+
+      {game.won && <WinModal moves={game.mistakes} time={time} difficulty={game.difficulty} onClose={onMenu} />}
     </div>
   );
 };

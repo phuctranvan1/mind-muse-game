@@ -1,9 +1,11 @@
 import { NQueensState } from "@/hooks/useNQueensGame";
 import DarkModeToggle from "./DarkModeToggle";
 import PowerUpButtons from "./PowerUpButtons";
+import WinModal from "./WinModal";
 
 interface Props {
   game: NQueensState;
+  time: string;
   onToggleQueen: (row: number, col: number) => void;
   onHint: () => void;
   onUndo: () => void;
@@ -14,7 +16,7 @@ interface Props {
   onToggleDark: () => void;
 }
 
-const NQueensGameScreen = ({ game, onToggleQueen, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
+const NQueensGameScreen = ({ game, time, onToggleQueen, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
   const placed = game.queens.filter(q => q !== null).length;
   const cellSize = game.boardSize <= 6 ? "w-12 h-12" : game.boardSize <= 8 ? "w-10 h-10" : "w-8 h-8";
   const fontSize = game.boardSize <= 6 ? "text-xl" : game.boardSize <= 8 ? "text-lg" : "text-sm";
@@ -77,9 +79,7 @@ const NQueensGameScreen = ({ game, onToggleQueen, onHint, onUndo, onPeek, onRest
       </div>
 
       {game.won && (
-        <div className="text-center mb-4">
-          <p className="text-primary font-bold text-lg">🎉 All Queens Placed!</p>
-        </div>
+        <WinModal moves={placed} time={time ?? "0:00"} difficulty={game.difficulty} onClose={onMenu} />
       )}
 
       <p className="text-center text-xs text-muted-foreground mb-4">

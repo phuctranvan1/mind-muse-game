@@ -23,7 +23,7 @@ interface Props {
 }
 
 const MemoryGameScreen = ({ game, time, onFlip, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend" };
 
   return (
     <div className="py-6 sm:py-8">
@@ -88,7 +88,7 @@ const MemoryGameScreen = ({ game, time, onFlip, onHint, onUndo, onPeek, onRestar
         <button onClick={onMenu} className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors">Menu</button>
       </div>
 
-      {game.won && <WinModal moves={game.moves} time={time} onClose={onMenu} />}
+      {game.won && <WinModal moves={game.moves} time={time} difficulty={diffLabels[game.difficulty]} onClose={onMenu} />}
     </div>
   );
 };

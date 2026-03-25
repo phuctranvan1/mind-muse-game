@@ -43,6 +43,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 500 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 · 300 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10×10 · 150 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   memory: [
     { key: "easy", label: "Easy", desc: "4 pairs", color: "bg-tile-5" },
@@ -52,6 +53,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "24 pairs", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "30 pairs", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "36 pairs", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "42 pairs · 84 cards", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   lightsout: [
     { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
@@ -61,6 +63,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 Grid", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 Grid", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10×10 · Pure Logic", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   pattern: [
     { key: "easy", label: "Easy", desc: "3×3 · 4 steps", color: "bg-tile-5" },
@@ -70,6 +73,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "5×5 · 14 steps", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "6×6 · 18 steps", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "6×6 · 24 ultra-fast", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "7×7 · 30 · lightning", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   mathchain: [
     { key: "easy", label: "Easy", desc: "5 questions · + −", color: "bg-tile-5" },
@@ -79,6 +83,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "20 questions · big nums", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "25 questions · huge", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "30 questions · extreme", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "40 questions · 3s · max", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   hanoi: [
     { key: "easy", label: "Easy", desc: "3 discs", color: "bg-tile-5" },
@@ -88,6 +93,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "7 discs · 180 moves", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "8 discs · 350 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9 discs · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10 discs · 1200 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   colorsort: [
     { key: "easy", label: "Easy", desc: "3 colors", color: "bg-tile-5" },
@@ -97,6 +103,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "10 colors", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "12 colors · tall", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "14 colors · tall", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "16 colors · chaos", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   sudoku: [
     { key: "easy", label: "Easy", desc: "4×4 · 4 blanks", color: "bg-tile-5" },
@@ -106,6 +113,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "9×9 · 52 blanks", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "9×9 · 56 blanks", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 · 60 blanks", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "9×9 · 64 blanks", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   nqueens: [
     { key: "easy", label: "Easy", desc: "4×4 board", color: "bg-tile-5" },
@@ -115,6 +123,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "8×8 board", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "9×9 board", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "10×10 board", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12×12 board", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   knighttour: [
     { key: "easy", label: "Easy", desc: "5×5 board", color: "bg-tile-5" },
@@ -124,6 +133,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "7×7 · 60 moves", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 80 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "8×8 · 75 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10×10 · 100 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   minesweeper: [
     { key: "easy", label: "Easy", desc: "8×8 · 10 mines", color: "bg-tile-5" },
@@ -133,6 +143,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "16×16 · 60 mines", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "18×18 · 80 mines", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "20×20 · 100 mines", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "24×24 · 130 mines", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   "2048": [
     { key: "easy", label: "Easy", desc: "4×4 · reach 2048", color: "bg-tile-5" },
@@ -142,6 +153,7 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "master", label: "Master", desc: "5×5 · reach 4096 · 600 moves", color: "bg-tile-2", badge: "Genius" },
     { key: "grandmaster", label: "Grandmaster", desc: "5×5 · reach 8192 · 700 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "6×6 · reach 2048 · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "6×6 · reach 4096 · 800 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
 };
 
@@ -401,7 +413,7 @@ const Index = () => {
       case "nqueens":
         return nqueens.game && (
           <NQueensGameScreen
-            game={nqueens.game} onToggleQueen={nqueens.toggleQueen}
+            game={nqueens.game} time={time} onToggleQueen={nqueens.toggleQueen}
             onHint={nqueens.hint} onUndo={nqueens.undo} onPeek={nqueens.peek}
             onRestart={isDaily ? dailyRestart : nqueens.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}

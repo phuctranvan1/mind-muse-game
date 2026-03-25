@@ -1,8 +1,8 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9 };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10 };
 
 function generateBoard(size: number, rand: () => number = Math.random): boolean[][] {
   const board = Array.from({ length: size }, () => Array(size).fill(false));

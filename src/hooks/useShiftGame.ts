@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9 };
-const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius" };
-const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null, grandmaster: 500, genius: 300 };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10 };
+const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend" };
+const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null, grandmaster: 500, genius: 300, legend: 150 };
 
 function isSolvable(arr: (number | null)[], size: number): boolean {
   const flat = arr.filter((n): n is number => n !== null);

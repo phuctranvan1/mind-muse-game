@@ -1,12 +1,12 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
 const CONFIGS: Record<Difficulty, { discs: number; moveLimit: number | null }> = {
   easy: { discs: 3, moveLimit: null }, medium: { discs: 4, moveLimit: null },
   hard: { discs: 5, moveLimit: 40 }, expert: { discs: 6, moveLimit: 100 },
   master: { discs: 7, moveLimit: 180 }, grandmaster: { discs: 8, moveLimit: 350 },
-  genius: { discs: 9, moveLimit: 600 },
+  genius: { discs: 9, moveLimit: 600 }, legend: { discs: 10, moveLimit: 1200 },
 };
 
 export interface HanoiState {

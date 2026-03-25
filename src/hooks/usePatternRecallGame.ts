@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
 
 const CONFIGS: Record<Difficulty, { gridSize: number; patternLength: number; showTime: number }> = {
   easy: { gridSize: 3, patternLength: 4, showTime: 2000 },
@@ -10,6 +10,7 @@ const CONFIGS: Record<Difficulty, { gridSize: number; patternLength: number; sho
   master: { gridSize: 5, patternLength: 14, showTime: 1000 },
   grandmaster: { gridSize: 6, patternLength: 18, showTime: 800 },
   genius: { gridSize: 6, patternLength: 24, showTime: 600 },
+  legend: { gridSize: 7, patternLength: 30, showTime: 350 },
 };
 
 export interface PatternRecallState {
