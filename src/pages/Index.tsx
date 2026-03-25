@@ -317,6 +317,8 @@ const Index = () => {
       case "knighttour": knighttour.startGame(difficulty); break;
       case "minesweeper": minesweeper.startGame(difficulty, dailyRandom); break;
       case "2048": game2048.startGame(difficulty, dailyRandom); break;
+      case "sieve": sieve.startGame(difficulty, dailyRandom); break;
+      case "babylonian": babylonian.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
