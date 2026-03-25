@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const BOARD_SIZES: Record<Difficulty, number> = {
   easy: 4, medium: 5, hard: 6, expert: 7, master: 8, grandmaster: 9, genius: 10, legend: 12,
