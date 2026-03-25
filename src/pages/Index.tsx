@@ -264,6 +264,8 @@ const Index = () => {
     if (selectedPuzzle === "knighttour" && knighttour.game?.won) checkWin(true, knighttour.game.path.length);
     if (selectedPuzzle === "minesweeper" && minesweeper.game?.won) checkWin(true, minesweeper.game.moves);
     if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
+    if (selectedPuzzle === "sieve" && sieve.game?.won) checkWin(true, sieve.game.moves);
+    if (selectedPuzzle === "babylonian" && babylonian.game?.won) checkWin(true, babylonian.game.moves);
   }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game]);
 
   // Keyboard support for shift
