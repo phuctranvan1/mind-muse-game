@@ -11,6 +11,8 @@ import { useNQueensGame } from "@/hooks/useNQueensGame";
 import { useKnightTourGame } from "@/hooks/useKnightTourGame";
 import { useMinesweeperGame } from "@/hooks/useMinesweeperGame";
 import { use2048Game } from "@/hooks/use2048Game";
+import { useSieveGame } from "@/hooks/useSieveGame";
+import { useBabylonianGame } from "@/hooks/useBabylonianGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -30,6 +32,8 @@ import NQueensGameScreen from "@/components/game/NQueensGameScreen";
 import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
 import MinesweeperGameScreen from "@/components/game/MinesweeperGameScreen";
 import Game2048Screen from "@/components/game/Game2048Screen";
+import SieveGameScreen from "@/components/game/SieveGameScreen";
+import BabylonianGameScreen from "@/components/game/BabylonianGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
@@ -155,6 +159,26 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "genius", label: "Genius", desc: "6×6 · reach 2048 · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "6×6 · reach 4096 · 800 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
+  sieve: [
+    { key: "easy", label: "Easy", desc: "Numbers up to 20", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "Numbers up to 30", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "Numbers up to 50", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert", label: "Expert", desc: "Numbers up to 75", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "Numbers up to 100", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "Numbers up to 150", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "Numbers up to 200", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "Numbers up to 300", color: "bg-tile-8", badge: "💀 Legend" },
+  ],
+  babylonian: [
+    { key: "easy", label: "Easy", desc: "3 rounds · ±0.5", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4 rounds · ±0.2", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "5 rounds · ±0.1", color: "bg-tile-1", badge: "Precise" },
+    { key: "expert", label: "Expert", desc: "6 rounds · ±0.05", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7 rounds · ±0.01", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8 rounds · ±0.005", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9 rounds · ±0.001", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10 rounds · ±0.0005", color: "bg-tile-8", badge: "💀 Legend" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -170,6 +194,8 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   knighttour: "Knight's Tour",
   minesweeper: "Minesweeper",
   "2048": "2048",
+  sieve: "Sieve of Eratosthenes",
+  babylonian: "Babylonian Method",
 };
 
 const Index = () => {
@@ -191,6 +217,8 @@ const Index = () => {
   const knighttour = useKnightTourGame();
   const minesweeper = useMinesweeperGame();
   const game2048 = use2048Game();
+  const sieve = useSieveGame();
+  const babylonian = useBabylonianGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
 
@@ -206,7 +234,9 @@ const Index = () => {
   const knighttourActive = isPlaying && selectedPuzzle === "knighttour" && knighttour.game && !knighttour.game.won;
   const minesweeperActive = isPlaying && selectedPuzzle === "minesweeper" && minesweeper.game && !minesweeper.game.won && !minesweeper.game.lost;
   const game2048Active = isPlaying && selectedPuzzle === "2048" && game2048.game && !game2048.game.won && !game2048.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active);
+  const sieveActive = isPlaying && selectedPuzzle === "sieve" && sieve.game && !sieve.game.won;
+  const babylonianActive = isPlaying && selectedPuzzle === "babylonian" && babylonian.game && !babylonian.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -234,7 +264,9 @@ const Index = () => {
     if (selectedPuzzle === "knighttour" && knighttour.game?.won) checkWin(true, knighttour.game.path.length);
     if (selectedPuzzle === "minesweeper" && minesweeper.game?.won) checkWin(true, minesweeper.game.moves);
     if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game]);
+    if (selectedPuzzle === "sieve" && sieve.game?.won) checkWin(true, sieve.game.moves);
+    if (selectedPuzzle === "babylonian" && babylonian.game?.won) checkWin(true, babylonian.game.moves);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -262,6 +294,7 @@ const Index = () => {
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
+    sieve.goToMenu(); babylonian.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -284,6 +317,8 @@ const Index = () => {
       case "knighttour": knighttour.startGame(difficulty); break;
       case "minesweeper": minesweeper.startGame(difficulty, dailyRandom); break;
       case "2048": game2048.startGame(difficulty, dailyRandom); break;
+      case "sieve": sieve.startGame(difficulty, dailyRandom); break;
+      case "babylonian": babylonian.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -302,6 +337,8 @@ const Index = () => {
       case "knighttour": knighttour.startGame(difficulty); break;
       case "minesweeper": minesweeper.startGame(difficulty); break;
       case "2048": game2048.startGame(difficulty); break;
+      case "sieve": sieve.startGame(difficulty); break;
+      case "babylonian": babylonian.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -444,6 +481,25 @@ const Index = () => {
             game={game2048.game} time={time} onSlide={game2048.slide}
             onHint={game2048.hint} onUndo={game2048.undo} onPeek={game2048.peek}
             onRestart={isDaily ? dailyRestart : game2048.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "sieve":
+        return sieve.game && (
+          <SieveGameScreen
+            game={sieve.game} time={time} onToggleMark={sieve.toggleMark}
+            onHint={sieve.showHint} onUndo={sieve.undo} onPeek={sieve.peek}
+            onRestart={isDaily ? dailyRestart : sieve.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "babylonian":
+        return babylonian.game && (
+          <BabylonianGameScreen
+            game={babylonian.game} time={time}
+            onSetGuess={babylonian.setCurrentGuess} onSubmit={babylonian.submitGuess}
+            onHint={babylonian.showHint} onUndo={babylonian.undo} onPeek={babylonian.peek}
+            onRestart={isDaily ? dailyRestart : babylonian.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );

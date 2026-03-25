@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 import { Rewards } from "@/hooks/useDailyChallenge";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian";
 
 const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; color: string }[] = [
   { key: "shift", label: "Shift", desc: "Sliding tile puzzle", icon: "⬡", color: "bg-tile-1" },
@@ -17,6 +17,8 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "knighttour", label: "Knight's Tour", desc: "Visit every square", icon: "♞", color: "bg-tile-3" },
   { key: "minesweeper", label: "Minesweeper", desc: "Avoid hidden mines", icon: "💣", color: "bg-tile-2" },
   { key: "2048", label: "2048", desc: "Merge tiles to win", icon: "🔀", color: "bg-tile-4" },
+  { key: "sieve", label: "Sieve", desc: "Find all prime numbers", icon: "🔍", color: "bg-tile-5" },
+  { key: "babylonian", label: "Babylonian", desc: "Approximate square roots", icon: "√", color: "bg-tile-6" },
 ];
 
 interface Props {
