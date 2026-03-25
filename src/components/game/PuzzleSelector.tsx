@@ -17,6 +17,8 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "knighttour", label: "Knight's Tour", desc: "Visit every square", icon: "♞", color: "bg-tile-3" },
   { key: "minesweeper", label: "Minesweeper", desc: "Avoid hidden mines", icon: "💣", color: "bg-tile-2" },
   { key: "2048", label: "2048", desc: "Merge tiles to win", icon: "🔀", color: "bg-tile-4" },
+  { key: "sieve", label: "Sieve", desc: "Find all prime numbers", icon: "🔍", color: "bg-tile-5" },
+  { key: "babylonian", label: "Babylonian", desc: "Approximate square roots", icon: "√", color: "bg-tile-6" },
 ];
 
 interface Props {

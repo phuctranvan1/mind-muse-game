@@ -32,6 +32,8 @@ import NQueensGameScreen from "@/components/game/NQueensGameScreen";
 import KnightTourGameScreen from "@/components/game/KnightTourGameScreen";
 import MinesweeperGameScreen from "@/components/game/MinesweeperGameScreen";
 import Game2048Screen from "@/components/game/Game2048Screen";
+import SieveGameScreen from "@/components/game/SieveGameScreen";
+import BabylonianGameScreen from "@/components/game/BabylonianGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
