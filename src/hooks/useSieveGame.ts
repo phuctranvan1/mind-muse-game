@@ -28,15 +28,15 @@ function getPrimes(limit: number): boolean[] {
 
 function getConfig(difficulty: Difficulty): { limit: number } {
   switch (difficulty) {
-    case "easy": return { limit: 20 };
-    case "medium": return { limit: 30 };
-    case "hard": return { limit: 50 };
-    case "expert": return { limit: 75 };
-    case "master": return { limit: 100 };
-    case "grandmaster": return { limit: 150 };
-    case "genius": return { limit: 200 };
-    case "legend": return { limit: 300 };
-    default: return { limit: 20 };
+    case "easy": return { limit: 30 };
+    case "medium": return { limit: 50 };
+    case "hard": return { limit: 100 };
+    case "expert": return { limit: 150 };
+    case "master": return { limit: 200 };
+    case "grandmaster": return { limit: 300 };
+    case "genius": return { limit: 500 };
+    case "legend": return { limit: 1000 };
+    default: return { limit: 30 };
   }
 }
 
