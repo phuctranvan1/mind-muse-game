@@ -239,6 +239,41 @@ function generateRules(difficulty: Difficulty, rand: () => number): Rule[] {
         rules.push({ type: "compound_and", params: {}, subRules: subs, description: subs.map(s => s.description).join(" AND ") });
         break;
       }
+      case "mythic": {
+        // 5-6 compound conditions with higher chance of NOT
+        const subs = Array.from({ length: pick([5, 6]) }, () => {
+          const base = pick(simpleRules)();
+          return rand() > 0.3 ? base : { type: "compound_not" as RuleType, params: {}, subRules: [base], description: `NOT ${base.description}` };
+        });
+        rules.push({ type: "compound_and", params: {}, subRules: subs, description: subs.map(s => s.description).join(" AND ") });
+        break;
+      }
+      case "immortal": {
+        // 6-7 compound conditions, majority are negated
+        const subs = Array.from({ length: pick([6, 7]) }, () => {
+          const base = pick(simpleRules)();
+          return rand() > 0.2 ? base : { type: "compound_not" as RuleType, params: {}, subRules: [base], description: `NOT ${base.description}` };
+        });
+        const outerNot = rand() > 0.5;
+        const inner = { type: "compound_and" as RuleType, params: {}, subRules: subs, description: subs.map(s => s.description).join(" AND ") };
+        rules.push(outerNot ? { type: "compound_not" as RuleType, params: {}, subRules: [inner], description: `NOT (${inner.description})` } : inner);
+        break;
+      }
+      case "divine": {
+        // 7-8 conditions, nested compound logic
+        const inner1Subs = Array.from({ length: pick([3, 4]) }, () => {
+          const base = pick(simpleRules)();
+          return rand() > 0.3 ? base : { type: "compound_not" as RuleType, params: {}, subRules: [base], description: `NOT ${base.description}` };
+        });
+        const inner2Subs = Array.from({ length: pick([3, 4]) }, () => {
+          const base = pick(simpleRules)();
+          return rand() > 0.3 ? base : { type: "compound_not" as RuleType, params: {}, subRules: [base], description: `NOT ${base.description}` };
+        });
+        const inner1 = { type: "compound_and" as RuleType, params: {}, subRules: inner1Subs, description: inner1Subs.map(s => s.description).join(" AND ") };
+        const inner2 = { type: "compound_and" as RuleType, params: {}, subRules: inner2Subs, description: inner2Subs.map(s => s.description).join(" AND ") };
+        rules.push({ type: "compound_or" as RuleType, params: {}, subRules: [inner1, { type: "compound_not" as RuleType, params: {}, subRules: [inner2], description: `NOT (${inner2.description})` }], description: `(${inner1.description}) OR NOT (${inner2.description})` });
+        break;
+      }
       default:
         rules.push(pick(simpleRules)());
     }
@@ -263,6 +298,9 @@ function getConfig(difficulty: Difficulty): Config {
     case "grandmaster": return { limit: 200, rounds: 8, maxMistakes: 2 };
     case "genius": return { limit: 300, rounds: 10, maxMistakes: 1 };
     case "legend": return { limit: 500, rounds: 12, maxMistakes: 1 };
+    case "mythic": return { limit: 750, rounds: 15, maxMistakes: 0 };
+    case "immortal": return { limit: 1000, rounds: 18, maxMistakes: 0 };
+    case "divine": return { limit: 1500, rounds: 20, maxMistakes: 0 };
     default: return { limit: 30, rounds: 3, maxMistakes: 5 };
   }
 }

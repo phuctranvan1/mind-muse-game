@@ -1,12 +1,13 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const CONFIGS: Record<Difficulty, { size: number; removeCount: number }> = {
   easy: { size: 4, removeCount: 4 }, medium: { size: 4, removeCount: 8 },
   hard: { size: 9, removeCount: 35 }, expert: { size: 9, removeCount: 45 },
   master: { size: 9, removeCount: 52 }, grandmaster: { size: 9, removeCount: 56 },
   genius: { size: 9, removeCount: 60 }, legend: { size: 9, removeCount: 64 },
+  mythic: { size: 9, removeCount: 64 }, immortal: { size: 9, removeCount: 64 }, divine: { size: 9, removeCount: 64 },
 };
 
 function generateSudoku4(rand: () => number): number[][] {

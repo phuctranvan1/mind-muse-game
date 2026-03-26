@@ -48,6 +48,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 500 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 · 300 moves", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "10×10 · 150 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11×11 · 120 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12×12 · 100 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "14×14 · 80 moves", color: "bg-red-600", badge: "✦ Divine" },
   ],
   memory: [
     { key: "easy", label: "Easy", desc: "4 pairs", color: "bg-tile-5" },
@@ -58,6 +61,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "30 pairs", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "36 pairs", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "42 pairs · 84 cards", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "48 pairs · 96 cards", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "54 pairs · 108 cards", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "60 pairs · 120 cards", color: "bg-red-600", badge: "✦ Divine" },
   ],
   lightsout: [
     { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
@@ -68,6 +74,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 Grid", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 Grid", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "10×10 · Pure Logic", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11×11 · Pure Logic", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12×12 · Pure Logic", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "14×14 · Pure Logic", color: "bg-red-600", badge: "✦ Divine" },
   ],
   pattern: [
     { key: "easy", label: "Easy", desc: "3×3 · 4 steps", color: "bg-tile-5" },
@@ -78,6 +87,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "6×6 · 18 steps", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "6×6 · 24 ultra-fast", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "7×7 · 30 · lightning", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "8×8 · 40 · 250ms", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "8×8 · 52 · 200ms", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "9×9 · 64 · 150ms", color: "bg-red-600", badge: "✦ Divine" },
   ],
   mathchain: [
     { key: "easy", label: "Easy", desc: "5 questions · + −", color: "bg-tile-5" },
@@ -88,6 +100,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "25 questions · huge", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "30 questions · extreme", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "40 questions · 3s · max", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "50 questions · 2s · insane", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "65 questions · 2s · absurd", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "80 questions · 1s · godmode", color: "bg-red-600", badge: "✦ Divine" },
   ],
   hanoi: [
     { key: "easy", label: "Easy", desc: "3 discs", color: "bg-tile-5" },
@@ -98,6 +113,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8 discs · 350 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9 discs · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "10 discs · 1200 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11 discs · 2400 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12 discs · 5000 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "13 discs · 10000 moves", color: "bg-red-600", badge: "✦ Divine" },
   ],
   colorsort: [
     { key: "easy", label: "Easy", desc: "3 colors", color: "bg-tile-5" },
@@ -108,6 +126,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "12 colors · tall", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "14 colors · tall", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "16 colors · chaos", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "18 colors · mayhem", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "20 colors · abyss", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "22 colors · void", color: "bg-red-600", badge: "✦ Divine" },
   ],
   sudoku: [
     { key: "easy", label: "Easy", desc: "4×4 · 4 blanks", color: "bg-tile-5" },
@@ -118,6 +139,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "9×9 · 56 blanks", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9×9 · 60 blanks", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "9×9 · 64 blanks", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "9×9 · 64 blanks · no hints", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "9×9 · 64 blanks · no mercy", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "9×9 · 64 blanks · transcend", color: "bg-red-600", badge: "✦ Divine" },
   ],
   nqueens: [
     { key: "easy", label: "Easy", desc: "4×4 board", color: "bg-tile-5" },
@@ -128,6 +152,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "9×9 board", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "10×10 board", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "12×12 board", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "14×14 board", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "16×16 board", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "20×20 board", color: "bg-red-600", badge: "✦ Divine" },
   ],
   knighttour: [
     { key: "easy", label: "Easy", desc: "5×5 board", color: "bg-tile-5" },
@@ -138,6 +165,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8×8 · 80 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "8×8 · 75 moves", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "10×10 · 100 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11×11 · 130 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12×12 · 155 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "14×14 · 210 moves", color: "bg-red-600", badge: "✦ Divine" },
   ],
   minesweeper: [
     { key: "easy", label: "Easy", desc: "8×8 · 10 mines", color: "bg-tile-5" },
@@ -148,6 +178,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "18×18 · 80 mines", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "20×20 · 100 mines", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "24×24 · 130 mines", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "28×28 · 180 mines", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "30×30 · 220 mines", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "32×32 · 260 mines", color: "bg-red-600", badge: "✦ Divine" },
   ],
   "2048": [
     { key: "easy", label: "Easy", desc: "4×4 · reach 2048", color: "bg-tile-5" },
@@ -158,6 +191,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "5×5 · reach 8192 · 700 moves", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "6×6 · reach 2048 · 600 moves", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "6×6 · reach 4096 · 800 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "6×6 · reach 8192 · 900 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "7×7 · reach 4096 · 900 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "7×7 · reach 8192 · 1000 moves", color: "bg-red-600", badge: "✦ Divine" },
   ],
   sieve: [
     { key: "easy", label: "Easy", desc: "3 rounds · simple rules", color: "bg-tile-5" },
@@ -168,6 +204,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8 rounds · 2 lives", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "10 rounds · 1 life", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "12 rounds · 5 conditions", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "15 rounds · 0 mistakes", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "18 rounds · 0 mistakes", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "20 rounds · 0 mistakes", color: "bg-red-600", badge: "✦ Divine" },
   ],
   babylonian: [
     { key: "easy", label: "Easy", desc: "3 rounds · ±0.5", color: "bg-tile-5" },
@@ -178,6 +217,9 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "grandmaster", label: "Grandmaster", desc: "8 rounds · ±0.005", color: "bg-tile-3", badge: "🧠 Elite" },
     { key: "genius", label: "Genius", desc: "9 rounds · ±0.001", color: "bg-tile-4", badge: "🔥 Insane" },
     { key: "legend", label: "Legend", desc: "10 rounds · ±0.0005", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "30 rounds · ±0.000001", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "36 rounds · ±0.0000001", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "45 rounds · ±0.00000001", color: "bg-red-600", badge: "✦ Divine" },
   ],
 };
 

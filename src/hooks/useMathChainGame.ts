@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 interface MathProblem {
   question: string; answer: number; options: number[];
@@ -15,6 +15,9 @@ const CONFIGS: Record<Difficulty, { count: number; maxNum: number; ops: string[]
   grandmaster: { count: 25, maxNum: 500, ops: ["+", "-", "×", "÷"], timePerQ: 5 },
   genius: { count: 30, maxNum: 1000, ops: ["+", "-", "×", "÷"], timePerQ: 4 },
   legend: { count: 40, maxNum: 9999, ops: ["+", "-", "×", "÷"], timePerQ: 3 },
+  mythic: { count: 50, maxNum: 99999, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
+  immortal: { count: 65, maxNum: 9999999, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
+  divine: { count: 80, maxNum: 99999999, ops: ["+", "-", "×", "÷"], timePerQ: 1 },
 };
 
 function randInt(min: number, max: number, rand: () => number = Math.random) {

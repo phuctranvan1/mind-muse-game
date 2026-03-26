@@ -11,6 +11,8 @@ const COLOR_MAP: Record<string, string> = {
   indigo: "hsl(240, 65%, 52%)", lime: "hsl(82, 70%, 45%)", cyan: "hsl(190, 85%, 45%)",
   rose: "hsl(350, 75%, 55%)", violet: "hsl(280, 70%, 55%)", sky: "hsl(200, 85%, 50%)",
   fuchsia: "hsl(300, 75%, 55%)",
+  emerald: "hsl(158, 64%, 40%)", stone: "hsl(25, 5%, 50%)", coral: "hsl(16, 85%, 58%)",
+  gold: "hsl(43, 90%, 48%)", crimson: "hsl(348, 83%, 42%)", mint: "hsl(152, 60%, 52%)",
 };
 
 interface Props {

@@ -29,6 +29,9 @@ function getConfig(difficulty: Difficulty): { count: number; maxVal: number; tol
     case "grandmaster": return { count: 15, maxVal: 100000, tolerance: 0.001 };
     case "genius": return { count: 18, maxVal: 500000, tolerance: 0.0001 };
     case "legend": return { count: 25, maxVal: 1000000, tolerance: 0.00001 };
+    case "mythic": return { count: 30, maxVal: 10000000, tolerance: 0.000001 };
+    case "immortal": return { count: 36, maxVal: 100000000, tolerance: 0.0000001 };
+    case "divine": return { count: 45, maxVal: 1000000000, tolerance: 0.00000001 };
     default: return { count: 3, maxVal: 50, tolerance: 1.0 };
   }
 }
