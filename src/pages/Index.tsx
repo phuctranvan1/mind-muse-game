@@ -160,14 +160,14 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "legend", label: "Legend", desc: "6×6 · reach 4096 · 800 moves", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   sieve: [
-    { key: "easy", label: "Easy", desc: "Numbers up to 20", color: "bg-tile-5" },
-    { key: "medium", label: "Medium", desc: "Numbers up to 30", color: "bg-tile-6" },
-    { key: "hard", label: "Hard", desc: "Numbers up to 50", color: "bg-tile-1", badge: "Classic" },
-    { key: "expert", label: "Expert", desc: "Numbers up to 75", color: "bg-tile-7", badge: "IQ Test" },
-    { key: "master", label: "Master", desc: "Numbers up to 100", color: "bg-tile-2", badge: "Genius" },
-    { key: "grandmaster", label: "Grandmaster", desc: "Numbers up to 150", color: "bg-tile-3", badge: "🧠 Elite" },
-    { key: "genius", label: "Genius", desc: "Numbers up to 200", color: "bg-tile-4", badge: "🔥 Insane" },
-    { key: "legend", label: "Legend", desc: "Numbers up to 300", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "easy", label: "Easy", desc: "3 rounds · simple rules", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4 rounds · compound rules", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "5 rounds · 3 lives", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert", label: "Expert", desc: "6 rounds · NOT logic", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7 rounds · triple rules", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8 rounds · 2 lives", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "10 rounds · 1 life", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12 rounds · 5 conditions", color: "bg-tile-8", badge: "💀 Legend" },
   ],
   babylonian: [
     { key: "easy", label: "Easy", desc: "3 rounds · ±0.5", color: "bg-tile-5" },
@@ -194,7 +194,7 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   knighttour: "Knight's Tour",
   minesweeper: "Minesweeper",
   "2048": "2048",
-  sieve: "Sieve of Eratosthenes",
+  sieve: "Number Theory Challenge",
   babylonian: "Babylonian Method",
 };
 
@@ -234,7 +234,7 @@ const Index = () => {
   const knighttourActive = isPlaying && selectedPuzzle === "knighttour" && knighttour.game && !knighttour.game.won;
   const minesweeperActive = isPlaying && selectedPuzzle === "minesweeper" && minesweeper.game && !minesweeper.game.won && !minesweeper.game.lost;
   const game2048Active = isPlaying && selectedPuzzle === "2048" && game2048.game && !game2048.game.won && !game2048.game.lost;
-  const sieveActive = isPlaying && selectedPuzzle === "sieve" && sieve.game && !sieve.game.won;
+  const sieveActive = isPlaying && selectedPuzzle === "sieve" && sieve.game && !sieve.game.won && !sieve.game.lost;
   const babylonianActive = isPlaying && selectedPuzzle === "babylonian" && babylonian.game && !babylonian.game.won;
   const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive);
 
@@ -488,6 +488,7 @@ const Index = () => {
         return sieve.game && (
           <SieveGameScreen
             game={sieve.game} time={time} onToggleMark={sieve.toggleMark}
+            onSubmitRound={sieve.submitRound} onNextRound={sieve.nextRound}
             onHint={sieve.showHint} onUndo={sieve.undo} onPeek={sieve.peek}
             onRestart={isDaily ? dailyRestart : sieve.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
