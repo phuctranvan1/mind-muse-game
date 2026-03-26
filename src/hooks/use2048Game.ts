@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 interface Config { size: number; target: number; moveLimit: number | null }
 
@@ -13,6 +13,9 @@ const CONFIGS: Record<Difficulty, Config> = {
   grandmaster: { size: 5, target: 8192,  moveLimit: 700  },
   genius:      { size: 6, target: 2048,  moveLimit: 600  },
   legend:      { size: 6, target: 4096,  moveLimit: 800  },
+  mythic:      { size: 6, target: 8192,  moveLimit: 900  },
+  immortal:    { size: 7, target: 4096,  moveLimit: 900  },
+  divine:      { size: 7, target: 8192,  moveLimit: 1000 },
 };
 
 export interface Game2048State {

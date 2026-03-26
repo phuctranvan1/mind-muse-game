@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes: number }> = {
   easy: { colors: 3, tubeSize: 3, extraTubes: 1 },
@@ -11,11 +11,15 @@ const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes
   grandmaster: { colors: 12, tubeSize: 5, extraTubes: 2 },
   genius: { colors: 14, tubeSize: 5, extraTubes: 2 },
   legend: { colors: 16, tubeSize: 5, extraTubes: 2 },
+  mythic: { colors: 18, tubeSize: 5, extraTubes: 2 },
+  immortal: { colors: 20, tubeSize: 6, extraTubes: 2 },
+  divine: { colors: 22, tubeSize: 6, extraTubes: 1 },
 };
 
 const COLOR_NAMES = [
   "red", "blue", "green", "yellow", "purple", "orange", "pink", "teal", "amber", "indigo",
   "lime", "cyan", "rose", "violet", "sky", "fuchsia",
+  "emerald", "stone", "coral", "gold", "crimson", "mint",
 ];
 
 function generateTubes(colors: number, tubeSize: number, extraTubes: number, rand: () => number = Math.random): string[][] {
