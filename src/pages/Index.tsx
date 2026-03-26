@@ -488,6 +488,7 @@ const Index = () => {
         return sieve.game && (
           <SieveGameScreen
             game={sieve.game} time={time} onToggleMark={sieve.toggleMark}
+            onSubmitRound={sieve.submitRound} onNextRound={sieve.nextRound}
             onHint={sieve.showHint} onUndo={sieve.undo} onPeek={sieve.peek}
             onRestart={isDaily ? dailyRestart : sieve.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
