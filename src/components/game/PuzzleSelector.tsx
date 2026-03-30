@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 import { Rewards } from "@/hooks/useDailyChallenge";
+import { XPState } from "@/hooks/useXPSystem";
+import { getLevelTitle } from "@/hooks/useXPSystem";
+import XPBar from "./XPBar";
 
 export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian";
 
@@ -24,23 +27,27 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
 interface Props {
   onSelect: (type: PuzzleType) => void;
   onDailyChallenge: (type: PuzzleType) => void;
+  onOpenStats: () => void;
   dark: boolean;
   onToggleDark: () => void;
   rewards: Rewards;
   isDailyDone: (type: PuzzleType) => boolean;
+  xpState: XPState;
+  unlockedAchievements: number;
 }
 
-const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, rewards, isDailyDone }: Props) => {
+const PuzzleSelector = ({ onSelect, onDailyChallenge, onOpenStats, dark, onToggleDark, rewards, isDailyDone, xpState, unlockedAchievements }: Props) => {
   const totalRewards = rewards.hints + rewards.undos + rewards.peeks;
+  const levelTitle = getLevelTitle(xpState.level);
 
   return (
     <div className="py-6 sm:py-8">
-      <div className="mb-6 sm:mb-8 flex justify-between items-start gap-2">
+      <div className="mb-4 sm:mb-5 flex justify-between items-start gap-2">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             <span className="text-primary">Mind Muse</span>
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">Challenge your IQ</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Challenge your IQ</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {totalRewards > 0 && (
@@ -51,6 +58,33 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, dark, onToggleDark, reward
           <DarkModeToggle dark={dark} onToggle={onToggleDark} />
         </div>
       </div>
+
+      {/* Player Level & XP Bar */}
+      <motion.button
+        onClick={onOpenStats}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="w-full mb-4 rounded-[var(--radius-inner)] border border-border bg-card shadow-[var(--shadow-sm)] px-4 py-3 text-left hover:border-primary/30 hover:shadow-[var(--shadow-md)] transition-all"
+      >
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🧠</span>
+            <div>
+              <span className="text-xs font-bold text-foreground">Level {xpState.level}</span>
+              <span className="text-[0.65rem] text-muted-foreground ml-1.5">· {levelTitle}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5">
+            {unlockedAchievements > 0 && (
+              <span className="text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-500 border border-amber-500/25">
+                🏆 {unlockedAchievements}
+              </span>
+            )}
+            <span className="text-[0.6rem] text-muted-foreground">View profile →</span>
+          </div>
+        </div>
+        <XPBar xpState={xpState} compact />
+      </motion.button>
 
       <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
         Choose a Puzzle
