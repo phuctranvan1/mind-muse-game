@@ -16,7 +16,10 @@ import { useBabylonianGame } from "@/hooks/useBabylonianGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
-import { useEffect } from "react";
+import { useXPSystem } from "@/hooks/useXPSystem";
+import { useAchievements, Achievement } from "@/hooks/useAchievements";
+import { useGameStats } from "@/hooks/useGameStats";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import PuzzleSelector, { PuzzleType } from "@/components/game/PuzzleSelector";
 import DifficultyMenu from "@/components/game/DifficultyMenu";
@@ -35,6 +38,10 @@ import Game2048Screen from "@/components/game/Game2048Screen";
 import SieveGameScreen from "@/components/game/SieveGameScreen";
 import BabylonianGameScreen from "@/components/game/BabylonianGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
+import StatsModal from "@/components/game/StatsModal";
+import AchievementToast from "@/components/game/AchievementToast";
+import { XPGain } from "@/hooks/useXPSystem";
+import { getStars } from "@/lib/puzzleUtils";
 
 type Screen = "puzzleSelect" | "difficultySelect" | "playing";
 
@@ -246,6 +253,14 @@ const Index = () => {
   const [isDaily, setIsDaily] = useState(false);
   const [showDailyWin, setShowDailyWin] = useState(false);
   const [dailyWinData, setDailyWinData] = useState<{ moves: number; time: string } | null>(null);
+  const [showStats, setShowStats] = useState(false);
+  const [pendingAchievements, setPendingAchievements] = useState<Achievement[]>([]);
+  const [lastXPGain, setLastXPGain] = useState<XPGain | null>(null);
+  const [currentDifficulty, setCurrentDifficulty] = useState<Difficulty>("easy");
+  const [usedHintInGame, setUsedHintInGame] = useState(false);
+
+  // Track which wins we've already processed (to avoid double-awarding)
+  const processedWins = useRef<Set<string>>(new Set());
 
   const shift = useShiftGame();
   const memory = useMemoryGame();
@@ -263,6 +278,9 @@ const Index = () => {
   const babylonian = useBabylonianGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
+  const xp = useXPSystem();
+  const achievements = useAchievements();
+  const gameStats = useGameStats();
 
   const isPlaying = screen === "playing";
   const shiftActive = isPlaying && selectedPuzzle === "shift" && shift.game && !shift.game.won;
@@ -281,6 +299,75 @@ const Index = () => {
   const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive);
 
   const { formatted: time } = useTimer(timerRunning);
+
+  // Helper to get current win state
+  const getWinInfo = (): { won: boolean; moves: number } | null => {
+    if (!isPlaying) return null;
+    if (selectedPuzzle === "shift" && shift.game?.won) return { won: true, moves: shift.game.moves };
+    if (selectedPuzzle === "memory" && memory.game?.won) return { won: true, moves: memory.game.moves };
+    if (selectedPuzzle === "lightsout" && lightsout.game?.won) return { won: true, moves: lightsout.game.moves };
+    if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") return { won: true, moves: pattern.game.score };
+    if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) return { won: true, moves: math.game.score };
+    if (selectedPuzzle === "hanoi" && hanoi.game?.won) return { won: true, moves: hanoi.game.moves };
+    if (selectedPuzzle === "colorsort" && colorsort.game?.won) return { won: true, moves: colorsort.game.moves };
+    if (selectedPuzzle === "sudoku" && sudoku.game?.won) return { won: true, moves: sudoku.game.mistakes };
+    if (selectedPuzzle === "nqueens" && nqueens.game?.won) return { won: true, moves: 0 };
+    if (selectedPuzzle === "knighttour" && knighttour.game?.won) return { won: true, moves: knighttour.game.path.length };
+    if (selectedPuzzle === "minesweeper" && minesweeper.game?.won) return { won: true, moves: minesweeper.game.moves };
+    if (selectedPuzzle === "2048" && game2048.game?.won) return { won: true, moves: game2048.game.score };
+    if (selectedPuzzle === "sieve" && sieve.game?.won) return { won: true, moves: sieve.game.moves };
+    if (selectedPuzzle === "babylonian" && babylonian.game?.won) return { won: true, moves: babylonian.game.moves };
+    return null;
+  };
+
+  // Award XP and check achievements on win
+  useEffect(() => {
+    if (!isPlaying) return;
+    const winInfo = getWinInfo();
+    if (!winInfo?.won) return;
+
+    // Create a unique key for this win so we don't double-process it
+    const winKey = `${selectedPuzzle}-${currentDifficulty}-${winInfo.moves}-${time}`;
+    if (processedWins.current.has(winKey)) return;
+    processedWins.current.add(winKey);
+
+    const stars = getStars(currentDifficulty, winInfo.moves, time);
+    const timeSeconds = gameStats.parseTime(time);
+    const isSpeedWin = timeSeconds < 30;
+    const timeBonus = isSpeedWin ? 10 : 0;
+
+    // Award XP
+    const gain = xp.awardXP(currentDifficulty, stars, timeBonus);
+    setLastXPGain(gain);
+
+    // Record game stats
+    const updatedStats = gameStats.recordGame(selectedPuzzle, currentDifficulty, true, winInfo.moves, time, stars, isDaily);
+
+    // Check achievements
+    const ctx = {
+      puzzle: selectedPuzzle,
+      difficulty: currentDifficulty,
+      moves: winInfo.moves,
+      timeSeconds,
+      stars,
+      usedHint: usedHintInGame,
+      wins: Object.fromEntries(
+        Object.entries(updatedStats.puzzles).map(([k, v]) => [k, v?.won ?? 0])
+      ),
+      playedPuzzles: new Set(updatedStats.playedPuzzleTypes),
+      level: gain.newLevel,
+      dailyStreak: updatedStats.dailyStreak,
+    };
+
+    const newAchievements = achievements.checkAndUnlock(ctx);
+    if (newAchievements.length > 0) {
+      setPendingAchievements(prev => [...prev, ...newAchievements]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
+      pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
+      sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
+      game2048.game?.won, sieve.game?.won, babylonian.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -344,7 +431,11 @@ const Index = () => {
     setIsDaily(true);
     setShowDailyWin(false);
     setDailyWinData(null);
+    setLastXPGain(null);
+    setUsedHintInGame(false);
+    processedWins.current.clear();
     const difficulty: Difficulty = "hard";
+    setCurrentDifficulty(difficulty);
     const dailyRandom = daily.getDailyRandom(type);
     switch (type) {
       case "shift": shift.startGame(difficulty, dailyRandom); break;
@@ -366,6 +457,10 @@ const Index = () => {
   };
 
   const handleDifficultySelect = (difficulty: Difficulty) => {
+    setCurrentDifficulty(difficulty);
+    setLastXPGain(null);
+    setUsedHintInGame(false);
+    processedWins.current.clear();
     switch (selectedPuzzle) {
       case "shift": shift.startGame(difficulty); break;
       case "memory": memory.startGame(difficulty); break;
@@ -558,9 +653,12 @@ const Index = () => {
               <PuzzleSelector
                 onSelect={handlePuzzleSelect}
                 onDailyChallenge={handleDailyChallenge}
+                onOpenStats={() => setShowStats(true)}
                 dark={dark} onToggleDark={toggleDark}
                 rewards={daily.rewards}
                 isDailyDone={daily.isDailyDone}
+                xpState={xp.xpState}
+                unlockedAchievements={achievements.unlockedCount}
               />
             </motion.div>
           )}
@@ -600,6 +698,22 @@ const Index = () => {
             onClose={goToMenu}
           />
         )}
+
+        {/* Stats / Achievements modal */}
+        {showStats && (
+          <StatsModal
+            unlocked={achievements.unlocked}
+            stats={gameStats.stats}
+            xpState={xp.xpState}
+            onClose={() => setShowStats(false)}
+          />
+        )}
+
+        {/* Achievement toast notifications */}
+        <AchievementToast
+          achievements={pendingAchievements}
+          onDismiss={() => setPendingAchievements([])}
+        />
       </div>
     </div>
   );
