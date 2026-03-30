@@ -1,7 +1,7 @@
 /**
  * Calculate the star rating for a completed puzzle based on difficulty, moves, and time.
  */
-function parseTimeToSeconds(time: string): number {
+export function parseTimeToSeconds(time: string): number {
   const parts = time.split(":").map(Number);
   if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
   if (parts.length === 2) return parts[0] * 60 + parts[1];
@@ -23,3 +23,5 @@ export function getStars(difficulty: string, moves: number, time: string): numbe
   if (d === "medium") return moves < 15 && totalSeconds < 20 ? 3 : moves < 30 ? 2 : 1;
   return moves < 10 && totalSeconds < 15 ? 3 : moves < 20 ? 2 : 1;
 }
+
+export const EPIC_DIFFICULTIES = new Set(["legend", "mythic", "immortal", "divine", "genius"]);

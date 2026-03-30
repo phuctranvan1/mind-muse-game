@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { PuzzleType } from "@/components/game/PuzzleSelector";
 import { Difficulty } from "@/hooks/useShiftGame";
+import { parseTimeToSeconds } from "@/lib/puzzleUtils";
 
 export interface Achievement {
   id: string;
@@ -98,13 +99,6 @@ export interface AchievementContext {
   playedPuzzles: Set<string>;
   level: number;
   dailyStreak: number;
-}
-
-function parseTime(time: string): number {
-  const parts = time.split(":").map(Number);
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-  if (parts.length === 2) return parts[0] * 60 + parts[1];
-  return parts[0] ?? 0;
 }
 
 export function useAchievements() {
@@ -218,6 +212,6 @@ export function useAchievements() {
     unlock,
     totalCount,
     unlockedCount,
-    parseTime,
+    parseTime: parseTimeToSeconds,
   };
 }

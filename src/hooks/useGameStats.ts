@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { PuzzleType } from "@/components/game/PuzzleSelector";
 import { Difficulty } from "@/hooks/useShiftGame";
+import { parseTimeToSeconds } from "@/lib/puzzleUtils";
 
 export interface PuzzleStat {
   played: number;
@@ -54,17 +55,11 @@ const DEFAULT_STATS: GameStats = {
 
 const STORAGE_KEY = "mindmuse_stats_v1";
 const DIFFICULTY_ORDER: Difficulty[] = ["easy", "medium", "hard", "expert", "master", "grandmaster", "genius", "legend", "mythic", "immortal", "divine"];
+const MS_PER_DAY = 86400000;
 
 function getTodayKey(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
-
-function parseTime(time: string): number {
-  const parts = time.split(":").map(Number);
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-  if (parts.length === 2) return parts[0] * 60 + parts[1];
-  return parts[0] ?? 0;
 }
 
 function loadStats(): GameStats {
@@ -94,7 +89,7 @@ export function useGameStats() {
   ) => {
     const s = loadStats();
     const today = getTodayKey();
-    const timeSeconds = parseTime(time);
+    const timeSeconds = parseTimeToSeconds(time);
 
     // Puzzle stats
     const ps: PuzzleStat = { ...DEFAULT_PUZZLE_STAT, ...(s.puzzles[puzzle] ?? {}) };
@@ -137,7 +132,7 @@ export function useGameStats() {
         s.dailyStreak = 1;
       } else {
         const last = new Date(s.lastDailyDate);
-        const diff = Math.floor((new Date(today).getTime() - last.getTime()) / 86400000);
+        const diff = Math.floor((new Date(today).getTime() - last.getTime()) / MS_PER_DAY);
         if (diff === 1) {
           s.dailyStreak++;
         } else if (diff > 1) {
@@ -183,6 +178,6 @@ export function useGameStats() {
     getPuzzleStat,
     getWinRate,
     formatBestTime,
-    parseTime,
+    parseTime: parseTimeToSeconds,
   };
 }

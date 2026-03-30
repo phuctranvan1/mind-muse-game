@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { motion } from "framer-motion";
 import { XPGain, getLevelTitle } from "@/hooks/useXPSystem";
-import { getStars } from "@/lib/puzzleUtils";
+import { getStars, EPIC_DIFFICULTIES } from "@/lib/puzzleUtils";
 
 interface WinModalProps {
   moves: number;
@@ -16,7 +16,7 @@ const WinModal = ({ moves, time, difficulty, xpGain, onClose }: WinModalProps) =
   const stars = difficulty ? getStars(difficulty, moves, time) : null;
 
   useEffect(() => {
-    const isEpic = difficulty && ["legend", "mythic", "immortal", "divine", "genius"].includes(difficulty.toLowerCase());
+    const isEpic = difficulty && EPIC_DIFFICULTIES.has(difficulty.toLowerCase());
     const colors = ["#7c3aed", "#ec4899", "#f97316", "#eab308", "#14b8a6", "#3b82f6"];
     const duration = isEpic ? 3500 : 2000;
     const end = Date.now() + duration;

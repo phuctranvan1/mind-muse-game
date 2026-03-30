@@ -8,6 +8,7 @@ interface Props {
   unlocked: Record<string, UnlockedAchievement>;
   stats: GameStats;
   xpState: XPState;
+  formatBestTime: (seconds: number | null) => string;
   onClose: () => void;
 }
 
@@ -27,7 +28,7 @@ const RARITY_BADGE: Record<string, string> = {
 
 type Tab = "stats" | "achievements";
 
-const StatsModal = ({ unlocked, stats, xpState, onClose }: Props) => {
+const StatsModal = ({ unlocked, stats, xpState, formatBestTime, onClose }: Props) => {
   const [tab, setTab] = useState<Tab>("stats");
 
   const totalAchievements = ACHIEVEMENTS.length;
@@ -124,9 +125,7 @@ const StatsModal = ({ unlocked, stats, xpState, onClose }: Props) => {
                         const ps = stats.puzzles[puzzle];
                         if (!ps) return null;
                         const wr = ps.played > 0 ? Math.round((ps.won / ps.played) * 100) : 0;
-                        const bestTime = ps.bestTimeSeconds !== null
-                          ? `${Math.floor(ps.bestTimeSeconds / 60)}:${String(ps.bestTimeSeconds % 60).padStart(2, "0")}`
-                          : "—";
+                        const bestTime = formatBestTime(ps.bestTimeSeconds);
                         return (
                           <div key={puzzle} className="flex items-center justify-between text-xs bg-background rounded-lg border border-border px-3 py-2 gap-3">
                             <span className="font-semibold text-foreground capitalize min-w-0 truncate">{puzzle === "2048" ? "2048" : puzzle.charAt(0).toUpperCase() + puzzle.slice(1)}</span>

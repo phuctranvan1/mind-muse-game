@@ -259,8 +259,9 @@ const Index = () => {
   const [currentDifficulty, setCurrentDifficulty] = useState<Difficulty>("easy");
   const [usedHintInGame, setUsedHintInGame] = useState(false);
 
-  // Track which wins we've already processed (to avoid double-awarding)
-  const processedWins = useRef<Set<string>>(new Set());
+  // Single-fire flag per game session: set to true once XP has been awarded for this win.
+  // Reset when a new game starts via handleDifficultySelect / handleDailyChallenge.
+  const winRewardedRef = useRef(false);
 
   const shift = useShiftGame();
   const memory = useMemoryGame();
@@ -321,15 +322,14 @@ const Index = () => {
   };
 
   // Award XP and check achievements on win
+  // We use winRewardedRef to fire exactly once per game session regardless of re-renders.
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || winRewardedRef.current) return;
     const winInfo = getWinInfo();
     if (!winInfo?.won) return;
 
-    // Create a unique key for this win so we don't double-process it
-    const winKey = `${selectedPuzzle}-${currentDifficulty}-${winInfo.moves}-${time}`;
-    if (processedWins.current.has(winKey)) return;
-    processedWins.current.add(winKey);
+    // Mark as rewarded so this effect fires only once per session
+    winRewardedRef.current = true;
 
     const stars = getStars(currentDifficulty, winInfo.moves, time);
     const timeSeconds = gameStats.parseTime(time);
@@ -363,6 +363,8 @@ const Index = () => {
     if (newAchievements.length > 0) {
       setPendingAchievements(prev => [...prev, ...newAchievements]);
     }
+  // xp.awardXP, gameStats.*, achievements.checkAndUnlock are stable useCallback refs.
+  // currentDifficulty, usedHintInGame, isDaily, time are captured at win-time via the ref flag.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
@@ -433,7 +435,7 @@ const Index = () => {
     setDailyWinData(null);
     setLastXPGain(null);
     setUsedHintInGame(false);
-    processedWins.current.clear();
+    winRewardedRef.current = false;
     const difficulty: Difficulty = "hard";
     setCurrentDifficulty(difficulty);
     const dailyRandom = daily.getDailyRandom(type);
@@ -460,7 +462,7 @@ const Index = () => {
     setCurrentDifficulty(difficulty);
     setLastXPGain(null);
     setUsedHintInGame(false);
-    processedWins.current.clear();
+    winRewardedRef.current = false;
     switch (selectedPuzzle) {
       case "shift": shift.startGame(difficulty); break;
       case "memory": memory.startGame(difficulty); break;
@@ -705,6 +707,7 @@ const Index = () => {
             unlocked={achievements.unlocked}
             stats={gameStats.stats}
             xpState={xp.xpState}
+            formatBestTime={gameStats.formatBestTime}
             onClose={() => setShowStats(false)}
           />
         )}
