@@ -732,6 +732,44 @@ const Index = () => {
             dark={dark} onToggleDark={toggleDark}
           />
         );
+      case "ricochet":
+        return ricochet.game && (
+          <RicochetGameScreen
+            game={ricochet.game} time={time} onMove={ricochet.move}
+            onHint={ricochet.hint} onUndo={ricochet.undo} onPeek={ricochet.peek}
+            onRestart={isDaily ? dailyRestart : ricochet.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "portal":
+        return portal.game && (
+          <PortalGameScreen
+            game={portal.game} time={time} onMove={portal.move}
+            onHint={portal.hint} onUndo={portal.undo} onPeek={portal.peek}
+            onRestart={isDaily ? dailyRestart : portal.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "chainblast":
+        return chainblast.game && (
+          <ChainBlastGameScreen
+            game={chainblast.game} time={time}
+            onPlaceBomb={chainblast.placeBomb} onDetonate={chainblast.detonateAll}
+            onHint={chainblast.hint} onUndo={chainblast.undo} onPeek={chainblast.peek}
+            onRestart={isDaily ? dailyRestart : chainblast.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "archer":
+        return archer.game && (
+          <ArcherGameScreen
+            game={archer.game} time={time}
+            onShoot={archer.shoot} onMoveArcher={archer.moveArcher}
+            onHint={archer.hint} onUndo={archer.undo} onPeek={archer.peek}
+            onRestart={isDaily ? dailyRestart : archer.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
     }
   };
 
