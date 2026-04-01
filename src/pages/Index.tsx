@@ -340,6 +340,10 @@ const Index = () => {
   const game2048 = use2048Game();
   const sieve = useSieveGame();
   const babylonian = useBabylonianGame();
+  const ricochet = useRicochetGame();
+  const portal = usePortalGame();
+  const chainblast = useChainBlastGame();
+  const archer = useArcherGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
