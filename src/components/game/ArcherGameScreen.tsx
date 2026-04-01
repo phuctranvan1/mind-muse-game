@@ -121,7 +121,7 @@ const ArcherGameScreen = ({ game, time, onShoot, onMoveArcher, onHint, onUndo, o
         <button onClick={onMenu} className="text-xs px-4 py-2 rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors font-semibold">☰ Menu</button>
       </div>
 
-      {game.won && <WinModal moves={game.moves} time={time} onRestart={onRestart} onMenu={onMenu} />}
+      {game.won && <WinModal moves={game.moves} time={time} onClose={onMenu} />}
       {game.lost && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-[var(--radius-outer)] border border-border shadow-xl text-center">
