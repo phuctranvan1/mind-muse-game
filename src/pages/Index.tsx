@@ -505,6 +505,8 @@ const Index = () => {
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
     sieve.goToMenu(); babylonian.goToMenu();
+    ricochet.goToMenu(); portal.goToMenu();
+    chainblast.goToMenu(); archer.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
