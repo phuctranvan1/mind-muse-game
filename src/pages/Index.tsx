@@ -563,6 +563,10 @@ const Index = () => {
       case "2048": game2048.startGame(difficulty); break;
       case "sieve": sieve.startGame(difficulty); break;
       case "babylonian": babylonian.startGame(difficulty); break;
+      case "ricochet": ricochet.startGame(difficulty); break;
+      case "portal": portal.startGame(difficulty); break;
+      case "chainblast": chainblast.startGame(difficulty); break;
+      case "archer": archer.startGame(difficulty); break;
     }
     setScreen("playing");
   };
