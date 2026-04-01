@@ -443,7 +443,8 @@ const Index = () => {
   }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
-      game2048.game?.won, sieve.game?.won, babylonian.game?.won]);
+      game2048.game?.won, sieve.game?.won, babylonian.game?.won,
+      ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
