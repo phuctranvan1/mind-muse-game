@@ -535,6 +535,10 @@ const Index = () => {
       case "2048": game2048.startGame(difficulty, dailyRandom); break;
       case "sieve": sieve.startGame(difficulty, dailyRandom); break;
       case "babylonian": babylonian.startGame(difficulty, dailyRandom); break;
+      case "ricochet": ricochet.startGame(difficulty, dailyRandom); break;
+      case "portal": portal.startGame(difficulty, dailyRandom); break;
+      case "chainblast": chainblast.startGame(difficulty, dailyRandom); break;
+      case "archer": archer.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
