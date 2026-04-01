@@ -305,6 +305,10 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   "2048": "2048",
   sieve: "Number Theory Challenge",
   babylonian: "Babylonian Method",
+  ricochet: "Ricochet",
+  portal: "Portal Maze",
+  chainblast: "Chain Blast",
+  archer: "Archer",
 };
 
 const Index = () => {
