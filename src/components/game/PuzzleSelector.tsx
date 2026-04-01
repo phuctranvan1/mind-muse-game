@@ -5,7 +5,7 @@ import { XPState } from "@/hooks/useXPSystem";
 import { getLevelTitle } from "@/hooks/useXPSystem";
 import XPBar from "./XPBar";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer";
 
 const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; color: string }[] = [
   { key: "shift", label: "Shift", desc: "Sliding tile puzzle", icon: "⬡", color: "bg-tile-1" },
