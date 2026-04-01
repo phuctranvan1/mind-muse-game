@@ -22,6 +22,10 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "2048", label: "2048", desc: "Merge tiles to win", icon: "🔀", color: "bg-tile-4" },
   { key: "sieve", label: "Number Theory", desc: "Complex rule-based challenges", icon: "🧠", color: "bg-tile-5" },
   { key: "babylonian", label: "Babylonian", desc: "Approximate square roots", icon: "√", color: "bg-tile-6" },
+  { key: "ricochet", label: "Ricochet", desc: "Slide to the target", icon: "🎱", color: "bg-tile-1" },
+  { key: "portal", label: "Portal Maze", desc: "Navigate through portals", icon: "🌀", color: "bg-tile-3" },
+  { key: "chainblast", label: "Chain Blast", desc: "Bomb chain reactions", icon: "💣", color: "bg-tile-7" },
+  { key: "archer", label: "Archer", desc: "Hit all targets", icon: "🏹", color: "bg-tile-4" },
 ];
 
 interface Props {
