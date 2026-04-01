@@ -389,6 +389,10 @@ const Index = () => {
     if (selectedPuzzle === "2048" && game2048.game?.won) return { won: true, moves: game2048.game.score };
     if (selectedPuzzle === "sieve" && sieve.game?.won) return { won: true, moves: sieve.game.moves };
     if (selectedPuzzle === "babylonian" && babylonian.game?.won) return { won: true, moves: babylonian.game.moves };
+    if (selectedPuzzle === "ricochet" && ricochet.game?.won) return { won: true, moves: ricochet.game.moves };
+    if (selectedPuzzle === "portal" && portal.game?.won) return { won: true, moves: portal.game.moves };
+    if (selectedPuzzle === "chainblast" && chainblast.game?.won) return { won: true, moves: chainblast.game.moves };
+    if (selectedPuzzle === "archer" && archer.game?.won) return { won: true, moves: archer.game.moves };
     return null;
   };
 
