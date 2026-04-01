@@ -13,6 +13,10 @@ import { useMinesweeperGame } from "@/hooks/useMinesweeperGame";
 import { use2048Game } from "@/hooks/use2048Game";
 import { useSieveGame } from "@/hooks/useSieveGame";
 import { useBabylonianGame } from "@/hooks/useBabylonianGame";
+import { useRicochetGame } from "@/hooks/useRicochetGame";
+import { usePortalGame } from "@/hooks/usePortalGame";
+import { useChainBlastGame } from "@/hooks/useChainBlastGame";
+import { useArcherGame } from "@/hooks/useArcherGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -37,6 +41,10 @@ import MinesweeperGameScreen from "@/components/game/MinesweeperGameScreen";
 import Game2048Screen from "@/components/game/Game2048Screen";
 import SieveGameScreen from "@/components/game/SieveGameScreen";
 import BabylonianGameScreen from "@/components/game/BabylonianGameScreen";
+import RicochetGameScreen from "@/components/game/RicochetGameScreen";
+import PortalGameScreen from "@/components/game/PortalGameScreen";
+import ChainBlastGameScreen from "@/components/game/ChainBlastGameScreen";
+import ArcherGameScreen from "@/components/game/ArcherGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import StatsModal from "@/components/game/StatsModal";
 import AchievementToast from "@/components/game/AchievementToast";
@@ -228,6 +236,58 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "immortal", label: "Immortal", desc: "36 rounds · ±0.0000001", color: "bg-purple-600", badge: "🌌 Immortal" },
     { key: "divine", label: "Divine", desc: "45 rounds · ±0.00000001", color: "bg-red-600", badge: "✦ Divine" },
   ],
+  ricochet: [
+    { key: "easy", label: "Easy", desc: "5×5 · free moves", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "6×6 · free moves", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "7×7 · 20 moves", color: "bg-tile-1", badge: "Limited" },
+    { key: "expert", label: "Expert", desc: "8×8 · 18 moves", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "9×9 · 16 moves", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "10×10 · 14 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "11×11 · 12 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12×12 · 10 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "13×13 · 9 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "14×14 · 8 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "16×16 · 7 moves", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  portal: [
+    { key: "easy", label: "Easy", desc: "5×5 · 1 portal", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "6×6 · 2 portals", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "7×7 · 30 moves", color: "bg-tile-1", badge: "Limited" },
+    { key: "expert", label: "Expert", desc: "8×8 · 28 moves", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "9×9 · 25 moves", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "10×10 · 22 moves", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "11×11 · 20 moves", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12×12 · 18 moves", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "14×14 · 16 moves", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "16×16 · 14 moves", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "18×18 · 12 moves", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  chainblast: [
+    { key: "easy", label: "Easy", desc: "5×5 · 3 bombs", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "6×6 · 4 bombs", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "7×7 · 4 bombs", color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert", label: "Expert", desc: "8×8 · 5 bombs", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "9×9 · 5 bombs", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "10×10 · 6 bombs", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "11×11 · 6 bombs", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12×12 · 6 bombs", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "13×13 · 7 bombs", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "14×14 · 7 bombs", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "16×16 · 8 bombs", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  archer: [
+    { key: "easy", label: "Easy", desc: "5×5 · 5 arrows", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "6×6 · 6 arrows", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "7×7 · 7 arrows", color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert", label: "Expert", desc: "8×8 · 9 arrows", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "9×9 · 11 arrows", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "10×10 · 14 arrows", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "11×11 · 17 arrows", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "12×12 · 21 arrows", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "14×14 · 27 arrows", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "16×16 · 35 arrows", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "18×18 · 45 arrows", color: "bg-red-600", badge: "✦ Divine" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -245,6 +305,10 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   "2048": "2048",
   sieve: "Number Theory Challenge",
   babylonian: "Babylonian Method",
+  ricochet: "Ricochet",
+  portal: "Portal Maze",
+  chainblast: "Chain Blast",
+  archer: "Archer",
 };
 
 const Index = () => {
@@ -276,6 +340,10 @@ const Index = () => {
   const game2048 = use2048Game();
   const sieve = useSieveGame();
   const babylonian = useBabylonianGame();
+  const ricochet = useRicochetGame();
+  const portal = usePortalGame();
+  const chainblast = useChainBlastGame();
+  const archer = useArcherGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
@@ -296,7 +364,11 @@ const Index = () => {
   const game2048Active = isPlaying && selectedPuzzle === "2048" && game2048.game && !game2048.game.won && !game2048.game.lost;
   const sieveActive = isPlaying && selectedPuzzle === "sieve" && sieve.game && !sieve.game.won && !sieve.game.lost;
   const babylonianActive = isPlaying && selectedPuzzle === "babylonian" && babylonian.game && !babylonian.game.won;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive);
+  const ricochetActive = isPlaying && selectedPuzzle === "ricochet" && ricochet.game && !ricochet.game.won && !ricochet.game.lost;
+  const portalActive = isPlaying && selectedPuzzle === "portal" && portal.game && !portal.game.won && !portal.game.lost;
+  const chainblastActive = isPlaying && selectedPuzzle === "chainblast" && chainblast.game && !chainblast.game.won && !chainblast.game.lost;
+  const archerActive = isPlaying && selectedPuzzle === "archer" && archer.game && !archer.game.won && !archer.game.lost;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -317,6 +389,10 @@ const Index = () => {
     if (selectedPuzzle === "2048" && game2048.game?.won) return { won: true, moves: game2048.game.score };
     if (selectedPuzzle === "sieve" && sieve.game?.won) return { won: true, moves: sieve.game.moves };
     if (selectedPuzzle === "babylonian" && babylonian.game?.won) return { won: true, moves: babylonian.game.moves };
+    if (selectedPuzzle === "ricochet" && ricochet.game?.won) return { won: true, moves: ricochet.game.moves };
+    if (selectedPuzzle === "portal" && portal.game?.won) return { won: true, moves: portal.game.moves };
+    if (selectedPuzzle === "chainblast" && chainblast.game?.won) return { won: true, moves: chainblast.game.moves };
+    if (selectedPuzzle === "archer" && archer.game?.won) return { won: true, moves: archer.game.moves };
     return null;
   };
 
@@ -367,7 +443,8 @@ const Index = () => {
   }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
-      game2048.game?.won, sieve.game?.won, babylonian.game?.won]);
+      game2048.game?.won, sieve.game?.won, babylonian.game?.won,
+      ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -395,7 +472,11 @@ const Index = () => {
     if (selectedPuzzle === "2048" && game2048.game?.won) checkWin(true, game2048.game.score);
     if (selectedPuzzle === "sieve" && sieve.game?.won) checkWin(true, sieve.game.moves);
     if (selectedPuzzle === "babylonian" && babylonian.game?.won) checkWin(true, babylonian.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game]);
+    if (selectedPuzzle === "ricochet" && ricochet.game?.won) checkWin(true, ricochet.game.moves);
+    if (selectedPuzzle === "portal" && portal.game?.won) checkWin(true, portal.game.moves);
+    if (selectedPuzzle === "chainblast" && chainblast.game?.won) checkWin(true, chainblast.game.moves);
+    if (selectedPuzzle === "archer" && archer.game?.won) checkWin(true, archer.game.moves);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -424,6 +505,8 @@ const Index = () => {
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
     sieve.goToMenu(); babylonian.goToMenu();
+    ricochet.goToMenu(); portal.goToMenu();
+    chainblast.goToMenu(); archer.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -452,6 +535,10 @@ const Index = () => {
       case "2048": game2048.startGame(difficulty, dailyRandom); break;
       case "sieve": sieve.startGame(difficulty, dailyRandom); break;
       case "babylonian": babylonian.startGame(difficulty, dailyRandom); break;
+      case "ricochet": ricochet.startGame(difficulty, dailyRandom); break;
+      case "portal": portal.startGame(difficulty, dailyRandom); break;
+      case "chainblast": chainblast.startGame(difficulty, dailyRandom); break;
+      case "archer": archer.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -476,6 +563,10 @@ const Index = () => {
       case "2048": game2048.startGame(difficulty); break;
       case "sieve": sieve.startGame(difficulty); break;
       case "babylonian": babylonian.startGame(difficulty); break;
+      case "ricochet": ricochet.startGame(difficulty); break;
+      case "portal": portal.startGame(difficulty); break;
+      case "chainblast": chainblast.startGame(difficulty); break;
+      case "archer": archer.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -638,6 +729,44 @@ const Index = () => {
             onSetGuess={babylonian.setCurrentGuess} onSubmit={babylonian.submitGuess}
             onHint={babylonian.showHint} onUndo={babylonian.undo} onPeek={babylonian.peek}
             onRestart={isDaily ? dailyRestart : babylonian.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "ricochet":
+        return ricochet.game && (
+          <RicochetGameScreen
+            game={ricochet.game} time={time} onMove={ricochet.move}
+            onHint={ricochet.hint} onUndo={ricochet.undo} onPeek={ricochet.peek}
+            onRestart={isDaily ? dailyRestart : ricochet.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "portal":
+        return portal.game && (
+          <PortalGameScreen
+            game={portal.game} time={time} onMove={portal.move}
+            onHint={portal.hint} onUndo={portal.undo} onPeek={portal.peek}
+            onRestart={isDaily ? dailyRestart : portal.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "chainblast":
+        return chainblast.game && (
+          <ChainBlastGameScreen
+            game={chainblast.game} time={time}
+            onPlaceBomb={chainblast.placeBomb} onDetonate={chainblast.detonateAll}
+            onHint={chainblast.hint} onUndo={chainblast.undo} onPeek={chainblast.peek}
+            onRestart={isDaily ? dailyRestart : chainblast.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "archer":
+        return archer.game && (
+          <ArcherGameScreen
+            game={archer.game} time={time}
+            onShoot={archer.shoot} onMoveArcher={archer.moveArcher}
+            onHint={archer.hint} onUndo={archer.undo} onPeek={archer.peek}
+            onRestart={isDaily ? dailyRestart : archer.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
