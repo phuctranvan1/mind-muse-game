@@ -651,6 +651,15 @@ const Index = () => {
             dark={dark} onToggleDark={toggleDark}
           />
         );
+      case "lightsin":
+        return lightsin.game && (
+          <LightsInGameScreen
+            game={lightsin.game} time={time} onToggleCell={lightsin.toggleCell}
+            onHint={lightsin.hint} onUndo={lightsin.undo} onPeek={lightsin.peek}
+            onRestart={isDaily ? dailyRestart : lightsin.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
       case "pattern":
         return pattern.game && (
           <PatternRecallGameScreen
