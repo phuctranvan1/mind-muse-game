@@ -345,6 +345,7 @@ const Index = () => {
   const shift = useShiftGame();
   const memory = useMemoryGame();
   const lightsout = useLightsOutGame();
+  const lightsin = useLightsInGame();
   const pattern = usePatternRecallGame();
   const math = useMathChainGame();
   const hanoi = useHanoiGame();
@@ -370,6 +371,7 @@ const Index = () => {
   const shiftActive = isPlaying && selectedPuzzle === "shift" && shift.game && !shift.game.won;
   const memoryActive = isPlaying && selectedPuzzle === "memory" && memory.game && !memory.game.won;
   const lightsoutActive = isPlaying && selectedPuzzle === "lightsout" && lightsout.game && !lightsout.game.won;
+  const lightsinActive = isPlaying && selectedPuzzle === "lightsin" && lightsin.game && !lightsin.game.won;
   const mathActive = isPlaying && selectedPuzzle === "mathchain" && math.game && !math.game.finished;
   const hanoiActive = isPlaying && selectedPuzzle === "hanoi" && hanoi.game && !hanoi.game.won;
   const colorsortActive = isPlaying && selectedPuzzle === "colorsort" && colorsort.game && !colorsort.game.won;
@@ -384,7 +386,7 @@ const Index = () => {
   const portalActive = isPlaying && selectedPuzzle === "portal" && portal.game && !portal.game.won && !portal.game.lost;
   const chainblastActive = isPlaying && selectedPuzzle === "chainblast" && chainblast.game && !chainblast.game.won && !chainblast.game.lost;
   const archerActive = isPlaying && selectedPuzzle === "archer" && archer.game && !archer.game.won && !archer.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -394,6 +396,7 @@ const Index = () => {
     if (selectedPuzzle === "shift" && shift.game?.won) return { won: true, moves: shift.game.moves };
     if (selectedPuzzle === "memory" && memory.game?.won) return { won: true, moves: memory.game.moves };
     if (selectedPuzzle === "lightsout" && lightsout.game?.won) return { won: true, moves: lightsout.game.moves };
+    if (selectedPuzzle === "lightsin" && lightsin.game?.won) return { won: true, moves: lightsin.game.moves };
     if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") return { won: true, moves: pattern.game.score };
     if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) return { won: true, moves: math.game.score };
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) return { won: true, moves: hanoi.game.moves };
@@ -456,7 +459,7 @@ const Index = () => {
       setPendingAchievements(prev => [...prev, ...newAchievements]);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
+  }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won, lightsin.game?.won,
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
       game2048.game?.won, sieve.game?.won, babylonian.game?.won,
