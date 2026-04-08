@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useShiftGame, Difficulty } from "@/hooks/useShiftGame";
 import { useMemoryGame } from "@/hooks/useMemoryGame";
 import { useLightsOutGame } from "@/hooks/useLightsOutGame";
+import { useLightsInGame } from "@/hooks/useLightsInGame";
 import { usePatternRecallGame } from "@/hooks/usePatternRecallGame";
 import { useMathChainGame } from "@/hooks/useMathChainGame";
 import { useHanoiGame } from "@/hooks/useHanoiGame";
@@ -30,6 +31,7 @@ import DifficultyMenu from "@/components/game/DifficultyMenu";
 import GameScreen from "@/components/game/GameScreen";
 import MemoryGameScreen from "@/components/game/MemoryGameScreen";
 import LightsOutGameScreen from "@/components/game/LightsOutGameScreen";
+import LightsInGameScreen from "@/components/game/LightsInGameScreen";
 import PatternRecallGameScreen from "@/components/game/PatternRecallGameScreen";
 import MathChainGameScreen from "@/components/game/MathChainGameScreen";
 import HanoiGameScreen from "@/components/game/HanoiGameScreen";
@@ -81,6 +83,19 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "divine", label: "Divine", desc: "60 pairs · 120 cards", color: "bg-red-600", badge: "✦ Divine" },
   ],
   lightsout: [
+    { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4×4 Grid", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
+    { key: "expert", label: "Expert", desc: "6×6 Grid", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×8 Grid", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9×9 Grid", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10×10 · Pure Logic", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11×11 · Pure Logic", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12×12 · Pure Logic", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "14×14 · Pure Logic", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  lightsin: [
     { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
     { key: "medium", label: "Medium", desc: "4×4 Grid", color: "bg-tile-6" },
     { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
@@ -294,6 +309,7 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   shift: "Shift",
   memory: "Memory",
   lightsout: "Lights Out",
+  lightsin: "Lights In",
   pattern: "Pattern",
   mathchain: "Math Chain",
   hanoi: "Tower of Hanoi",
@@ -329,6 +345,7 @@ const Index = () => {
   const shift = useShiftGame();
   const memory = useMemoryGame();
   const lightsout = useLightsOutGame();
+  const lightsin = useLightsInGame();
   const pattern = usePatternRecallGame();
   const math = useMathChainGame();
   const hanoi = useHanoiGame();
@@ -354,6 +371,7 @@ const Index = () => {
   const shiftActive = isPlaying && selectedPuzzle === "shift" && shift.game && !shift.game.won;
   const memoryActive = isPlaying && selectedPuzzle === "memory" && memory.game && !memory.game.won;
   const lightsoutActive = isPlaying && selectedPuzzle === "lightsout" && lightsout.game && !lightsout.game.won;
+  const lightsinActive = isPlaying && selectedPuzzle === "lightsin" && lightsin.game && !lightsin.game.won;
   const mathActive = isPlaying && selectedPuzzle === "mathchain" && math.game && !math.game.finished;
   const hanoiActive = isPlaying && selectedPuzzle === "hanoi" && hanoi.game && !hanoi.game.won;
   const colorsortActive = isPlaying && selectedPuzzle === "colorsort" && colorsort.game && !colorsort.game.won;
@@ -368,7 +386,7 @@ const Index = () => {
   const portalActive = isPlaying && selectedPuzzle === "portal" && portal.game && !portal.game.won && !portal.game.lost;
   const chainblastActive = isPlaying && selectedPuzzle === "chainblast" && chainblast.game && !chainblast.game.won && !chainblast.game.lost;
   const archerActive = isPlaying && selectedPuzzle === "archer" && archer.game && !archer.game.won && !archer.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -378,6 +396,7 @@ const Index = () => {
     if (selectedPuzzle === "shift" && shift.game?.won) return { won: true, moves: shift.game.moves };
     if (selectedPuzzle === "memory" && memory.game?.won) return { won: true, moves: memory.game.moves };
     if (selectedPuzzle === "lightsout" && lightsout.game?.won) return { won: true, moves: lightsout.game.moves };
+    if (selectedPuzzle === "lightsin" && lightsin.game?.won) return { won: true, moves: lightsin.game.moves };
     if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") return { won: true, moves: pattern.game.score };
     if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) return { won: true, moves: math.game.score };
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) return { won: true, moves: hanoi.game.moves };
@@ -440,7 +459,7 @@ const Index = () => {
       setPendingAchievements(prev => [...prev, ...newAchievements]);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won,
+  }, [isPlaying, selectedPuzzle, shift.game?.won, memory.game?.won, lightsout.game?.won, lightsin.game?.won,
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
       game2048.game?.won, sieve.game?.won, babylonian.game?.won,
@@ -461,6 +480,7 @@ const Index = () => {
     if (selectedPuzzle === "shift" && shift.game?.won) checkWin(true, shift.game.moves);
     if (selectedPuzzle === "memory" && memory.game?.won) checkWin(true, memory.game.moves);
     if (selectedPuzzle === "lightsout" && lightsout.game?.won) checkWin(true, lightsout.game.moves);
+    if (selectedPuzzle === "lightsin" && lightsin.game?.won) checkWin(true, lightsin.game.moves);
     if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") checkWin(true, pattern.game.score);
     if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) checkWin(true, math.game.score);
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) checkWin(true, hanoi.game.moves);
@@ -476,7 +496,7 @@ const Index = () => {
     if (selectedPuzzle === "portal" && portal.game?.won) checkWin(true, portal.game.moves);
     if (selectedPuzzle === "chainblast" && chainblast.game?.won) checkWin(true, chainblast.game.moves);
     if (selectedPuzzle === "archer" && archer.game?.won) checkWin(true, archer.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -500,7 +520,7 @@ const Index = () => {
   };
 
   const allGoToMenu = () => {
-    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
+    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu(); lightsin.goToMenu();
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
@@ -524,6 +544,7 @@ const Index = () => {
       case "shift": shift.startGame(difficulty, dailyRandom); break;
       case "memory": memory.startGame(difficulty, dailyRandom); break;
       case "lightsout": lightsout.startGame(difficulty, dailyRandom); break;
+      case "lightsin": lightsin.startGame(difficulty, dailyRandom); break;
       case "pattern": pattern.startGame(difficulty, dailyRandom); break;
       case "mathchain": math.startGame(difficulty, dailyRandom); break;
       case "hanoi": hanoi.startGame(difficulty); break;
@@ -552,6 +573,7 @@ const Index = () => {
       case "shift": shift.startGame(difficulty); break;
       case "memory": memory.startGame(difficulty); break;
       case "lightsout": lightsout.startGame(difficulty); break;
+      case "lightsin": lightsin.startGame(difficulty); break;
       case "pattern": pattern.startGame(difficulty); break;
       case "mathchain": math.startGame(difficulty); break;
       case "hanoi": hanoi.startGame(difficulty); break;
@@ -626,6 +648,15 @@ const Index = () => {
             game={lightsout.game} time={time} onToggleCell={lightsout.toggleCell}
             onHint={lightsout.hint} onUndo={lightsout.undo} onPeek={lightsout.peek}
             onRestart={isDaily ? dailyRestart : lightsout.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "lightsin":
+        return lightsin.game && (
+          <LightsInGameScreen
+            game={lightsin.game} time={time} onToggleCell={lightsin.toggleCell}
+            onHint={lightsin.hint} onUndo={lightsin.undo} onPeek={lightsin.peek}
+            onRestart={isDaily ? dailyRestart : lightsin.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
