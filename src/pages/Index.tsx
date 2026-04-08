@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useShiftGame, Difficulty } from "@/hooks/useShiftGame";
 import { useMemoryGame } from "@/hooks/useMemoryGame";
 import { useLightsOutGame } from "@/hooks/useLightsOutGame";
+import { useLightsInGame } from "@/hooks/useLightsInGame";
 import { usePatternRecallGame } from "@/hooks/usePatternRecallGame";
 import { useMathChainGame } from "@/hooks/useMathChainGame";
 import { useHanoiGame } from "@/hooks/useHanoiGame";
@@ -30,6 +31,7 @@ import DifficultyMenu from "@/components/game/DifficultyMenu";
 import GameScreen from "@/components/game/GameScreen";
 import MemoryGameScreen from "@/components/game/MemoryGameScreen";
 import LightsOutGameScreen from "@/components/game/LightsOutGameScreen";
+import LightsInGameScreen from "@/components/game/LightsInGameScreen";
 import PatternRecallGameScreen from "@/components/game/PatternRecallGameScreen";
 import MathChainGameScreen from "@/components/game/MathChainGameScreen";
 import HanoiGameScreen from "@/components/game/HanoiGameScreen";
@@ -81,6 +83,19 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "divine", label: "Divine", desc: "60 pairs · 120 cards", color: "bg-red-600", badge: "✦ Divine" },
   ],
   lightsout: [
+    { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
+    { key: "medium", label: "Medium", desc: "4×4 Grid", color: "bg-tile-6" },
+    { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
+    { key: "expert", label: "Expert", desc: "6×6 Grid", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master", label: "Master", desc: "7×7 Grid", color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×8 Grid", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius", label: "Genius", desc: "9×9 Grid", color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend", label: "Legend", desc: "10×10 · Pure Logic", color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic", label: "Mythic", desc: "11×11 · Pure Logic", color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal", label: "Immortal", desc: "12×12 · Pure Logic", color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine", label: "Divine", desc: "14×14 · Pure Logic", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  lightsin: [
     { key: "easy", label: "Easy", desc: "3×3 Grid", color: "bg-tile-5" },
     { key: "medium", label: "Medium", desc: "4×4 Grid", color: "bg-tile-6" },
     { key: "hard", label: "Hard", desc: "5×5 Grid", color: "bg-tile-1" },
@@ -294,6 +309,7 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   shift: "Shift",
   memory: "Memory",
   lightsout: "Lights Out",
+  lightsin: "Lights In",
   pattern: "Pattern",
   mathchain: "Math Chain",
   hanoi: "Tower of Hanoi",
