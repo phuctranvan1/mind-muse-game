@@ -480,6 +480,7 @@ const Index = () => {
     if (selectedPuzzle === "shift" && shift.game?.won) checkWin(true, shift.game.moves);
     if (selectedPuzzle === "memory" && memory.game?.won) checkWin(true, memory.game.moves);
     if (selectedPuzzle === "lightsout" && lightsout.game?.won) checkWin(true, lightsout.game.moves);
+    if (selectedPuzzle === "lightsin" && lightsin.game?.won) checkWin(true, lightsin.game.moves);
     if (selectedPuzzle === "pattern" && pattern.game?.phase === "won") checkWin(true, pattern.game.score);
     if (selectedPuzzle === "mathchain" && math.game?.finished && math.game.score === math.game.problems.length) checkWin(true, math.game.score);
     if (selectedPuzzle === "hanoi" && hanoi.game?.won) checkWin(true, hanoi.game.moves);
@@ -495,7 +496,7 @@ const Index = () => {
     if (selectedPuzzle === "portal" && portal.game?.won) checkWin(true, portal.game.moves);
     if (selectedPuzzle === "chainblast" && chainblast.game?.won) checkWin(true, chainblast.game.moves);
     if (selectedPuzzle === "archer" && archer.game?.won) checkWin(true, archer.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -519,7 +520,7 @@ const Index = () => {
   };
 
   const allGoToMenu = () => {
-    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu();
+    shift.goToMenu(); memory.goToMenu(); lightsout.goToMenu(); lightsin.goToMenu();
     pattern.goToMenu(); math.goToMenu(); hanoi.goToMenu(); colorsort.goToMenu();
     sudoku.goToMenu(); nqueens.goToMenu(); knighttour.goToMenu();
     minesweeper.goToMenu(); game2048.goToMenu();
@@ -543,6 +544,7 @@ const Index = () => {
       case "shift": shift.startGame(difficulty, dailyRandom); break;
       case "memory": memory.startGame(difficulty, dailyRandom); break;
       case "lightsout": lightsout.startGame(difficulty, dailyRandom); break;
+      case "lightsin": lightsin.startGame(difficulty, dailyRandom); break;
       case "pattern": pattern.startGame(difficulty, dailyRandom); break;
       case "mathchain": math.startGame(difficulty, dailyRandom); break;
       case "hanoi": hanoi.startGame(difficulty); break;
@@ -571,6 +573,7 @@ const Index = () => {
       case "shift": shift.startGame(difficulty); break;
       case "memory": memory.startGame(difficulty); break;
       case "lightsout": lightsout.startGame(difficulty); break;
+      case "lightsin": lightsin.startGame(difficulty); break;
       case "pattern": pattern.startGame(difficulty); break;
       case "mathchain": math.startGame(difficulty); break;
       case "hanoi": hanoi.startGame(difficulty); break;
