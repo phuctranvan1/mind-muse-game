@@ -151,7 +151,7 @@ export function useNonogramGame() {
     const solution = buildGrid(difficulty, rand);
     const size = solution.length;
     const { rowClues, colClues } = computeClues(solution);
-    const grid: CellState[][] = Array.from({ length: size }, () => Array(size).fill("empty"));
+    const grid: CellState[][] = Array.from({ length: size }, () => Array.from({ length: size }, () => "empty" as CellState));
     setGame({ difficulty, solution, grid, rowClues, colClues, size, moves: 0, mistakes: 0, won: false, hintCell: null, peeking: false });
   }, []);
 
@@ -222,7 +222,7 @@ export function useNonogramGame() {
     historyRef.current = [];
     setGame(prev => {
       if (!prev) return prev;
-      const grid: CellState[][] = Array.from({ length: prev.size }, () => Array(prev.size).fill("empty"));
+      const grid: CellState[][] = Array.from({ length: prev.size }, () => Array.from({ length: prev.size }, () => "empty" as CellState));
       return { ...prev, grid, moves: 0, mistakes: 0, won: false, hintCell: null, peeking: false };
     });
   }, []);

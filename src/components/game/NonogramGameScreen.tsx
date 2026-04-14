@@ -32,8 +32,8 @@ const NonogramGameScreen = ({
   const [markMode, setMarkMode] = useState(false);
   const diffLabel = DIFF_LABELS[game.difficulty] ?? game.difficulty;
 
-  // Compute cell size based on grid size
-  const maxGridPx = Math.min(340, typeof window !== "undefined" ? window.innerWidth - 80 : 340);
+  // Compute cell size based on grid size — use 360 as a safe fallback for SSR/initial render
+  const maxGridPx = 340;
   const clueSpace = Math.max(20, Math.min(40, Math.floor(60 / game.size)));
   const cellPx = Math.max(18, Math.floor((maxGridPx - clueSpace * 4) / game.size));
 
