@@ -33,7 +33,7 @@ const NonogramGameScreen = ({
   const diffLabel = DIFF_LABELS[game.difficulty] ?? game.difficulty;
 
   // Compute cell size based on grid size
-  const maxGridPx = 420;
+  const maxGridPx = 560;
   const cellPx = Math.max(22, Math.floor(maxGridPx / game.size));
   const clueFontSize = Math.max(9, Math.min(13, Math.floor(cellPx * 0.6)));
   const clueLineH = clueFontSize + 5;
