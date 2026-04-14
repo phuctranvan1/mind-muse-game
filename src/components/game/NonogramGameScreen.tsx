@@ -32,10 +32,15 @@ const NonogramGameScreen = ({
   const [markMode, setMarkMode] = useState(false);
   const diffLabel = DIFF_LABELS[game.difficulty] ?? game.difficulty;
 
-  // Compute cell size based on grid size — use 360 as a safe fallback for SSR/initial render
-  const maxGridPx = 340;
-  const clueSpace = Math.max(20, Math.min(40, Math.floor(60 / game.size)));
-  const cellPx = Math.max(18, Math.floor((maxGridPx - clueSpace * 4) / game.size));
+  // Compute cell size based on grid size
+  const maxGridPx = 420;
+  const cellPx = Math.max(22, Math.floor(maxGridPx / game.size));
+  const clueFontSize = Math.max(9, Math.min(13, Math.floor(cellPx * 0.6)));
+  const clueLineH = clueFontSize + 5;
+  const maxColClueCount = Math.max(1, ...game.colClues.map(c => c.length));
+  const maxRowClueCount = Math.max(1, ...game.rowClues.map(r => r.length));
+  const colClueAreaH = Math.max(40, maxColClueCount * clueLineH + 10);
+  const rowClueAreaW = Math.max(40, maxRowClueCount * (clueFontSize * 0.7 + 6) + 6);
 
   const handleCellClick = useCallback((r: number, c: number) => {
     onToggleCell(r, c, markMode);
@@ -97,7 +102,7 @@ const NonogramGameScreen = ({
       <div className="overflow-auto pb-2">
         <div
           className="mx-auto"
-          style={{ display: "grid", gridTemplateColumns: `${clueSpace * 3}px repeat(${game.size}, ${cellPx}px)`, gridTemplateRows: `${clueSpace * 2}px repeat(${game.size}, ${cellPx}px)`, gap: 1 }}
+          style={{ display: "grid", gridTemplateColumns: `${rowClueAreaW}px repeat(${game.size}, ${cellPx}px)`, gridTemplateRows: `${colClueAreaH}px repeat(${game.size}, ${cellPx}px)`, gap: 1 }}
         >
           {/* Top-left empty corner */}
           <div style={{ gridColumn: "1", gridRow: "1" }} />
@@ -113,7 +118,7 @@ const NonogramGameScreen = ({
                 <span
                   key={i}
                   className="text-foreground font-bold leading-none"
-                  style={{ fontSize: Math.max(7, Math.min(11, cellPx * 0.55)) }}
+                  style={{ fontSize: clueFontSize, lineHeight: `${clueLineH}px` }}
                 >
                   {n}
                 </span>
@@ -133,7 +138,7 @@ const NonogramGameScreen = ({
                   <span
                     key={i}
                     className="text-foreground font-bold"
-                    style={{ fontSize: Math.max(7, Math.min(11, cellPx * 0.55)) }}
+                    style={{ fontSize: clueFontSize }}
                   >
                     {n}
                   </span>
