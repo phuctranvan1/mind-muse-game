@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
-export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master";
+export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7 };
-const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master" };
-const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10, mythic: 11, immortal: 12, divine: 14 };
+const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend", mythic: "Mythic", immortal: "Immortal", divine: "Divine" };
+const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null, grandmaster: 500, genius: 300, legend: 150, mythic: 120, immortal: 100, divine: 80 };
 
 function isSolvable(arr: (number | null)[], size: number): boolean {
   const flat = arr.filter((n): n is number => n !== null);
@@ -20,16 +20,14 @@ function isSolvable(arr: (number | null)[], size: number): boolean {
   return (rowFromBottom % 2 === 0) === (inversions % 2 !== 0);
 }
 
-function generateTiles(size: number): (number | null)[] {
+function generateTiles(size: number, rand: () => number = Math.random): (number | null)[] {
   const total = size * size;
   let arr: (number | null)[] = Array.from({ length: total - 1 }, (_, i) => i + 1);
   arr.push(null);
-
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-
   if (!isSolvable(arr, size)) {
     if (arr[0] !== null && arr[1] !== null) {
       [arr[0], arr[1]] = [arr[1], arr[0]];
@@ -58,7 +56,6 @@ function findHint(tiles: (number | null)[], size: number): number | null {
   if (row < size - 1) neighbors.push(emptyIdx + size);
   if (col > 0) neighbors.push(emptyIdx - 1);
   if (col < size - 1) neighbors.push(emptyIdx + 1);
-
   const target = emptyIdx < tiles.length - 1 ? emptyIdx + 1 : null;
   const best = neighbors.find(i => tiles[i] === target);
   return best ?? neighbors[0] ?? null;
@@ -73,22 +70,20 @@ export interface GameState {
   lost: boolean;
   hintTile: number | null;
   moveLimit: number | null;
+  peeking: boolean;
 }
 
 export function useShiftGame() {
   const [game, setGame] = useState<GameState | null>(null);
+  const historyRef = useRef<GameState[]>([]);
+  const peekTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const startGame = useCallback((difficulty: Difficulty) => {
+  const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
     const size = GRID_SIZES[difficulty];
+    historyRef.current = [];
     setGame({
-      tiles: generateTiles(size),
-      gridSize: size,
-      difficulty,
-      moves: 0,
-      won: false,
-      lost: false,
-      hintTile: null,
-      moveLimit: MOVE_LIMITS[difficulty],
+      tiles: generateTiles(size, rand), gridSize: size, difficulty, moves: 0,
+      won: false, lost: false, hintTile: null, moveLimit: MOVE_LIMITS[difficulty], peeking: false,
     });
   }, []);
 
@@ -97,6 +92,7 @@ export function useShiftGame() {
       if (!prev || prev.won || prev.lost) return prev;
       const emptyIdx = prev.tiles.indexOf(null);
       if (!isAdjacent(index, emptyIdx, prev.gridSize)) return prev;
+      historyRef.current.push({ ...prev });
       const newTiles = [...prev.tiles];
       [newTiles[index], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[index]];
       const newMoves = prev.moves + 1;
@@ -118,6 +114,7 @@ export function useShiftGame() {
       if (direction === "left" && col < prev.gridSize - 1) tileIdx = emptyIdx + 1;
       if (direction === "right" && col > 0) tileIdx = emptyIdx - 1;
       if (tileIdx === null) return prev;
+      historyRef.current.push({ ...prev });
       const newTiles = [...prev.tiles];
       [newTiles[tileIdx], newTiles[emptyIdx]] = [newTiles[emptyIdx], newTiles[tileIdx]];
       const newMoves = prev.moves + 1;
@@ -127,8 +124,14 @@ export function useShiftGame() {
     });
   }, []);
 
+  const undo = useCallback(() => {
+    const prev = historyRef.current.pop();
+    if (prev) setGame(prev);
+  }, []);
+
   const restart = useCallback(() => {
-    setGame(prev => prev ? { ...prev, tiles: generateTiles(prev.gridSize), moves: 0, won: false, lost: false, hintTile: null } : null);
+    historyRef.current = [];
+    setGame(prev => prev ? { ...prev, tiles: generateTiles(prev.gridSize), moves: 0, won: false, lost: false, hintTile: null, peeking: false } : null);
   }, []);
 
   const showHint = useCallback(() => {
@@ -138,7 +141,15 @@ export function useShiftGame() {
     });
   }, []);
 
-  const goToMenu = useCallback(() => setGame(null), []);
+  const peek = useCallback(() => {
+    if (peekTimeout.current) clearTimeout(peekTimeout.current);
+    setGame(prev => prev ? { ...prev, peeking: true } : prev);
+    peekTimeout.current = setTimeout(() => {
+      setGame(prev => prev ? { ...prev, peeking: false } : prev);
+    }, 2000);
+  }, []);
 
-  return { game, startGame, moveTile, moveByDirection, restart, showHint, goToMenu, difficultyLabel: game ? LABELS[game.difficulty] : "" };
+  const goToMenu = useCallback(() => { historyRef.current = []; setGame(null); }, []);
+
+  return { game, startGame, moveTile, moveByDirection, undo, restart, showHint, peek, goToMenu, difficultyLabel: game ? LABELS[game.difficulty] : "" };
 }

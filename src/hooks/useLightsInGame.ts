@@ -5,14 +5,16 @@ export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "gra
 const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10, mythic: 11, immortal: 12, divine: 14 };
 
 function generateBoard(size: number, rand: () => number = Math.random): boolean[][] {
-  const board = Array.from({ length: size }, () => Array(size).fill(false));
+  // Start with all lights ON, then apply random toggles to turn some off
+  const board = Array.from({ length: size }, () => Array(size).fill(true));
   const presses = Math.max(size * 2, 8);
   for (let p = 0; p < presses; p++) {
     const r = Math.floor(rand() * size);
     const c = Math.floor(rand() * size);
     toggle(board, r, c, size);
   }
-  if (board.every(row => row.every(cell => !cell))) {
+  // Ensure not already solved (all on)
+  if (board.every(row => row.every(cell => cell))) {
     toggle(board, 0, 0, size);
   }
   return board;
@@ -29,21 +31,21 @@ function toggle(board: boolean[][], r: number, c: number, size: number) {
 }
 
 function findHintCell(board: boolean[][], size: number): [number, number] | null {
-  // Find a lit cell to suggest toggling
+  // Find a dark (off) cell to suggest toggling
   for (let r = 0; r < size; r++)
     for (let c = 0; c < size; c++)
-      if (board[r][c]) return [r, c];
+      if (!board[r][c]) return [r, c];
   return null;
 }
 
-export interface LightsOutState {
+export interface LightsInState {
   board: boolean[][]; gridSize: number; difficulty: Difficulty;
   moves: number; won: boolean; hintCell: [number, number] | null; peeking: boolean;
 }
 
-export function useLightsOutGame() {
-  const [game, setGame] = useState<LightsOutState | null>(null);
-  const historyRef = useRef<LightsOutState[]>([]);
+export function useLightsInGame() {
+  const [game, setGame] = useState<LightsInState | null>(null);
+  const historyRef = useRef<LightsInState[]>([]);
   const peekTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startGame = useCallback((difficulty: Difficulty, rand: () => number = Math.random) => {
@@ -58,7 +60,7 @@ export function useLightsOutGame() {
       historyRef.current.push({ ...prev, board: prev.board.map(r => [...r]) });
       const newBoard = prev.board.map(r => [...r]);
       toggle(newBoard, row, col, prev.gridSize);
-      const won = newBoard.every(r => r.every(c => !c));
+      const won = newBoard.every(r => r.every(c => c)); // All ON = win
       return { ...prev, board: newBoard, moves: prev.moves + 1, won, hintCell: null };
     });
   }, []);

@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { LightsOutState } from "@/hooks/useLightsOutGame";
+import { LightsInState } from "@/hooks/useLightsInGame";
 import DarkModeToggle from "./DarkModeToggle";
 import WinModal from "./WinModal";
 import PowerUpButtons from "./PowerUpButtons";
 
 interface Props {
-  game: LightsOutState;
+  game: LightsInState;
   time: string;
   onToggleCell: (row: number, col: number) => void;
   onHint: () => void;
@@ -17,14 +17,14 @@ interface Props {
   onToggleDark: () => void;
 }
 
-const LightsOutGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
-  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend" };
+const LightsInGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek, onRestart, onMenu, dark, onToggleDark }: Props) => {
+  const diffLabels: Record<string, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend", mythic: "Mythic", immortal: "Immortal", divine: "Divine" };
 
   return (
     <div className="py-6 sm:py-8">
       <div className="flex justify-between items-start mb-5 sm:mb-6 gap-2">
         <div className="min-w-0">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Lights Out</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">Lights In</h1>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">{diffLabels[game.difficulty]}</span>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -42,10 +42,10 @@ const LightsOutGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek,
         </div>
       </div>
 
-      <p className="text-xs text-muted-foreground mb-4 text-center">Turn off all the lights! Clicking a cell toggles it and its neighbors.</p>
+      <p className="text-xs text-muted-foreground mb-4 text-center">Turn on all the lights! Clicking a cell toggles it and its neighbors.</p>
 
       {game.peeking && (
-        <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking — all lights off is the goal!</p>
+        <p className="text-xs text-accent text-center mb-2 font-semibold animate-pulse">👁 Peeking — all lights on is the goal!</p>
       )}
 
       <div
@@ -53,10 +53,10 @@ const LightsOutGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek,
         style={{ padding: "var(--gap)", display: "grid", gridTemplateColumns: `repeat(${game.gridSize}, 1fr)`, gap: "var(--gap)" }}
       >
         {(game.peeking
-          ? Array.from({ length: game.gridSize }, () => Array(game.gridSize).fill(false))
+          ? Array.from({ length: game.gridSize }, () => Array(game.gridSize).fill(true))
           : game.board
         ).map((row, r) =>
-          row.map((lit, c) => {
+          row.map((lit: boolean, c: number) => {
             const isHint = game.hintCell?.[0] === r && game.hintCell?.[1] === c;
             return (
               <motion.div
@@ -66,9 +66,9 @@ const LightsOutGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek,
                 whileTap={{ scale: 0.9 }}
                 className={`rounded-[var(--radius-inner)] cursor-pointer border transition-all duration-200 ${
                   isHint
-                    ? "bg-accent text-accent-foreground border-accent/50 shadow-[0_0_20px_hsl(var(--accent)/0.6)] animate-pulse"
+                    ? "bg-primary text-primary-foreground border-primary/50 shadow-[0_0_20px_hsl(var(--primary)/0.6)] animate-pulse"
                     : lit
-                    ? "bg-accent text-accent-foreground border-accent/50 shadow-[0_0_16px_hsl(var(--accent)/0.4)]"
+                    ? "bg-primary text-primary-foreground border-primary/50 shadow-[0_0_16px_hsl(var(--primary)/0.4)]"
                     : "bg-muted border-border shadow-[var(--tile-shadow)]"
                 }`}
               />
@@ -91,4 +91,4 @@ const LightsOutGameScreen = ({ game, time, onToggleCell, onHint, onUndo, onPeek,
   );
 };
 
-export default LightsOutGameScreen;
+export default LightsInGameScreen;
