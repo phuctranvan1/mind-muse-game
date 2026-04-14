@@ -18,6 +18,8 @@ import { useRicochetGame } from "@/hooks/useRicochetGame";
 import { usePortalGame } from "@/hooks/usePortalGame";
 import { useChainBlastGame } from "@/hooks/useChainBlastGame";
 import { useArcherGame } from "@/hooks/useArcherGame";
+import { useWordScrambleGame } from "@/hooks/useWordScrambleGame";
+import { useNonogramGame } from "@/hooks/useNonogramGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -47,6 +49,8 @@ import RicochetGameScreen from "@/components/game/RicochetGameScreen";
 import PortalGameScreen from "@/components/game/PortalGameScreen";
 import ChainBlastGameScreen from "@/components/game/ChainBlastGameScreen";
 import ArcherGameScreen from "@/components/game/ArcherGameScreen";
+import WordScrambleGameScreen from "@/components/game/WordScrambleGameScreen";
+import NonogramGameScreen from "@/components/game/NonogramGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import StatsModal from "@/components/game/StatsModal";
 import AchievementToast from "@/components/game/AchievementToast";
@@ -303,6 +307,32 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "immortal", label: "Immortal", desc: "16×16 · 35 arrows", color: "bg-purple-600", badge: "🌌 Immortal" },
     { key: "divine", label: "Divine", desc: "18×18 · 45 arrows", color: "bg-red-600", badge: "✦ Divine" },
   ],
+  wordscramble: [
+    { key: "easy",        label: "Easy",        desc: "3–4 letter words · 3 rounds",    color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "5–6 letter words · 4 rounds",    color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "7–8 letter words · 5 rounds · timed", color: "bg-tile-1", badge: "Timed" },
+    { key: "expert",      label: "Expert",      desc: "8–10 letter words · 6 rounds",   color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "9–10 letter words · 7 rounds",   color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "Long words · 8 rounds · fast",   color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "11+ letter words · 10 rounds",   color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "12 rounds · monster words",      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "14 rounds · 35s per word",       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "16 rounds · 30s per word",       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "20 rounds · 25s per word",       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  nonogram: [
+    { key: "easy",        label: "Easy",        desc: "5×5 grid · pixel art",           color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7×7 grid",                       color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "10×10 grid",                     color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "10×10 · random layout",          color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12×12 grid",                     color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "12×12 · denser",                 color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "15×15 grid",                     color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "15×15 · sparse clues",           color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "18×18 grid",                     color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "20×20 grid",                     color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25×25 · maximum pain",           color: "bg-red-600", badge: "✦ Divine" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -325,6 +355,8 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   portal: "Portal Maze",
   chainblast: "Chain Blast",
   archer: "Archer",
+  wordscramble: "Word Scramble",
+  nonogram: "Nonogram",
 };
 
 const Index = () => {
@@ -361,6 +393,8 @@ const Index = () => {
   const portal = usePortalGame();
   const chainblast = useChainBlastGame();
   const archer = useArcherGame();
+  const wordscramble = useWordScrambleGame();
+  const nonogram = useNonogramGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
@@ -386,7 +420,9 @@ const Index = () => {
   const portalActive = isPlaying && selectedPuzzle === "portal" && portal.game && !portal.game.won && !portal.game.lost;
   const chainblastActive = isPlaying && selectedPuzzle === "chainblast" && chainblast.game && !chainblast.game.won && !chainblast.game.lost;
   const archerActive = isPlaying && selectedPuzzle === "archer" && archer.game && !archer.game.won && !archer.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive);
+  const wordscrambleActive = isPlaying && selectedPuzzle === "wordscramble" && wordscramble.game && !wordscramble.game.won && !wordscramble.game.lost;
+  const nonogramActive = isPlaying && selectedPuzzle === "nonogram" && nonogram.game && !nonogram.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -412,6 +448,8 @@ const Index = () => {
     if (selectedPuzzle === "portal" && portal.game?.won) return { won: true, moves: portal.game.moves };
     if (selectedPuzzle === "chainblast" && chainblast.game?.won) return { won: true, moves: chainblast.game.moves };
     if (selectedPuzzle === "archer" && archer.game?.won) return { won: true, moves: archer.game.moves };
+    if (selectedPuzzle === "wordscramble" && wordscramble.game?.won) return { won: true, moves: wordscramble.game.moves };
+    if (selectedPuzzle === "nonogram" && nonogram.game?.won) return { won: true, moves: nonogram.game.moves };
     return null;
   };
 
@@ -463,7 +501,8 @@ const Index = () => {
       pattern.game?.phase, math.game?.finished, hanoi.game?.won, colorsort.game?.won,
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
       game2048.game?.won, sieve.game?.won, babylonian.game?.won,
-      ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won]);
+      ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won,
+      wordscramble.game?.won, nonogram.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -496,7 +535,9 @@ const Index = () => {
     if (selectedPuzzle === "portal" && portal.game?.won) checkWin(true, portal.game.moves);
     if (selectedPuzzle === "chainblast" && chainblast.game?.won) checkWin(true, chainblast.game.moves);
     if (selectedPuzzle === "archer" && archer.game?.won) checkWin(true, archer.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game]);
+    if (selectedPuzzle === "wordscramble" && wordscramble.game?.won) checkWin(true, wordscramble.game.moves);
+    if (selectedPuzzle === "nonogram" && nonogram.game?.won) checkWin(true, nonogram.game.moves);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -527,6 +568,7 @@ const Index = () => {
     sieve.goToMenu(); babylonian.goToMenu();
     ricochet.goToMenu(); portal.goToMenu();
     chainblast.goToMenu(); archer.goToMenu();
+    wordscramble.goToMenu(); nonogram.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -560,6 +602,8 @@ const Index = () => {
       case "portal": portal.startGame(difficulty, dailyRandom); break;
       case "chainblast": chainblast.startGame(difficulty, dailyRandom); break;
       case "archer": archer.startGame(difficulty, dailyRandom); break;
+      case "wordscramble": wordscramble.startGame(difficulty, dailyRandom); break;
+      case "nonogram": nonogram.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -589,6 +633,8 @@ const Index = () => {
       case "portal": portal.startGame(difficulty); break;
       case "chainblast": chainblast.startGame(difficulty); break;
       case "archer": archer.startGame(difficulty); break;
+      case "wordscramble": wordscramble.startGame(difficulty); break;
+      case "nonogram": nonogram.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -799,6 +845,30 @@ const Index = () => {
             onHint={archer.hint} onUndo={archer.undo} onPeek={archer.peek}
             onRestart={isDaily ? dailyRestart : archer.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "wordscramble":
+        return wordscramble.game && (
+          <WordScrambleGameScreen
+            game={wordscramble.game} time={time}
+            onPlaceLetter={wordscramble.placeLetter}
+            onRemoveLast={wordscramble.removeLast}
+            onRetryRound={wordscramble.retryRound}
+            onHint={wordscramble.hint} onUndo={wordscramble.undo} onPeek={wordscramble.peek}
+            onRestart={isDaily ? dailyRestart : wordscramble.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+            xpGain={lastXPGain}
+          />
+        );
+      case "nonogram":
+        return nonogram.game && (
+          <NonogramGameScreen
+            game={nonogram.game} time={time}
+            onToggleCell={nonogram.toggleCell}
+            onHint={nonogram.hint} onUndo={nonogram.undo} onPeek={nonogram.peek}
+            onRestart={isDaily ? dailyRestart : nonogram.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+            xpGain={lastXPGain}
           />
         );
     }
