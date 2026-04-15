@@ -20,6 +20,8 @@ import { useChainBlastGame } from "@/hooks/useChainBlastGame";
 import { useArcherGame } from "@/hooks/useArcherGame";
 import { useWordScrambleGame } from "@/hooks/useWordScrambleGame";
 import { useNonogramGame } from "@/hooks/useNonogramGame";
+import { useStroopGame } from "@/hooks/useStroopGame";
+import { useSequenceGame } from "@/hooks/useSequenceGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -51,6 +53,8 @@ import ChainBlastGameScreen from "@/components/game/ChainBlastGameScreen";
 import ArcherGameScreen from "@/components/game/ArcherGameScreen";
 import WordScrambleGameScreen from "@/components/game/WordScrambleGameScreen";
 import NonogramGameScreen from "@/components/game/NonogramGameScreen";
+import StroopGameScreen from "@/components/game/StroopGameScreen";
+import SequenceGameScreen from "@/components/game/SequenceGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import StatsModal from "@/components/game/StatsModal";
 import AchievementToast from "@/components/game/AchievementToast";
@@ -333,6 +337,32 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "immortal",    label: "Immortal",    desc: "20×20 grid",                     color: "bg-purple-600", badge: "🌌 Immortal" },
     { key: "divine",      label: "Divine",      desc: "25×25 · maximum pain",           color: "bg-red-600", badge: "✦ Divine" },
   ],
+  stroop: [
+    { key: "easy",        label: "Easy",        desc: "3 colors · 6 rounds · 8s",       color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "4 colors · 8 rounds · 6s",       color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "5 colors · 10 rounds · 5s",      color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "6 colors · 12 rounds · 4s",      color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "6 colors · 15 rounds · 3s",      color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "7 colors · 18 rounds · 2.5s",    color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "8 colors · 20 rounds · 2s",      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "8 colors · 25 rounds · 1.5s",    color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "8 colors · 30 rounds · 1s",      color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "8 colors · 36 rounds · 0.8s",    color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "8 colors · 45 rounds · 0.6s",    color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  sequence: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · arithmetic only",     color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · geometric added",     color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · squares & triangles", color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · primes & Fibonacci", color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · cubes & powers",     color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · 2nd-order patterns", color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · all types",          color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds · all types",          color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "25 rounds · all types",          color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "30 rounds · all types",          color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "40 rounds · all types",          color: "bg-red-600", badge: "✦ Divine" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -357,6 +387,8 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   archer: "Archer",
   wordscramble: "Word Scramble",
   nonogram: "Nonogram",
+  stroop: "Stroop Test",
+  sequence: "Number Sequence",
 };
 
 const Index = () => {
@@ -395,6 +427,8 @@ const Index = () => {
   const archer = useArcherGame();
   const wordscramble = useWordScrambleGame();
   const nonogram = useNonogramGame();
+  const stroop = useStroopGame();
+  const sequence = useSequenceGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
@@ -422,7 +456,9 @@ const Index = () => {
   const archerActive = isPlaying && selectedPuzzle === "archer" && archer.game && !archer.game.won && !archer.game.lost;
   const wordscrambleActive = isPlaying && selectedPuzzle === "wordscramble" && wordscramble.game && !wordscramble.game.won && !wordscramble.game.lost;
   const nonogramActive = isPlaying && selectedPuzzle === "nonogram" && nonogram.game && !nonogram.game.won;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive);
+  const stroopActive = isPlaying && selectedPuzzle === "stroop" && stroop.game && !stroop.game.won;
+  const sequenceActive = isPlaying && selectedPuzzle === "sequence" && sequence.game && !sequence.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive || stroopActive || sequenceActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -450,6 +486,8 @@ const Index = () => {
     if (selectedPuzzle === "archer" && archer.game?.won) return { won: true, moves: archer.game.moves };
     if (selectedPuzzle === "wordscramble" && wordscramble.game?.won) return { won: true, moves: wordscramble.game.moves };
     if (selectedPuzzle === "nonogram" && nonogram.game?.won) return { won: true, moves: nonogram.game.moves };
+    if (selectedPuzzle === "stroop" && stroop.game?.won) return { won: true, moves: stroop.game.score };
+    if (selectedPuzzle === "sequence" && sequence.game?.won) return { won: true, moves: sequence.game.score };
     return null;
   };
 
@@ -502,7 +540,7 @@ const Index = () => {
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
       game2048.game?.won, sieve.game?.won, babylonian.game?.won,
       ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won,
-      wordscramble.game?.won, nonogram.game?.won]);
+      wordscramble.game?.won, nonogram.game?.won, stroop.game?.won, sequence.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -537,7 +575,9 @@ const Index = () => {
     if (selectedPuzzle === "archer" && archer.game?.won) checkWin(true, archer.game.moves);
     if (selectedPuzzle === "wordscramble" && wordscramble.game?.won) checkWin(true, wordscramble.game.moves);
     if (selectedPuzzle === "nonogram" && nonogram.game?.won) checkWin(true, nonogram.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game]);
+    if (selectedPuzzle === "stroop" && stroop.game?.won) checkWin(true, stroop.game.score);
+    if (selectedPuzzle === "sequence" && sequence.game?.won) checkWin(true, sequence.game.score);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game, stroop.game, sequence.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -569,6 +609,7 @@ const Index = () => {
     ricochet.goToMenu(); portal.goToMenu();
     chainblast.goToMenu(); archer.goToMenu();
     wordscramble.goToMenu(); nonogram.goToMenu();
+    stroop.goToMenu(); sequence.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -604,6 +645,8 @@ const Index = () => {
       case "archer": archer.startGame(difficulty, dailyRandom); break;
       case "wordscramble": wordscramble.startGame(difficulty, dailyRandom); break;
       case "nonogram": nonogram.startGame(difficulty, dailyRandom); break;
+      case "stroop": stroop.startGame(difficulty, dailyRandom); break;
+      case "sequence": sequence.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -635,6 +678,8 @@ const Index = () => {
       case "archer": archer.startGame(difficulty); break;
       case "wordscramble": wordscramble.startGame(difficulty); break;
       case "nonogram": nonogram.startGame(difficulty); break;
+      case "stroop": stroop.startGame(difficulty); break;
+      case "sequence": sequence.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -871,15 +916,35 @@ const Index = () => {
             xpGain={lastXPGain}
           />
         );
+      case "stroop":
+        return stroop.game && (
+          <StroopGameScreen
+            game={stroop.game} time={time}
+            onAnswer={stroop.selectAnswer}
+            onHint={stroop.hint} onPeek={stroop.peek}
+            onRestart={isDaily ? dailyRestart : stroop.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "sequence":
+        return sequence.game && (
+          <SequenceGameScreen
+            game={sequence.game} time={time}
+            onAnswer={sequence.selectAnswer}
+            onHint={sequence.hint} onPeek={sequence.peek} onUndo={sequence.undo}
+            onRestart={isDaily ? dailyRestart : sequence.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
     }
   };
 
   return (
-    <div className="flex min-h-svh items-start sm:items-center justify-center bg-background">
-      <div className="w-full max-w-[640px] sm:max-w-2xl px-4 sm:px-6 py-4 sm:py-0">
+    <div className="min-h-svh bg-background">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
         <AnimatePresence mode="wait">
           {screen === "puzzleSelect" && (
-            <motion.div key="puzzles" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition}>
+            <motion.div key="puzzles" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition} className="max-w-7xl mx-auto">
               <PuzzleSelector
                 onSelect={handlePuzzleSelect}
                 onDailyChallenge={handleDailyChallenge}
@@ -893,7 +958,7 @@ const Index = () => {
             </motion.div>
           )}
           {screen === "difficultySelect" && (
-            <motion.div key="difficulty" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition}>
+            <motion.div key="difficulty" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition} className="max-w-2xl mx-auto">
               <DifficultyMenu
                 title={PUZZLE_NAMES[selectedPuzzle]}
                 onSelectDifficulty={handleDifficultySelect}
@@ -904,7 +969,7 @@ const Index = () => {
             </motion.div>
           )}
           {screen === "playing" && (
-            <motion.div key="game" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition}>
+            <motion.div key="game" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={transition} className="max-w-2xl mx-auto">
               {isDaily && (
                 <div className="text-center mb-2">
                   <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/15 text-primary border border-primary/25">

@@ -6,7 +6,7 @@ import { XPState } from "@/hooks/useXPSystem";
 import { getLevelTitle } from "@/hooks/useXPSystem";
 import XPBar from "./XPBar";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram" | "stroop" | "sequence";
 
 type Category = "all" | "logic" | "memory" | "math" | "word" | "visual";
 
@@ -32,6 +32,8 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "archer",       label: "Archer",         desc: "Hit all targets",              icon: "🏹", color: "bg-tile-4", category: "logic"  },
   { key: "wordscramble", label: "Word Scramble",  desc: "Unscramble the letters",       icon: "🔤", color: "bg-tile-2", category: "word"   },
   { key: "nonogram",     label: "Nonogram",       desc: "Fill cells from clues",        icon: "🖼",  color: "bg-tile-5", category: "visual" },
+  { key: "stroop",       label: "Stroop Test",    desc: "Ink color vs word conflict",   icon: "🎨", color: "bg-tile-3", category: "memory" },
+  { key: "sequence",     label: "Number Sequence",desc: "Find the pattern",             icon: "🔢", color: "bg-tile-7", category: "math"   },
 ];
 
 const CATEGORY_LABELS: Record<Category, string> = {
@@ -164,7 +166,7 @@ const PuzzleSelector = ({ onSelect, onDailyChallenge, onOpenStats, dark, onToggl
               <button onClick={() => setSearch("")} className="mt-2 text-primary text-xs underline">Clear search</button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
               {filtered.map((p, i) => {
                 const done = isDailyDone(p.key);
                 return (
