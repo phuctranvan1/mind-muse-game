@@ -6,7 +6,7 @@ import { XPState } from "@/hooks/useXPSystem";
 import { getLevelTitle } from "@/hooks/useXPSystem";
 import XPBar from "./XPBar";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram" | "stroop" | "sequence";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram" | "stroop" | "sequence" | "binary" | "roman" | "mentalmath" | "simon" | "reflex" | "typing" | "cipher" | "wordsearch" | "anagram" | "wordle" | "mastermind" | "maze" | "tictactoe" | "balance" | "piperotate" | "floodfill" | "connect4" | "setgame" | "oddoneout" | "pathfinder";
 
 type Category = "all" | "logic" | "memory" | "math" | "word" | "visual";
 
@@ -34,6 +34,26 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "nonogram",     label: "Nonogram",       desc: "Fill cells from clues",        icon: "🖼",  color: "bg-tile-5", category: "visual" },
   { key: "stroop",       label: "Stroop Test",    desc: "Ink color vs word conflict",   icon: "🎨", color: "bg-tile-3", category: "memory" },
   { key: "sequence",     label: "Number Sequence",desc: "Find the pattern",             icon: "🔢", color: "bg-tile-7", category: "math"   },
+  { key: "binary",       label: "Binary",         desc: "Convert between bases",        icon: "01", color: "bg-tile-1", category: "math"   },
+  { key: "roman",        label: "Roman Numerals", desc: "Read & write Roman numbers",   icon: "Ⅻ", color: "bg-tile-3", category: "math"   },
+  { key: "mentalmath",   label: "Mental Math",    desc: "Multi-step arithmetic",        icon: "🧮", color: "bg-tile-5", category: "math"   },
+  { key: "simon",        label: "Simon Says",     desc: "Repeat the color sequence",    icon: "🎨", color: "bg-tile-2", category: "memory" },
+  { key: "reflex",       label: "Reflex",         desc: "Tap targets before they vanish",icon: "⚡",color: "bg-tile-4", category: "memory" },
+  { key: "typing",       label: "Typing Speed",   desc: "Type words against the clock", icon: "⌨️", color: "bg-tile-6", category: "word"   },
+  { key: "cipher",       label: "Cipher",         desc: "Decode the Caesar cipher",     icon: "🔐", color: "bg-tile-8", category: "word"   },
+  { key: "wordsearch",   label: "Word Search",    desc: "Find hidden words in a grid",  icon: "🔍", color: "bg-tile-1", category: "word"   },
+  { key: "anagram",      label: "Anagram",        desc: "Spot the anagram",             icon: "🔤", color: "bg-tile-3", category: "word"   },
+  { key: "wordle",       label: "Wordle",         desc: "Guess the hidden word",        icon: "💬", color: "bg-tile-5", category: "word"   },
+  { key: "mastermind",   label: "Mastermind",     desc: "Crack the color code",         icon: "🎯", color: "bg-tile-7", category: "logic"  },
+  { key: "maze",         label: "Maze",           desc: "Find the exit",                icon: "🌐", color: "bg-tile-2", category: "logic"  },
+  { key: "tictactoe",    label: "Tic-Tac-Toe",    desc: "Beat the AI on large boards",  icon: "✕", color: "bg-tile-4", category: "logic"  },
+  { key: "balance",      label: "Balance",        desc: "Deduce the heavier object",    icon: "⚖️", color: "bg-tile-6", category: "logic"  },
+  { key: "piperotate",   label: "Pipe Rotate",    desc: "Rotate pipes to connect flow", icon: "🔧", color: "bg-tile-8", category: "logic"  },
+  { key: "floodfill",    label: "Flood Fill",     desc: "Paint the board one color",    icon: "🌊", color: "bg-tile-1", category: "logic"  },
+  { key: "connect4",     label: "Connect 4",      desc: "Four in a row vs AI",          icon: "🔴", color: "bg-tile-3", category: "logic"  },
+  { key: "setgame",      label: "Set Game",       desc: "Find matching card sets",      icon: "🃏", color: "bg-tile-5", category: "visual" },
+  { key: "oddoneout",    label: "Odd One Out",    desc: "Identify the odd one out",     icon: "🦠", color: "bg-tile-7", category: "visual" },
+  { key: "pathfinder",   label: "Pathfinder",     desc: "Flip arrows to find the path", icon: "🧭", color: "bg-tile-2", category: "logic"  },
 ];
 
 const CATEGORY_LABELS: Record<Category, string> = {

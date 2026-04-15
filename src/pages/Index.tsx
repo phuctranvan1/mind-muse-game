@@ -22,6 +22,26 @@ import { useWordScrambleGame } from "@/hooks/useWordScrambleGame";
 import { useNonogramGame } from "@/hooks/useNonogramGame";
 import { useStroopGame } from "@/hooks/useStroopGame";
 import { useSequenceGame } from "@/hooks/useSequenceGame";
+import { useBinaryGame } from "@/hooks/useBinaryGame";
+import { useRomanGame } from "@/hooks/useRomanGame";
+import { useMentalMathGame } from "@/hooks/useMentalMathGame";
+import { useSimonGame } from "@/hooks/useSimonGame";
+import { useReflexGame } from "@/hooks/useReflexGame";
+import { useTypingSpeedGame } from "@/hooks/useTypingSpeedGame";
+import { useCipherGame } from "@/hooks/useCipherGame";
+import { useWordSearchGame } from "@/hooks/useWordSearchGame";
+import { useAnagramGame } from "@/hooks/useAnagramGame";
+import { useWordleGame } from "@/hooks/useWordleGame";
+import { useMastermindGame } from "@/hooks/useMastermindGame";
+import { useMazeGame } from "@/hooks/useMazeGame";
+import { useTicTacToeGame } from "@/hooks/useTicTacToeGame";
+import { useBalanceGame } from "@/hooks/useBalanceGame";
+import { usePipeRotateGame } from "@/hooks/usePipeRotateGame";
+import { useFloodFillGame } from "@/hooks/useFloodFillGame";
+import { useConnect4Game } from "@/hooks/useConnect4Game";
+import { useSetGame } from "@/hooks/useSetGame";
+import { useOddOneOutGame } from "@/hooks/useOddOneOutGame";
+import { usePathfinderGame } from "@/hooks/usePathfinderGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -55,6 +75,26 @@ import WordScrambleGameScreen from "@/components/game/WordScrambleGameScreen";
 import NonogramGameScreen from "@/components/game/NonogramGameScreen";
 import StroopGameScreen from "@/components/game/StroopGameScreen";
 import SequenceGameScreen from "@/components/game/SequenceGameScreen";
+import BinaryGameScreen from "@/components/game/BinaryGameScreen";
+import RomanGameScreen from "@/components/game/RomanGameScreen";
+import MentalMathGameScreen from "@/components/game/MentalMathGameScreen";
+import SimonGameScreen from "@/components/game/SimonGameScreen";
+import ReflexGameScreen from "@/components/game/ReflexGameScreen";
+import TypingSpeedGameScreen from "@/components/game/TypingSpeedGameScreen";
+import CipherGameScreen from "@/components/game/CipherGameScreen";
+import WordSearchGameScreen from "@/components/game/WordSearchGameScreen";
+import AnagramGameScreen from "@/components/game/AnagramGameScreen";
+import WordleGameScreen from "@/components/game/WordleGameScreen";
+import MastermindGameScreen from "@/components/game/MastermindGameScreen";
+import MazeGameScreen from "@/components/game/MazeGameScreen";
+import TicTacToeGameScreen from "@/components/game/TicTacToeGameScreen";
+import BalanceGameScreen from "@/components/game/BalanceGameScreen";
+import PipeRotateGameScreen from "@/components/game/PipeRotateGameScreen";
+import FloodFillGameScreen from "@/components/game/FloodFillGameScreen";
+import Connect4GameScreen from "@/components/game/Connect4GameScreen";
+import SetGameScreen from "@/components/game/SetGameScreen";
+import OddOneOutGameScreen from "@/components/game/OddOneOutGameScreen";
+import PathfinderGameScreen from "@/components/game/PathfinderGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import StatsModal from "@/components/game/StatsModal";
 import AchievementToast from "@/components/game/AchievementToast";
@@ -363,6 +403,266 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "immortal",    label: "Immortal",    desc: "30 rounds · all types",          color: "bg-purple-600", badge: "🌌 Immortal" },
     { key: "divine",      label: "Divine",      desc: "40 rounds · all types",          color: "bg-red-600", badge: "✦ Divine" },
   ],
+  binary: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · binary→decimal",       color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · binary ↔ decimal",     color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · + hex→decimal",        color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · all bases",           color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · large values",        color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · all conversions",     color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · up to 4095",          color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds · up to 65535",         color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds · 16-bit values",       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds · 16-bit values",       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds · 16-bit values",       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  roman: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · up to X",              color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · up to L",              color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · reverse included",     color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · up to D",             color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · up to M",             color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · up to MM",            color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · up to MMCMXCIX",      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds · up to MMMCMXCIX",     color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds · 3999 max",            color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds · 3999 max",            color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds · 3999 max",            color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  mentalmath: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · 2-step",               color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · 3-step",               color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · 3-step · larger nums", color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · 4-step",              color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · 4-step · harder",     color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · 5-step",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · 5-step · max nums",   color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds · 6-step",              color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds · 6-step · brutal",     color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds · 7-step",              color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds · 7-step · extreme",    color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  simon: [
+    { key: "easy",        label: "Easy",        desc: "4 colors · 4 steps",              color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "4 colors · 6 steps",              color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "4 colors · 8 steps",              color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "6 colors · 10 steps",             color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "6 colors · 12 steps",             color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "6 colors · 16 steps",             color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "8 colors · 20 steps",             color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "8 colors · 25 steps · fast",      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "8 colors · 30 steps · faster",    color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "8 colors · 36 steps · rapid",     color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "8 colors · 45 steps · lightning", color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  reflex: [
+    { key: "easy",        label: "Easy",        desc: "10 targets · slow",               color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "15 targets · normal",             color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "20 targets · fast",               color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "25 targets · 1.2s window",        color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "30 targets · 1s window",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "35 targets · 0.8s",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "40 targets · 0.6s",              color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "50 targets · 0.5s",              color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "60 targets · 0.4s",              color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "70 targets · 0.3s",              color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "80 targets · 0.25s",             color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  typing: [
+    { key: "easy",        label: "Easy",        desc: "10 words · 5 letters · slow",     color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "12 words · normal speed",         color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "15 words · 6+ letters",           color: "bg-tile-1", badge: "Timed" },
+    { key: "expert",      label: "Expert",      desc: "18 words · fast",                 color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "20 words · long words",           color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "25 words · very fast",            color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "30 words · extreme speed",        color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "35 words · brutal words",         color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "40 words · 3s each",              color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "45 words · 2.5s each",            color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "50 words · 2s each",              color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  cipher: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · shift ≤ 5",            color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · any shift",            color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · longer words",         color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · 4 options",           color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · harder",              color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · brutal",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · max confusion",       color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds · full cipher",         color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds",                       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds",                       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds",                       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  wordsearch: [
+    { key: "easy",        label: "Easy",        desc: "6×6 grid · 3 words",              color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "8×8 grid · 4 words",              color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "10×10 · 5 words · diagonals",     color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "12×12 · 6 words",                 color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "14×14 · 7 words · all dirs",      color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "16×16 · 8 words",                 color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16×16 · 9 words · reversed",      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "18×18 · 10 words",                color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "20×20 · 11 words",                color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "22×22 · 12 words",                color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "24×24 · 14 words",                color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  anagram: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · 4-letter words",       color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · 5-letter words",       color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · 6-letter words",       color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · 7-letter words",      color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · long words",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · brutal",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · max confusion",       color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds",                       color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds",                       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds",                       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds",                       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  wordle: [
+    { key: "easy",        label: "Easy",        desc: "4-letter words · 6 guesses",      color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "5-letter words · 6 guesses",      color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "5-letter words · 5 guesses",      color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "6-letter words · 6 guesses",      color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "6-letter words · 5 guesses",      color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "7-letter words · 5 guesses",      color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "7-letter words · 4 guesses",      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "8-letter words · 4 guesses",      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "8-letter words · 3 guesses",      color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "9-letter words · 3 guesses",      color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "10-letter words · 3 guesses",     color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  mastermind: [
+    { key: "easy",        label: "Easy",        desc: "4 pegs · 4 colors · 8 guesses",   color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "4 pegs · 5 colors · 7 guesses",   color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "4 pegs · 6 colors · 6 guesses",   color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "5 pegs · 6 colors · 7 guesses",   color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "5 pegs · 7 colors · 6 guesses",   color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "6 pegs · 7 colors · 7 guesses",   color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "6 pegs · 8 colors · 6 guesses",   color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "7 pegs · 8 colors · 7 guesses",   color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "7 pegs · 9 colors · 6 guesses",   color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "8 pegs · 9 colors · 7 guesses",   color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "8 pegs · 10 colors · 6 guesses",  color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  maze: [
+    { key: "easy",        label: "Easy",        desc: "5×5 maze",                        color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "8×8 maze",                        color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "10×10 maze",                      color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "12×12 maze",                      color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "14×14 maze",                      color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "16×16 maze",                      color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "20×20 maze",                      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "24×24 maze",                      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "28×28 maze",                      color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "32×32 maze",                      color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "40×40 maze",                      color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  tictactoe: [
+    { key: "easy",        label: "Easy",        desc: "3×3 · easy AI",                   color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "3×3 · medium AI",                 color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "4×4 · 4-in-a-row",               color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "5×5 · 4-in-a-row · hard AI",     color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "5×5 · 5-in-a-row",               color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "6×6 · 5-in-a-row",               color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "7×7 · 5-in-a-row · brutal AI",   color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "8×8 · 5-in-a-row · max AI",      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "9×9 · 6-in-a-row",               color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "10×10 · 6-in-a-row",             color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "12×12 · 6-in-a-row",             color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  balance: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · 3 weights",            color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · 4 weights",            color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · deduction chains",     color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · 5 weights",           color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · complex chains",      color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · 6 weights",           color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · max confusion",       color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds",                       color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds",                       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds",                       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds",                       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  piperotate: [
+    { key: "easy",        label: "Easy",        desc: "4×4 grid",                        color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "5×5 grid",                        color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "6×6 grid",                        color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "7×7 grid",                        color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "8×8 grid",                        color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "9×9 grid",                        color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "10×10 grid",                      color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "12×12 grid",                      color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "14×14 grid",                      color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "16×16 grid",                      color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "18×18 grid",                      color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  floodfill: [
+    { key: "easy",        label: "Easy",        desc: "6×6 · 3 colors · 8 moves",        color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "8×8 · 4 colors · 12 moves",       color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "10×10 · 5 colors · 16 moves",     color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "12×12 · 5 colors · 18 moves",     color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "14×14 · 6 colors · 20 moves",     color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "16×16 · 6 colors · 22 moves",     color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "18×18 · 7 colors · 25 moves",     color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20×20 · 7 colors · 28 moves",     color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22×22 · 7 colors · 30 moves",     color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24×24 · 7 colors · 32 moves",     color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "26×26 · 7 colors · 35 moves",     color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  connect4: [
+    { key: "easy",        label: "Easy",        desc: "6×7 · easy AI",                   color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "6×7 · medium AI",                 color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "6×7 · hard AI",                   color: "bg-tile-1", badge: "Classic" },
+    { key: "expert",      label: "Expert",      desc: "7×8 · expert AI",                 color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "7×8 · master AI",                 color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "8×9 · grandmaster AI",            color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "8×9 · genius AI",                 color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "9×10 · legend AI",                color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "9×10 · mythic AI",                color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "10×11 · immortal AI",             color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "10×11 · divine AI",               color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  setgame: [
+    { key: "easy",        label: "Easy",        desc: "9 cards · find 2 sets",           color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "9 cards · find 3 sets",           color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "12 cards · find 4 sets",          color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "12 cards · find 5 sets",          color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 cards · find 6 sets",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "15 cards · find 7 sets",          color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "15 cards · find 8 sets",          color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "15 cards · find 9 sets",          color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "18 cards · find 10 sets",         color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "18 cards · find 11 sets",         color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "18 cards · find 12 sets",         color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  oddoneout: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · obvious differences",  color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · subtle differences",   color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · tricky",               color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · expert level",        color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · hard logic",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · brutal",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · max confusion",       color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "20 rounds",                       color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "22 rounds",                       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "24 rounds",                       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "25 rounds",                       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  pathfinder: [
+    { key: "easy",        label: "Easy",        desc: "4×4 grid · 5 flips",              color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "4×4 grid · 4 flips",              color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "5×5 grid · 5 flips",              color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "5×5 grid · 4 flips",              color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "6×6 grid · 5 flips",              color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "6×6 grid · 4 flips",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "7×7 grid · 5 flips",              color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "7×7 grid · 4 flips",              color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "8×8 grid · 5 flips",              color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "8×8 grid · 4 flips",              color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "9×9 grid · 5 flips",              color: "bg-red-600", badge: "✦ Divine" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -389,6 +689,26 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   nonogram: "Nonogram",
   stroop: "Stroop Test",
   sequence: "Number Sequence",
+  binary: "Binary Conversion",
+  roman: "Roman Numerals",
+  mentalmath: "Mental Math",
+  simon: "Simon Says",
+  reflex: "Reflex Challenge",
+  typing: "Typing Speed",
+  cipher: "Caesar Cipher",
+  wordsearch: "Word Search",
+  anagram: "Anagram",
+  wordle: "Wordle",
+  mastermind: "Mastermind",
+  maze: "Maze",
+  tictactoe: "Tic-Tac-Toe",
+  balance: "Balance Deduction",
+  piperotate: "Pipe Rotate",
+  floodfill: "Flood Fill",
+  connect4: "Connect 4",
+  setgame: "Set Game",
+  oddoneout: "Odd One Out",
+  pathfinder: "Pathfinder",
 };
 
 const Index = () => {
@@ -429,6 +749,26 @@ const Index = () => {
   const nonogram = useNonogramGame();
   const stroop = useStroopGame();
   const sequence = useSequenceGame();
+  const binary = useBinaryGame();
+  const roman = useRomanGame();
+  const mentalmath = useMentalMathGame();
+  const simon = useSimonGame();
+  const reflex = useReflexGame();
+  const typing = useTypingSpeedGame();
+  const cipher = useCipherGame();
+  const wordsearch = useWordSearchGame();
+  const anagram = useAnagramGame();
+  const wordle = useWordleGame();
+  const mastermind = useMastermindGame();
+  const maze = useMazeGame();
+  const tictactoe = useTicTacToeGame();
+  const balance = useBalanceGame();
+  const piperotate = usePipeRotateGame();
+  const floodfill = useFloodFillGame();
+  const connect4 = useConnect4Game();
+  const setgame = useSetGame();
+  const oddoneout = useOddOneOutGame();
+  const pathfinder = usePathfinderGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
@@ -458,7 +798,27 @@ const Index = () => {
   const nonogramActive = isPlaying && selectedPuzzle === "nonogram" && nonogram.game && !nonogram.game.won;
   const stroopActive = isPlaying && selectedPuzzle === "stroop" && stroop.game && !stroop.game.won;
   const sequenceActive = isPlaying && selectedPuzzle === "sequence" && sequence.game && !sequence.game.won;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive || stroopActive || sequenceActive);
+  const binaryActive = isPlaying && selectedPuzzle === "binary" && binary.game && !binary.game.won;
+  const romanActive = isPlaying && selectedPuzzle === "roman" && roman.game && !roman.game.won;
+  const mentalmathActive = isPlaying && selectedPuzzle === "mentalmath" && mentalmath.game && !mentalmath.game.won;
+  const simonActive = isPlaying && selectedPuzzle === "simon" && simon.game && !simon.game.won;
+  const reflexActive = isPlaying && selectedPuzzle === "reflex" && reflex.game && !reflex.game.won && !reflex.game.lost;
+  const typingActive = isPlaying && selectedPuzzle === "typing" && typing.game && !typing.game.won && !typing.game.lost;
+  const cipherActive = isPlaying && selectedPuzzle === "cipher" && cipher.game && !cipher.game.won;
+  const wordsearchActive = isPlaying && selectedPuzzle === "wordsearch" && wordsearch.game && !wordsearch.game.won;
+  const anagramActive = isPlaying && selectedPuzzle === "anagram" && anagram.game && !anagram.game.won;
+  const wordleActive = isPlaying && selectedPuzzle === "wordle" && wordle.game && !wordle.game.won && !wordle.game.lost;
+  const mastermindActive = isPlaying && selectedPuzzle === "mastermind" && mastermind.game && !mastermind.game.won && !mastermind.game.lost;
+  const mazeActive = isPlaying && selectedPuzzle === "maze" && maze.game && !maze.game.won;
+  const tictactoeActive = isPlaying && selectedPuzzle === "tictactoe" && tictactoe.game && !tictactoe.game.won && !tictactoe.game.draw;
+  const balanceActive = isPlaying && selectedPuzzle === "balance" && balance.game && !balance.game.won;
+  const piperotateActive = isPlaying && selectedPuzzle === "piperotate" && piperotate.game && !piperotate.game.won;
+  const floodfillActive = isPlaying && selectedPuzzle === "floodfill" && floodfill.game && !floodfill.game.won;
+  const connect4Active = isPlaying && selectedPuzzle === "connect4" && connect4.game && !connect4.game.won && !connect4.game.draw;
+  const setgameActive = isPlaying && selectedPuzzle === "setgame" && setgame.game && !setgame.game.won;
+  const oddoneoutActive = isPlaying && selectedPuzzle === "oddoneout" && oddoneout.game && !oddoneout.game.won;
+  const pathfinderActive = isPlaying && selectedPuzzle === "pathfinder" && pathfinder.game && !pathfinder.game.won && !pathfinder.game.lost;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive || stroopActive || sequenceActive || binaryActive || romanActive || mentalmathActive || simonActive || reflexActive || typingActive || cipherActive || wordsearchActive || anagramActive || wordleActive || mastermindActive || mazeActive || tictactoeActive || balanceActive || piperotateActive || floodfillActive || connect4Active || setgameActive || oddoneoutActive || pathfinderActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -488,6 +848,26 @@ const Index = () => {
     if (selectedPuzzle === "nonogram" && nonogram.game?.won) return { won: true, moves: nonogram.game.moves };
     if (selectedPuzzle === "stroop" && stroop.game?.won) return { won: true, moves: stroop.game.score };
     if (selectedPuzzle === "sequence" && sequence.game?.won) return { won: true, moves: sequence.game.score };
+    if (selectedPuzzle === "binary" && binary.game?.won) return { won: true, moves: binary.game.score };
+    if (selectedPuzzle === "roman" && roman.game?.won) return { won: true, moves: roman.game.score };
+    if (selectedPuzzle === "mentalmath" && mentalmath.game?.won) return { won: true, moves: mentalmath.game.score };
+    if (selectedPuzzle === "simon" && simon.game?.won) return { won: true, moves: simon.game.round };
+    if (selectedPuzzle === "reflex" && reflex.game?.won) return { won: true, moves: reflex.game.score };
+    if (selectedPuzzle === "typing" && typing.game?.won) return { won: true, moves: typing.game.correct };
+    if (selectedPuzzle === "cipher" && cipher.game?.won) return { won: true, moves: cipher.game.score };
+    if (selectedPuzzle === "wordsearch" && wordsearch.game?.won) return { won: true, moves: wordsearch.game.moves };
+    if (selectedPuzzle === "anagram" && anagram.game?.won) return { won: true, moves: anagram.game.score };
+    if (selectedPuzzle === "wordle" && wordle.game?.won) return { won: true, moves: wordle.game.guesses.length };
+    if (selectedPuzzle === "mastermind" && mastermind.game?.won) return { won: true, moves: mastermind.game.guesses.length };
+    if (selectedPuzzle === "maze" && maze.game?.won) return { won: true, moves: maze.game.moves };
+    if (selectedPuzzle === "tictactoe" && tictactoe.game?.won) return { won: true, moves: tictactoe.game.moves };
+    if (selectedPuzzle === "balance" && balance.game?.won) return { won: true, moves: balance.game.score };
+    if (selectedPuzzle === "piperotate" && piperotate.game?.won) return { won: true, moves: piperotate.game.moves };
+    if (selectedPuzzle === "floodfill" && floodfill.game?.won) return { won: true, moves: floodfill.game.moves };
+    if (selectedPuzzle === "connect4" && connect4.game?.won) return { won: true, moves: connect4.game.moves };
+    if (selectedPuzzle === "setgame" && setgame.game?.won) return { won: true, moves: setgame.game.moves };
+    if (selectedPuzzle === "oddoneout" && oddoneout.game?.won) return { won: true, moves: oddoneout.game.score };
+    if (selectedPuzzle === "pathfinder" && pathfinder.game?.won) return { won: true, moves: pathfinder.game.moves };
     return null;
   };
 
@@ -540,7 +920,12 @@ const Index = () => {
       sudoku.game?.won, nqueens.game?.won, knighttour.game?.won, minesweeper.game?.won,
       game2048.game?.won, sieve.game?.won, babylonian.game?.won,
       ricochet.game?.won, portal.game?.won, chainblast.game?.won, archer.game?.won,
-      wordscramble.game?.won, nonogram.game?.won, stroop.game?.won, sequence.game?.won]);
+      wordscramble.game?.won, nonogram.game?.won, stroop.game?.won, sequence.game?.won,
+      binary.game?.won, roman.game?.won, mentalmath.game?.won, simon.game?.won,
+      reflex.game?.won, typing.game?.won, cipher.game?.won, wordsearch.game?.won,
+      anagram.game?.won, wordle.game?.won, mastermind.game?.won, maze.game?.won,
+      tictactoe.game?.won, balance.game?.won, piperotate.game?.won, floodfill.game?.won,
+      connect4.game?.won, setgame.game?.won, oddoneout.game?.won, pathfinder.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -577,7 +962,27 @@ const Index = () => {
     if (selectedPuzzle === "nonogram" && nonogram.game?.won) checkWin(true, nonogram.game.moves);
     if (selectedPuzzle === "stroop" && stroop.game?.won) checkWin(true, stroop.game.score);
     if (selectedPuzzle === "sequence" && sequence.game?.won) checkWin(true, sequence.game.score);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game, stroop.game, sequence.game]);
+    if (selectedPuzzle === "binary" && binary.game?.won) checkWin(true, binary.game.score);
+    if (selectedPuzzle === "roman" && roman.game?.won) checkWin(true, roman.game.score);
+    if (selectedPuzzle === "mentalmath" && mentalmath.game?.won) checkWin(true, mentalmath.game.score);
+    if (selectedPuzzle === "simon" && simon.game?.won) checkWin(true, simon.game.round);
+    if (selectedPuzzle === "reflex" && reflex.game?.won) checkWin(true, reflex.game.score);
+    if (selectedPuzzle === "typing" && typing.game?.won) checkWin(true, typing.game.correct);
+    if (selectedPuzzle === "cipher" && cipher.game?.won) checkWin(true, cipher.game.score);
+    if (selectedPuzzle === "wordsearch" && wordsearch.game?.won) checkWin(true, wordsearch.game.moves);
+    if (selectedPuzzle === "anagram" && anagram.game?.won) checkWin(true, anagram.game.score);
+    if (selectedPuzzle === "wordle" && wordle.game?.won) checkWin(true, wordle.game.guesses.length);
+    if (selectedPuzzle === "mastermind" && mastermind.game?.won) checkWin(true, mastermind.game.guesses.length);
+    if (selectedPuzzle === "maze" && maze.game?.won) checkWin(true, maze.game.moves);
+    if (selectedPuzzle === "tictactoe" && tictactoe.game?.won) checkWin(true, tictactoe.game.moves);
+    if (selectedPuzzle === "balance" && balance.game?.won) checkWin(true, balance.game.score);
+    if (selectedPuzzle === "piperotate" && piperotate.game?.won) checkWin(true, piperotate.game.moves);
+    if (selectedPuzzle === "floodfill" && floodfill.game?.won) checkWin(true, floodfill.game.moves);
+    if (selectedPuzzle === "connect4" && connect4.game?.won) checkWin(true, connect4.game.moves);
+    if (selectedPuzzle === "setgame" && setgame.game?.won) checkWin(true, setgame.game.moves);
+    if (selectedPuzzle === "oddoneout" && oddoneout.game?.won) checkWin(true, oddoneout.game.score);
+    if (selectedPuzzle === "pathfinder" && pathfinder.game?.won) checkWin(true, pathfinder.game.moves);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game, stroop.game, sequence.game, binary.game, roman.game, mentalmath.game, simon.game, reflex.game, typing.game, cipher.game, wordsearch.game, anagram.game, wordle.game, mastermind.game, maze.game, tictactoe.game, balance.game, piperotate.game, floodfill.game, connect4.game, setgame.game, oddoneout.game, pathfinder.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -610,6 +1015,13 @@ const Index = () => {
     chainblast.goToMenu(); archer.goToMenu();
     wordscramble.goToMenu(); nonogram.goToMenu();
     stroop.goToMenu(); sequence.goToMenu();
+    binary.goToMenu(); roman.goToMenu(); mentalmath.goToMenu();
+    simon.goToMenu(); reflex.goToMenu(); typing.goToMenu();
+    cipher.goToMenu(); wordsearch.goToMenu(); anagram.goToMenu();
+    wordle.goToMenu(); mastermind.goToMenu(); maze.goToMenu();
+    tictactoe.goToMenu(); balance.goToMenu(); piperotate.goToMenu();
+    floodfill.goToMenu(); connect4.goToMenu(); setgame.goToMenu();
+    oddoneout.goToMenu(); pathfinder.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -647,6 +1059,26 @@ const Index = () => {
       case "nonogram": nonogram.startGame(difficulty, dailyRandom); break;
       case "stroop": stroop.startGame(difficulty, dailyRandom); break;
       case "sequence": sequence.startGame(difficulty, dailyRandom); break;
+      case "binary": binary.startGame(difficulty, dailyRandom); break;
+      case "roman": roman.startGame(difficulty, dailyRandom); break;
+      case "mentalmath": mentalmath.startGame(difficulty, dailyRandom); break;
+      case "simon": simon.startGame(difficulty, dailyRandom); break;
+      case "reflex": reflex.startGame(difficulty, dailyRandom); break;
+      case "typing": typing.startGame(difficulty, dailyRandom); break;
+      case "cipher": cipher.startGame(difficulty, dailyRandom); break;
+      case "wordsearch": wordsearch.startGame(difficulty, dailyRandom); break;
+      case "anagram": anagram.startGame(difficulty, dailyRandom); break;
+      case "wordle": wordle.startGame(difficulty, dailyRandom); break;
+      case "mastermind": mastermind.startGame(difficulty, dailyRandom); break;
+      case "maze": maze.startGame(difficulty, dailyRandom); break;
+      case "tictactoe": tictactoe.startGame(difficulty); break;
+      case "balance": balance.startGame(difficulty, dailyRandom); break;
+      case "piperotate": piperotate.startGame(difficulty, dailyRandom); break;
+      case "floodfill": floodfill.startGame(difficulty, dailyRandom); break;
+      case "connect4": connect4.startGame(difficulty); break;
+      case "setgame": setgame.startGame(difficulty, dailyRandom); break;
+      case "oddoneout": oddoneout.startGame(difficulty, dailyRandom); break;
+      case "pathfinder": pathfinder.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -680,6 +1112,26 @@ const Index = () => {
       case "nonogram": nonogram.startGame(difficulty); break;
       case "stroop": stroop.startGame(difficulty); break;
       case "sequence": sequence.startGame(difficulty); break;
+      case "binary": binary.startGame(difficulty); break;
+      case "roman": roman.startGame(difficulty); break;
+      case "mentalmath": mentalmath.startGame(difficulty); break;
+      case "simon": simon.startGame(difficulty); break;
+      case "reflex": reflex.startGame(difficulty); break;
+      case "typing": typing.startGame(difficulty); break;
+      case "cipher": cipher.startGame(difficulty); break;
+      case "wordsearch": wordsearch.startGame(difficulty); break;
+      case "anagram": anagram.startGame(difficulty); break;
+      case "wordle": wordle.startGame(difficulty); break;
+      case "mastermind": mastermind.startGame(difficulty); break;
+      case "maze": maze.startGame(difficulty); break;
+      case "tictactoe": tictactoe.startGame(difficulty); break;
+      case "balance": balance.startGame(difficulty); break;
+      case "piperotate": piperotate.startGame(difficulty); break;
+      case "floodfill": floodfill.startGame(difficulty); break;
+      case "connect4": connect4.startGame(difficulty); break;
+      case "setgame": setgame.startGame(difficulty); break;
+      case "oddoneout": oddoneout.startGame(difficulty); break;
+      case "pathfinder": pathfinder.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -933,6 +1385,213 @@ const Index = () => {
             onAnswer={sequence.selectAnswer}
             onHint={sequence.hint} onPeek={sequence.peek} onUndo={sequence.undo}
             onRestart={isDaily ? dailyRestart : sequence.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "binary":
+        return binary.game && (
+          <BinaryGameScreen
+            game={binary.game} time={time}
+            onAnswer={binary.selectAnswer}
+            onHint={binary.hint} onPeek={binary.peek} onUndo={binary.undo}
+            onRestart={isDaily ? dailyRestart : binary.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "roman":
+        return roman.game && (
+          <RomanGameScreen
+            game={roman.game} time={time}
+            onAnswer={roman.selectAnswer}
+            onHint={roman.hint} onPeek={roman.peek} onUndo={roman.undo}
+            onRestart={isDaily ? dailyRestart : roman.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "mentalmath":
+        return mentalmath.game && (
+          <MentalMathGameScreen
+            game={mentalmath.game} time={time}
+            onAnswer={mentalmath.selectAnswer}
+            onHint={mentalmath.hint} onPeek={mentalmath.peek} onUndo={mentalmath.undo}
+            onRestart={isDaily ? dailyRestart : mentalmath.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "simon":
+        return simon.game && (
+          <SimonGameScreen
+            game={simon.game} time={time}
+            onPressColor={simon.pressColor}
+            onAdvanceShow={simon.advanceShowIndex}
+            onHint={simon.hint} onPeek={simon.peek} onUndo={simon.undo}
+            onRestart={isDaily ? dailyRestart : simon.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "reflex":
+        return reflex.game && (
+          <ReflexGameScreen
+            game={reflex.game} time={time}
+            onClickTarget={reflex.clickTarget}
+            onMissTarget={reflex.missTarget}
+            onHint={reflex.hint} onPeek={reflex.peek}
+            onRestart={isDaily ? dailyRestart : reflex.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "typing":
+        return typing.game && (
+          <TypingSpeedGameScreen
+            game={typing.game} time={time}
+            onSetInput={typing.setInput}
+            onSubmitWord={typing.submitWord}
+            onTimeOut={typing.timeOut}
+            onHint={typing.hint} onPeek={typing.peek} onUndo={typing.undo}
+            onRestart={isDaily ? dailyRestart : typing.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "cipher":
+        return cipher.game && (
+          <CipherGameScreen
+            game={cipher.game} time={time}
+            onAnswer={cipher.selectAnswer}
+            onHint={cipher.hint} onPeek={cipher.peek} onUndo={cipher.undo}
+            onRestart={isDaily ? dailyRestart : cipher.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "wordsearch":
+        return wordsearch.game && (
+          <WordSearchGameScreen
+            game={wordsearch.game} time={time}
+            onSelectCell={wordsearch.selectCell}
+            onHint={wordsearch.hint} onPeek={wordsearch.peek} onUndo={wordsearch.undo}
+            onRestart={isDaily ? dailyRestart : wordsearch.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "anagram":
+        return anagram.game && (
+          <AnagramGameScreen
+            game={anagram.game} time={time}
+            onAnswer={anagram.selectAnswer}
+            onHint={anagram.hint} onPeek={anagram.peek} onUndo={anagram.undo}
+            onRestart={isDaily ? dailyRestart : anagram.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "wordle":
+        return wordle.game && (
+          <WordleGameScreen
+            game={wordle.game} time={time}
+            onTypeChar={wordle.typeChar}
+            onDeleteLast={wordle.deleteLast}
+            onSubmitGuess={wordle.submitGuess}
+            onHint={wordle.hint} onPeek={wordle.peek}
+            onRestart={isDaily ? dailyRestart : wordle.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "mastermind":
+        return mastermind.game && (
+          <MastermindGameScreen
+            game={mastermind.game} time={time}
+            onSetPeg={mastermind.setPeg}
+            onSubmitGuess={mastermind.submitGuess}
+            onHint={mastermind.hint} onPeek={mastermind.peek} onUndo={mastermind.undo}
+            onRestart={isDaily ? dailyRestart : mastermind.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "maze":
+        return maze.game && (
+          <MazeGameScreen
+            game={maze.game} time={time}
+            onMove={maze.move}
+            onHint={maze.hint} onPeek={maze.peek} onUndo={maze.undo}
+            onRestart={isDaily ? dailyRestart : maze.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "tictactoe":
+        return tictactoe.game && (
+          <TicTacToeGameScreen
+            game={tictactoe.game} time={time}
+            onPlaceMark={tictactoe.placeMark}
+            onHint={tictactoe.hint} onPeek={tictactoe.peek}
+            onRestart={isDaily ? dailyRestart : tictactoe.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "balance":
+        return balance.game && (
+          <BalanceGameScreen
+            game={balance.game} time={time}
+            onAnswer={balance.selectAnswer}
+            onHint={balance.hint} onPeek={balance.peek} onUndo={balance.undo}
+            onRestart={isDaily ? dailyRestart : balance.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "piperotate":
+        return piperotate.game && (
+          <PipeRotateGameScreen
+            game={piperotate.game} time={time}
+            onRotateTile={piperotate.rotateTileAt}
+            onHint={piperotate.hint} onPeek={piperotate.peek} onUndo={piperotate.undo}
+            onRestart={isDaily ? dailyRestart : piperotate.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "floodfill":
+        return floodfill.game && (
+          <FloodFillGameScreen
+            game={floodfill.game} time={time}
+            onFill={floodfill.fill}
+            onHint={floodfill.hint} onPeek={floodfill.peek}
+            onRestart={isDaily ? dailyRestart : floodfill.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "connect4":
+        return connect4.game && (
+          <Connect4GameScreen
+            game={connect4.game} time={time}
+            onDrop={connect4.dropInColumn}
+            onHint={connect4.hint} onPeek={connect4.peek}
+            onRestart={isDaily ? dailyRestart : connect4.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "setgame":
+        return setgame.game && (
+          <SetGameScreen
+            game={setgame.game} time={time}
+            onToggleCard={setgame.toggleCard}
+            onHint={setgame.hint} onPeek={setgame.peek}
+            onRestart={isDaily ? dailyRestart : setgame.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "oddoneout":
+        return oddoneout.game && (
+          <OddOneOutGameScreen
+            game={oddoneout.game} time={time}
+            onAnswer={oddoneout.selectAnswer}
+            onHint={oddoneout.hint} onPeek={oddoneout.peek} onUndo={oddoneout.undo}
+            onRestart={isDaily ? dailyRestart : oddoneout.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "pathfinder":
+        return pathfinder.game && (
+          <PathfinderGameScreen
+            game={pathfinder.game} time={time}
+            onFlipArrow={pathfinder.flipArrow}
+            onHint={pathfinder.hint} onPeek={pathfinder.peek} onUndo={pathfinder.undo}
+            onRestart={isDaily ? dailyRestart : pathfinder.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
