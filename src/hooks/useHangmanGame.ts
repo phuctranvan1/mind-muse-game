@@ -178,7 +178,7 @@ export function useHangmanGame() {
       const guessed = prev.guessed.slice(0, -1);
       const display = prev.word.split("").map(ch => guessed.includes(ch) ? ch : "_");
       const wrongCount = prev.word.includes(lastLetter) ? prev.wrongCount : prev.wrongCount - 1;
-      return { ...prev, guessed, display, wrongCount: Math.max(0, wrongCount), hintText: null };
+      return { ...prev, guessed, display, wrongCount: Math.max(0, wrongCount), moves: Math.max(0, prev.moves - 1), hintText: null };
     });
   }, []);
 

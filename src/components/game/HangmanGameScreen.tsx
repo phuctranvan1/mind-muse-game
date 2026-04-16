@@ -9,12 +9,13 @@ const LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 interface GallowsProps { wrongCount: number; maxWrong: number }
 
 const Gallows = ({ wrongCount, maxWrong }: GallowsProps) => {
-  const showHead    = wrongCount >= 1;
-  const showBody    = wrongCount >= Math.ceil(maxWrong * 2 / 6);
-  const showLeftArm = wrongCount >= Math.ceil(maxWrong * 3 / 6);
-  const showRightArm= wrongCount >= Math.ceil(maxWrong * 4 / 6);
-  const showLeftLeg = wrongCount >= Math.ceil(maxWrong * 5 / 6);
-  const showRightLeg= wrongCount >= maxWrong;
+  const step = maxWrong / 6;
+  const showHead     = wrongCount >= Math.ceil(step * 1);
+  const showBody     = wrongCount >= Math.ceil(step * 2);
+  const showLeftArm  = wrongCount >= Math.ceil(step * 3);
+  const showRightArm = wrongCount >= Math.ceil(step * 4);
+  const showLeftLeg  = wrongCount >= Math.ceil(step * 5);
+  const showRightLeg = wrongCount >= maxWrong;
   return (
     <svg viewBox="0 0 120 140" width="120" height="140" className="mx-auto">
       {/* Gallows frame */}
