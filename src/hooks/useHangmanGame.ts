@@ -82,11 +82,11 @@ const WORD_BANK: Record<Difficulty, { word: string; category: string }[]> = {
     { word: "communication", category: "Language" }, { word: "disappointing", category: "Feelings" },
   ],
   divine:      [
-    { word: "acknowledgment", category: "Language" }, { word: "approximately", category: "Math" },
-    { word: "autobiography", category: "Literature" }, { word: "counterintuitive", category: "Logic" },
-    { word: "electromagnetic", category: "Physics" }, { word: "misrepresentation", category: "Language" },
-    { word: "accomplishment", category: "Achievements" }, { word: "straightforward", category: "Adjectives" },
-    { word: "revolutionary", category: "History" }, { word: "transformation", category: "Science" },
+    { word: "incomprehensible", category: "Language" }, { word: "uncharacteristic", category: "Adjectives" },
+    { word: "disproportionate", category: "Math" }, { word: "unconstitutional", category: "Law" },
+    { word: "overrepresentation", category: "Statistics" }, { word: "indestructibility", category: "Physics" },
+    { word: "compartmentalize", category: "Psychology" }, { word: "indistinguishable", category: "Science" },
+    { word: "predetermination", category: "Philosophy" }, { word: "transcontinental", category: "Geography" },
   ],
 };
 
