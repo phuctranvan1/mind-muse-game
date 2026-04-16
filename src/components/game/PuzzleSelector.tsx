@@ -6,7 +6,7 @@ import { XPState } from "@/hooks/useXPSystem";
 import { getLevelTitle } from "@/hooks/useXPSystem";
 import XPBar from "./XPBar";
 
-export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram" | "stroop" | "sequence" | "binary" | "roman" | "mentalmath" | "simon" | "reflex" | "typing" | "cipher" | "wordsearch" | "anagram" | "wordle" | "mastermind" | "maze" | "tictactoe" | "balance" | "piperotate" | "floodfill" | "connect4" | "setgame" | "oddoneout" | "pathfinder";
+export type PuzzleType = "shift" | "memory" | "lightsout" | "lightsin" | "pattern" | "mathchain" | "hanoi" | "colorsort" | "sudoku" | "nqueens" | "knighttour" | "minesweeper" | "2048" | "sieve" | "babylonian" | "ricochet" | "portal" | "chainblast" | "archer" | "wordscramble" | "nonogram" | "stroop" | "sequence" | "binary" | "roman" | "mentalmath" | "simon" | "reflex" | "typing" | "cipher" | "wordsearch" | "anagram" | "wordle" | "mastermind" | "maze" | "tictactoe" | "balance" | "piperotate" | "floodfill" | "connect4" | "setgame" | "oddoneout" | "pathfinder" | "hangman" | "emojimath" | "flagquiz";
 
 type Category = "all" | "logic" | "memory" | "math" | "word" | "visual";
 
@@ -54,6 +54,9 @@ const puzzles: { key: PuzzleType; label: string; desc: string; icon: string; col
   { key: "setgame",      label: "Set Game",       desc: "Find matching card sets",      icon: "🃏", color: "bg-tile-5", category: "visual" },
   { key: "oddoneout",    label: "Odd One Out",    desc: "Identify the odd one out",     icon: "🦠", color: "bg-tile-7", category: "visual" },
   { key: "pathfinder",   label: "Pathfinder",     desc: "Flip arrows to find the path", icon: "🧭", color: "bg-tile-2", category: "logic"  },
+  { key: "hangman",      label: "Hangman",        desc: "Guess the hidden word",        icon: "🪢", color: "bg-tile-4", category: "word"   },
+  { key: "emojimath",    label: "Emoji Math",     desc: "Solve emoji equations",        icon: "🧮", color: "bg-tile-6", category: "math"   },
+  { key: "flagquiz",     label: "Flag Quiz",      desc: "Identify country flags",       icon: "🏳️", color: "bg-tile-2", category: "visual" },
 ];
 
 const CATEGORY_LABELS: Record<Category, string> = {

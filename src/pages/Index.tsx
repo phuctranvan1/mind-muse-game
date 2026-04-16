@@ -42,6 +42,9 @@ import { useConnect4Game } from "@/hooks/useConnect4Game";
 import { useSetGame } from "@/hooks/useSetGame";
 import { useOddOneOutGame } from "@/hooks/useOddOneOutGame";
 import { usePathfinderGame } from "@/hooks/usePathfinderGame";
+import { useHangmanGame } from "@/hooks/useHangmanGame";
+import { useEmojiMathGame } from "@/hooks/useEmojiMathGame";
+import { useFlagQuizGame } from "@/hooks/useFlagQuizGame";
 import { useTimer } from "@/hooks/useTimer";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useDailyChallenge } from "@/hooks/useDailyChallenge";
@@ -95,6 +98,9 @@ import Connect4GameScreen from "@/components/game/Connect4GameScreen";
 import SetGameScreen from "@/components/game/SetGameScreen";
 import OddOneOutGameScreen from "@/components/game/OddOneOutGameScreen";
 import PathfinderGameScreen from "@/components/game/PathfinderGameScreen";
+import HangmanGameScreen from "@/components/game/HangmanGameScreen";
+import EmojiMathGameScreen from "@/components/game/EmojiMathGameScreen";
+import FlagQuizGameScreen from "@/components/game/FlagQuizGameScreen";
 import DailyWinModal from "@/components/game/DailyWinModal";
 import StatsModal from "@/components/game/StatsModal";
 import AchievementToast from "@/components/game/AchievementToast";
@@ -663,6 +669,45 @@ const DIFFICULTY_CONFIGS: Record<PuzzleType, { key: Difficulty; label: string; d
     { key: "immortal",    label: "Immortal",    desc: "8×8 grid · 4 flips",              color: "bg-purple-600", badge: "🌌 Immortal" },
     { key: "divine",      label: "Divine",      desc: "9×9 grid · 5 flips",              color: "bg-red-600", badge: "✦ Divine" },
   ],
+  hangman: [
+    { key: "easy",        label: "Easy",        desc: "Short words · 6 lives",           color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "Medium words · 6 lives",          color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "Longer words · 6 lives",          color: "bg-tile-1" },
+    { key: "expert",      label: "Expert",      desc: "Hard words · 5 lives",            color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "Expert words · 5 lives",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "Long words · 5 lives",            color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "Very long · 4 lives",             color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "Huge words · 4 lives",            color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "Massive words · 4 lives",         color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "Insane words · 3 lives",          color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "Divine words · 3 lives",          color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  emojimath: [
+    { key: "easy",        label: "Easy",        desc: "5 rounds · simple equations",     color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 rounds · two clues",            color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 rounds · tricky",               color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 rounds · expert level",        color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 rounds · hard logic",          color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 rounds · brutal",              color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 rounds · max confusion",       color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "18 rounds",                       color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "20 rounds",                       color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "22 rounds",                       color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "24 rounds",                       color: "bg-red-600", badge: "✦ Divine" },
+  ],
+  flagquiz: [
+    { key: "easy",        label: "Easy",        desc: "5 flags · common countries",      color: "bg-tile-5" },
+    { key: "medium",      label: "Medium",      desc: "7 flags · world tour",            color: "bg-tile-6" },
+    { key: "hard",        label: "Hard",        desc: "8 flags · tricky",                color: "bg-tile-1", badge: "Tricky" },
+    { key: "expert",      label: "Expert",      desc: "10 flags · expert level",         color: "bg-tile-7", badge: "IQ Test" },
+    { key: "master",      label: "Master",      desc: "12 flags · hard",                 color: "bg-tile-2", badge: "Genius" },
+    { key: "grandmaster", label: "Grandmaster", desc: "14 flags · brutal",               color: "bg-tile-3", badge: "🧠 Elite" },
+    { key: "genius",      label: "Genius",      desc: "16 flags · insane",               color: "bg-tile-4", badge: "🔥 Insane" },
+    { key: "legend",      label: "Legend",      desc: "18 flags",                        color: "bg-tile-8", badge: "💀 Legend" },
+    { key: "mythic",      label: "Mythic",      desc: "20 flags",                        color: "bg-amber-500", badge: "⚡ Mythic" },
+    { key: "immortal",    label: "Immortal",    desc: "22 flags",                        color: "bg-purple-600", badge: "🌌 Immortal" },
+    { key: "divine",      label: "Divine",      desc: "24 flags",                        color: "bg-red-600", badge: "✦ Divine" },
+  ],
 };
 
 const PUZZLE_NAMES: Record<PuzzleType, string> = {
@@ -709,6 +754,9 @@ const PUZZLE_NAMES: Record<PuzzleType, string> = {
   setgame: "Set Game",
   oddoneout: "Odd One Out",
   pathfinder: "Pathfinder",
+  hangman: "Hangman",
+  emojimath: "Emoji Math",
+  flagquiz: "Flag Quiz",
 };
 
 const Index = () => {
@@ -769,6 +817,9 @@ const Index = () => {
   const setgame = useSetGame();
   const oddoneout = useOddOneOutGame();
   const pathfinder = usePathfinderGame();
+  const hangman = useHangmanGame();
+  const emojimath = useEmojiMathGame();
+  const flagquiz = useFlagQuizGame();
   const { dark, toggle: toggleDark } = useDarkMode();
   const daily = useDailyChallenge();
   const xp = useXPSystem();
@@ -818,7 +869,10 @@ const Index = () => {
   const setgameActive = isPlaying && selectedPuzzle === "setgame" && setgame.game && !setgame.game.won;
   const oddoneoutActive = isPlaying && selectedPuzzle === "oddoneout" && oddoneout.game && !oddoneout.game.won;
   const pathfinderActive = isPlaying && selectedPuzzle === "pathfinder" && pathfinder.game && !pathfinder.game.won && !pathfinder.game.lost;
-  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive || stroopActive || sequenceActive || binaryActive || romanActive || mentalmathActive || simonActive || reflexActive || typingActive || cipherActive || wordsearchActive || anagramActive || wordleActive || mastermindActive || mazeActive || tictactoeActive || balanceActive || piperotateActive || floodfillActive || connect4Active || setgameActive || oddoneoutActive || pathfinderActive);
+  const hangmanActive = isPlaying && selectedPuzzle === "hangman" && hangman.game && !hangman.game.won && !hangman.game.lost;
+  const emojimathActive = isPlaying && selectedPuzzle === "emojimath" && emojimath.game && !emojimath.game.won;
+  const flagquizActive = isPlaying && selectedPuzzle === "flagquiz" && flagquiz.game && !flagquiz.game.won;
+  const timerRunning = !!(shiftActive || memoryActive || lightsoutActive || lightsinActive || mathActive || hanoiActive || colorsortActive || sudokuActive || nqueensActive || knighttourActive || minesweeperActive || game2048Active || sieveActive || babylonianActive || ricochetActive || portalActive || chainblastActive || archerActive || wordscrambleActive || nonogramActive || stroopActive || sequenceActive || binaryActive || romanActive || mentalmathActive || simonActive || reflexActive || typingActive || cipherActive || wordsearchActive || anagramActive || wordleActive || mastermindActive || mazeActive || tictactoeActive || balanceActive || piperotateActive || floodfillActive || connect4Active || setgameActive || oddoneoutActive || pathfinderActive || hangmanActive || emojimathActive || flagquizActive);
 
   const { formatted: time } = useTimer(timerRunning);
 
@@ -868,6 +922,9 @@ const Index = () => {
     if (selectedPuzzle === "setgame" && setgame.game?.won) return { won: true, moves: setgame.game.moves };
     if (selectedPuzzle === "oddoneout" && oddoneout.game?.won) return { won: true, moves: oddoneout.game.score };
     if (selectedPuzzle === "pathfinder" && pathfinder.game?.won) return { won: true, moves: pathfinder.game.moves };
+    if (selectedPuzzle === "hangman" && hangman.game?.won) return { won: true, moves: hangman.game.moves };
+    if (selectedPuzzle === "emojimath" && emojimath.game?.won) return { won: true, moves: emojimath.game.score };
+    if (selectedPuzzle === "flagquiz" && flagquiz.game?.won) return { won: true, moves: flagquiz.game.score };
     return null;
   };
 
@@ -925,7 +982,8 @@ const Index = () => {
       reflex.game?.won, typing.game?.won, cipher.game?.won, wordsearch.game?.won,
       anagram.game?.won, wordle.game?.won, mastermind.game?.won, maze.game?.won,
       tictactoe.game?.won, balance.game?.won, piperotate.game?.won, floodfill.game?.won,
-      connect4.game?.won, setgame.game?.won, oddoneout.game?.won, pathfinder.game?.won]);
+      connect4.game?.won, setgame.game?.won, oddoneout.game?.won, pathfinder.game?.won,
+      hangman.game?.won, emojimath.game?.won, flagquiz.game?.won]);
 
   // Check for daily win conditions
   useEffect(() => {
@@ -982,7 +1040,10 @@ const Index = () => {
     if (selectedPuzzle === "setgame" && setgame.game?.won) checkWin(true, setgame.game.moves);
     if (selectedPuzzle === "oddoneout" && oddoneout.game?.won) checkWin(true, oddoneout.game.score);
     if (selectedPuzzle === "pathfinder" && pathfinder.game?.won) checkWin(true, pathfinder.game.moves);
-  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game, stroop.game, sequence.game, binary.game, roman.game, mentalmath.game, simon.game, reflex.game, typing.game, cipher.game, wordsearch.game, anagram.game, wordle.game, mastermind.game, maze.game, tictactoe.game, balance.game, piperotate.game, floodfill.game, connect4.game, setgame.game, oddoneout.game, pathfinder.game]);
+    if (selectedPuzzle === "hangman" && hangman.game?.won) checkWin(true, hangman.game.moves);
+    if (selectedPuzzle === "emojimath" && emojimath.game?.won) checkWin(true, emojimath.game.score);
+    if (selectedPuzzle === "flagquiz" && flagquiz.game?.won) checkWin(true, flagquiz.game.score);
+  }, [isDaily, isPlaying, selectedPuzzle, shift.game, memory.game, lightsout.game, lightsin.game, pattern.game, math.game, hanoi.game, colorsort.game, sudoku.game, nqueens.game, knighttour.game, minesweeper.game, game2048.game, sieve.game, babylonian.game, ricochet.game, portal.game, chainblast.game, archer.game, wordscramble.game, nonogram.game, stroop.game, sequence.game, binary.game, roman.game, mentalmath.game, simon.game, reflex.game, typing.game, cipher.game, wordsearch.game, anagram.game, wordle.game, mastermind.game, maze.game, tictactoe.game, balance.game, piperotate.game, floodfill.game, connect4.game, setgame.game, oddoneout.game, pathfinder.game, hangman.game, emojimath.game, flagquiz.game]);
 
   // Keyboard support for shift
   useEffect(() => {
@@ -1022,6 +1083,7 @@ const Index = () => {
     tictactoe.goToMenu(); balance.goToMenu(); piperotate.goToMenu();
     floodfill.goToMenu(); connect4.goToMenu(); setgame.goToMenu();
     oddoneout.goToMenu(); pathfinder.goToMenu();
+    hangman.goToMenu(); emojimath.goToMenu(); flagquiz.goToMenu();
   };
 
   const handleDailyChallenge = (type: PuzzleType) => {
@@ -1079,6 +1141,9 @@ const Index = () => {
       case "setgame": setgame.startGame(difficulty, dailyRandom); break;
       case "oddoneout": oddoneout.startGame(difficulty, dailyRandom); break;
       case "pathfinder": pathfinder.startGame(difficulty, dailyRandom); break;
+      case "hangman": hangman.startGame(difficulty, dailyRandom); break;
+      case "emojimath": emojimath.startGame(difficulty, dailyRandom); break;
+      case "flagquiz": flagquiz.startGame(difficulty, dailyRandom); break;
     }
     setScreen("playing");
   };
@@ -1132,6 +1197,9 @@ const Index = () => {
       case "setgame": setgame.startGame(difficulty); break;
       case "oddoneout": oddoneout.startGame(difficulty); break;
       case "pathfinder": pathfinder.startGame(difficulty); break;
+      case "hangman": hangman.startGame(difficulty); break;
+      case "emojimath": emojimath.startGame(difficulty); break;
+      case "flagquiz": flagquiz.startGame(difficulty); break;
     }
     setScreen("playing");
   };
@@ -1592,6 +1660,36 @@ const Index = () => {
             onFlipArrow={pathfinder.flipArrow}
             onHint={pathfinder.hint} onPeek={pathfinder.peek} onUndo={pathfinder.undo}
             onRestart={isDaily ? dailyRestart : pathfinder.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "hangman":
+        return hangman.game && (
+          <HangmanGameScreen
+            game={hangman.game} time={time}
+            onGuessLetter={hangman.guessLetter}
+            onHint={hangman.hint} onPeek={hangman.peek} onUndo={hangman.undo}
+            onRestart={isDaily ? dailyRestart : hangman.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "emojimath":
+        return emojimath.game && (
+          <EmojiMathGameScreen
+            game={emojimath.game} time={time}
+            onAnswer={emojimath.selectAnswer}
+            onHint={emojimath.hint} onPeek={emojimath.peek} onUndo={emojimath.undo}
+            onRestart={isDaily ? dailyRestart : emojimath.restart} onMenu={menuAction}
+            dark={dark} onToggleDark={toggleDark}
+          />
+        );
+      case "flagquiz":
+        return flagquiz.game && (
+          <FlagQuizGameScreen
+            game={flagquiz.game} time={time}
+            onAnswer={flagquiz.selectAnswer}
+            onHint={flagquiz.hint} onPeek={flagquiz.peek} onUndo={flagquiz.undo}
+            onRestart={isDaily ? dailyRestart : flagquiz.restart} onMenu={menuAction}
             dark={dark} onToggleDark={toggleDark}
           />
         );
