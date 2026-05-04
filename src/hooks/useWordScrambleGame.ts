@@ -16,10 +16,10 @@ const WORDS_9_10 = ["adventure","beautiful","challenge","discovery","emergency",
 const WORDS_11_PLUS = ["constellation","distinguished","encyclopedia","extraordinary","fluorescence","gravitational","hallucination","incomprehensible","jubilantly","kaleidoscope","laryngoscope","metamorphosis","nomenclature","opportunities","perpendicular","quintessential","radioactivity","sophisticated","transcendence","unforgettable","visualization","wholeheartedly","xylographical","yesteryear","zooplanktonic","bibliography","circumstances","decentralized","electroplated","fundamentals","grandiloquent","heterogeneous","interconnected","journeywoman","knowledgeable","liberalization","multifaceted","notifications","orchestration","phenomenology","quintuplicate","revolutionary","subterranean","transformation","understandable","vaccination","waterproofing","xerographics","yellowhammer","zoomorphical"];
 
 const WORD_BANKS: Record<Difficulty, string[]> = {
-  easy:        WORDS_3_4,
+  easy:        WORDS_5_6,
   medium:      WORDS_5_6,
   hard:        WORDS_7_8,
-  expert:      [...WORDS_7_8, ...WORDS_9_10].slice(0, 80),
+  expert:      WORDS_9_10,
   master:      WORDS_9_10,
   grandmaster: [...WORDS_9_10, ...WORDS_11_PLUS].slice(0, 60),
   genius:      WORDS_11_PLUS,
@@ -31,17 +31,17 @@ const WORD_BANKS: Record<Difficulty, string[]> = {
 
 // Per-difficulty: how many words to solve + optional time limit (seconds)
 const DIFF_CONFIG: Record<Difficulty, { count: number; timeLimit: number | null }> = {
-  easy:        { count: 3,  timeLimit: null },
-  medium:      { count: 4,  timeLimit: null },
-  hard:        { count: 5,  timeLimit: 120  },
-  expert:      { count: 6,  timeLimit: 90   },
-  master:      { count: 7,  timeLimit: 75   },
-  grandmaster: { count: 8,  timeLimit: 60   },
-  genius:      { count: 10, timeLimit: 45   },
-  legend:      { count: 12, timeLimit: 40   },
-  mythic:      { count: 14, timeLimit: 35   },
-  immortal:    { count: 16, timeLimit: 30   },
-  divine:      { count: 20, timeLimit: 25   },
+  easy:        { count: 4,  timeLimit: 120  },
+  medium:      { count: 5,  timeLimit: 100  },
+  hard:        { count: 6,  timeLimit: 90   },
+  expert:      { count: 8,  timeLimit: 75   },
+  master:      { count: 9,  timeLimit: 60   },
+  grandmaster: { count: 10, timeLimit: 50   },
+  genius:      { count: 12, timeLimit: 38   },
+  legend:      { count: 14, timeLimit: 33   },
+  mythic:      { count: 17, timeLimit: 29   },
+  immortal:    { count: 19, timeLimit: 25   },
+  divine:      { count: 24, timeLimit: 20   },
 };
 
 function seededRandom(seed: number) {

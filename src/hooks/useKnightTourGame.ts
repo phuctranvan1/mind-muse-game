@@ -3,10 +3,10 @@ import { useState, useCallback, useRef } from "react";
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const BOARD_SIZES: Record<Difficulty, number> = {
-  easy: 5, medium: 5, hard: 6, expert: 6, master: 7, grandmaster: 8, genius: 8, legend: 10, mythic: 11, immortal: 12, divine: 14,
+  easy: 5, medium: 6, hard: 7, expert: 7, master: 8, grandmaster: 9, genius: 10, legend: 11, mythic: 13, immortal: 14, divine: 17,
 };
 const MOVE_LIMITS: Record<Difficulty, number | null> = {
-  easy: null, medium: null, hard: null, expert: 50, master: 60, grandmaster: 80, genius: 75, legend: 100, mythic: 130, immortal: 155, divine: 210,
+  easy: null, medium: null, hard: 90, expert: 41, master: 50, grandmaster: 66, genius: 62, legend: 83, mythic: 108, immortal: 130, divine: 175,
 };
 
 const KNIGHT_MOVES = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
