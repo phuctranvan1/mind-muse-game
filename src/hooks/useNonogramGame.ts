@@ -109,7 +109,7 @@ function computeClues(grid: boolean[][]): { rowClues: number[][]; colClues: numb
   return { rowClues, colClues };
 }
 
-function pickPreset(presets: RawGrid[][], rand: () => number): boolean[][] {
+function pickPreset(presets: RawGrid[], rand: () => number): boolean[][] {
   const idx = Math.floor(rand() * presets.length);
   return expand(presets[idx]);
 }
