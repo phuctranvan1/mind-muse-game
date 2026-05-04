@@ -70,17 +70,17 @@ function generateProceduralGrid(size: number, density: number, rand: () => numbe
 }
 
 const DIFF_CONFIG: Record<Difficulty, { size: number; density: number; usePreset: boolean }> = {
-  easy:        { size: 5,  density: 0.55, usePreset: true },
-  medium:      { size: 7,  density: 0.55, usePreset: true },
-  hard:        { size: 10, density: 0.55, usePreset: true },
-  expert:      { size: 10, density: 0.50, usePreset: false },
-  master:      { size: 12, density: 0.50, usePreset: true },
-  grandmaster: { size: 12, density: 0.45, usePreset: false },
-  genius:      { size: 15, density: 0.45, usePreset: false },
-  legend:      { size: 15, density: 0.40, usePreset: false },
-  mythic:      { size: 18, density: 0.42, usePreset: false },
-  immortal:    { size: 20, density: 0.40, usePreset: false },
-  divine:      { size: 25, density: 0.38, usePreset: false },
+  easy:        { size: 6,  density: 0.55, usePreset: true },
+  medium:      { size: 8,  density: 0.55, usePreset: true },
+  hard:        { size: 10, density: 0.50, usePreset: false },
+  expert:      { size: 12, density: 0.48, usePreset: false },
+  master:      { size: 14, density: 0.46, usePreset: false },
+  grandmaster: { size: 15, density: 0.44, usePreset: false },
+  genius:      { size: 17, density: 0.43, usePreset: false },
+  legend:      { size: 18, density: 0.40, usePreset: false },
+  mythic:      { size: 21, density: 0.40, usePreset: false },
+  immortal:    { size: 24, density: 0.38, usePreset: false },
+  divine:      { size: 28, density: 0.36, usePreset: false },
 };
 
 function computeClues(grid: boolean[][]): { rowClues: number[][]; colClues: number[][] } {

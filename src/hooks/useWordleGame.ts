@@ -36,17 +36,17 @@ interface WordleConfig {
 }
 
 const CONFIGS: Record<Difficulty, WordleConfig> = {
-  easy:        { maxGuesses: 8, wordPool: WORDLE_EASY   },
-  medium:      { maxGuesses: 7, wordPool: WORDLE_EASY   },
-  hard:        { maxGuesses: 6, wordPool: WORDLE_HARD   },
-  expert:      { maxGuesses: 6, wordPool: WORDLE_HARD   },
-  master:      { maxGuesses: 5, wordPool: WORDLE_HARD   },
-  grandmaster: { maxGuesses: 5, wordPool: WORDLE_EXPERT },
-  genius:      { maxGuesses: 5, wordPool: WORDLE_EXPERT },
-  legend:      { maxGuesses: 4, wordPool: WORDLE_EXPERT },
-  mythic:      { maxGuesses: 4, wordPool: WORDLE_EXPERT },
-  immortal:    { maxGuesses: 4, wordPool: WORDLE_EXPERT },
-  divine:      { maxGuesses: 4, wordPool: WORDLE_EXPERT },
+  easy:        { maxGuesses: 7, wordPool: WORDLE_EASY   },
+  medium:      { maxGuesses: 6, wordPool: WORDLE_EASY   },
+  hard:        { maxGuesses: 5, wordPool: WORDLE_HARD   },
+  expert:      { maxGuesses: 5, wordPool: WORDLE_HARD   },
+  master:      { maxGuesses: 4, wordPool: WORDLE_HARD   },
+  grandmaster: { maxGuesses: 4, wordPool: WORDLE_EXPERT },
+  genius:      { maxGuesses: 4, wordPool: WORDLE_EXPERT },
+  legend:      { maxGuesses: 3, wordPool: WORDLE_EXPERT },
+  mythic:      { maxGuesses: 3, wordPool: WORDLE_EXPERT },
+  immortal:    { maxGuesses: 3, wordPool: WORDLE_EXPERT },
+  divine:      { maxGuesses: 3, wordPool: WORDLE_EXPERT },
 };
 
 export type TileColor = "green" | "yellow" | "gray" | "empty";

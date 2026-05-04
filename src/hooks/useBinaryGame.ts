@@ -23,17 +23,17 @@ interface BinaryConfig {
 }
 
 const CONFIGS: Record<Difficulty, BinaryConfig> = {
-  easy:        { rounds: 5,  maxVal: 15,    types: ["bin2dec"] },
-  medium:      { rounds: 7,  maxVal: 255,   types: ["bin2dec", "dec2bin"] },
-  hard:        { rounds: 8,  maxVal: 255,   types: ["bin2dec", "dec2bin"] },
-  expert:      { rounds: 10, maxVal: 255,   types: ["bin2dec", "dec2bin", "hex2dec"] },
-  master:      { rounds: 12, maxVal: 1023,  types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex"] },
-  grandmaster: { rounds: 14, maxVal: 4095,  types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex"] },
-  genius:      { rounds: 16, maxVal: 4095,  types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
-  legend:      { rounds: 20, maxVal: 65535, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
-  mythic:      { rounds: 22, maxVal: 65535, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
-  immortal:    { rounds: 24, maxVal: 65535, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
-  divine:      { rounds: 25, maxVal: 65535, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
+  easy:        { rounds: 6,  maxVal: 31,    types: ["bin2dec", "dec2bin"] },
+  medium:      { rounds: 8,  maxVal: 255,   types: ["bin2dec", "dec2bin"] },
+  hard:        { rounds: 10, maxVal: 511,   types: ["bin2dec", "dec2bin", "hex2dec"] },
+  expert:      { rounds: 12, maxVal: 1023,  types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex"] },
+  master:      { rounds: 14, maxVal: 4095,  types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex"] },
+  grandmaster: { rounds: 17, maxVal: 16383, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex"] },
+  genius:      { rounds: 19, maxVal: 65535, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
+  legend:      { rounds: 24, maxVal: 262143, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
+  mythic:      { rounds: 26, maxVal: 1048575, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
+  immortal:    { rounds: 29, maxVal: 4194303, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
+  divine:      { rounds: 30, maxVal: 16777215, types: ["bin2dec", "dec2bin", "hex2dec", "dec2hex", "bin2hex", "hex2bin"] },
 };
 
 function formatValue(val: number, base: "bin" | "dec" | "hex"): string {

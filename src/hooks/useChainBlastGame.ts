@@ -21,17 +21,17 @@ export interface ChainBlastState {
 }
 
 const CONFIGS: Record<string, { size: number; targets: number; bombs: number; blastRadius: number }> = {
-  easy: { size: 5, targets: 4, bombs: 3, blastRadius: 1 },
-  medium: { size: 6, targets: 6, bombs: 4, blastRadius: 1 },
-  hard: { size: 7, targets: 8, bombs: 4, blastRadius: 2 },
-  expert: { size: 8, targets: 12, bombs: 5, blastRadius: 2 },
-  master: { size: 9, targets: 16, bombs: 5, blastRadius: 2 },
-  grandmaster: { size: 10, targets: 20, bombs: 6, blastRadius: 2 },
-  genius: { size: 11, targets: 26, bombs: 6, blastRadius: 3 },
-  legend: { size: 12, targets: 32, bombs: 6, blastRadius: 3 },
-  mythic: { size: 13, targets: 40, bombs: 7, blastRadius: 3 },
-  immortal: { size: 14, targets: 50, bombs: 7, blastRadius: 3 },
-  divine: { size: 16, targets: 65, bombs: 8, blastRadius: 4 },
+  easy: { size: 6, targets: 5, bombs: 3, blastRadius: 1 },
+  medium: { size: 7, targets: 7, bombs: 3, blastRadius: 1 },
+  hard: { size: 8, targets: 10, bombs: 4, blastRadius: 2 },
+  expert: { size: 9, targets: 14, bombs: 4, blastRadius: 2 },
+  master: { size: 11, targets: 19, bombs: 4, blastRadius: 2 },
+  grandmaster: { size: 12, targets: 24, bombs: 5, blastRadius: 2 },
+  genius: { size: 13, targets: 31, bombs: 5, blastRadius: 3 },
+  legend: { size: 14, targets: 38, bombs: 5, blastRadius: 3 },
+  mythic: { size: 16, targets: 48, bombs: 6, blastRadius: 3 },
+  immortal: { size: 17, targets: 60, bombs: 6, blastRadius: 3 },
+  divine: { size: 19, targets: 78, bombs: 7, blastRadius: 4 },
 };
 
 function generateLevel(cfg: typeof CONFIGS.easy, rng: () => number) {

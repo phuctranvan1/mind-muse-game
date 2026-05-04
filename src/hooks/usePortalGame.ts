@@ -22,17 +22,17 @@ export interface PortalState {
 }
 
 const CONFIGS: Record<string, { size: number; walls: number; portalPairs: number; moveLimit: number | null }> = {
-  easy: { size: 5, walls: 4, portalPairs: 1, moveLimit: null },
-  medium: { size: 6, walls: 8, portalPairs: 2, moveLimit: null },
-  hard: { size: 7, walls: 12, portalPairs: 2, moveLimit: 30 },
-  expert: { size: 8, walls: 16, portalPairs: 3, moveLimit: 28 },
-  master: { size: 9, walls: 22, portalPairs: 3, moveLimit: 25 },
-  grandmaster: { size: 10, walls: 28, portalPairs: 4, moveLimit: 22 },
-  genius: { size: 11, walls: 35, portalPairs: 5, moveLimit: 20 },
-  legend: { size: 12, walls: 42, portalPairs: 6, moveLimit: 18 },
-  mythic: { size: 14, walls: 55, portalPairs: 7, moveLimit: 16 },
-  immortal: { size: 16, walls: 70, portalPairs: 8, moveLimit: 14 },
-  divine: { size: 18, walls: 90, portalPairs: 10, moveLimit: 12 },
+  easy: { size: 6, walls: 5, portalPairs: 2, moveLimit: null },
+  medium: { size: 7, walls: 10, portalPairs: 2, moveLimit: 40 },
+  hard: { size: 8, walls: 14, portalPairs: 3, moveLimit: 25 },
+  expert: { size: 9, walls: 19, portalPairs: 3, moveLimit: 23 },
+  master: { size: 11, walls: 26, portalPairs: 4, moveLimit: 21 },
+  grandmaster: { size: 12, walls: 33, portalPairs: 5, moveLimit: 18 },
+  genius: { size: 13, walls: 42, portalPairs: 6, moveLimit: 16 },
+  legend: { size: 14, walls: 50, portalPairs: 7, moveLimit: 15 },
+  mythic: { size: 17, walls: 66, portalPairs: 8, moveLimit: 13 },
+  immortal: { size: 19, walls: 84, portalPairs: 10, moveLimit: 11 },
+  divine: { size: 22, walls: 108, portalPairs: 12, moveLimit: 10 },
 };
 
 function generateMaze(cfg: typeof CONFIGS.easy, rng: () => number) {

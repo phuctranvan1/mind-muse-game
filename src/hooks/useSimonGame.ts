@@ -23,17 +23,17 @@ interface SimonConfig {
 }
 
 const CONFIGS: Record<Difficulty, SimonConfig> = {
-  easy:        { rounds: 4,  colorCount: 3, showSpeedMs: 900 },
-  medium:      { rounds: 5,  colorCount: 4, showSpeedMs: 750 },
-  hard:        { rounds: 6,  colorCount: 4, showSpeedMs: 600 },
-  expert:      { rounds: 7,  colorCount: 5, showSpeedMs: 500 },
-  master:      { rounds: 8,  colorCount: 5, showSpeedMs: 400 },
-  grandmaster: { rounds: 9,  colorCount: 6, showSpeedMs: 350 },
-  genius:      { rounds: 10, colorCount: 6, showSpeedMs: 280 },
-  legend:      { rounds: 12, colorCount: 7, showSpeedMs: 220 },
-  mythic:      { rounds: 13, colorCount: 7, showSpeedMs: 180 },
-  immortal:    { rounds: 14, colorCount: 8, showSpeedMs: 140 },
-  divine:      { rounds: 15, colorCount: 8, showSpeedMs: 100 },
+  easy:        { rounds: 5,  colorCount: 4, showSpeedMs: 750 },
+  medium:      { rounds: 6,  colorCount: 4, showSpeedMs: 625 },
+  hard:        { rounds: 7,  colorCount: 5, showSpeedMs: 500 },
+  expert:      { rounds: 8,  colorCount: 5, showSpeedMs: 415 },
+  master:      { rounds: 10, colorCount: 6, showSpeedMs: 330 },
+  grandmaster: { rounds: 11, colorCount: 6, showSpeedMs: 290 },
+  genius:      { rounds: 12, colorCount: 7, showSpeedMs: 230 },
+  legend:      { rounds: 14, colorCount: 7, showSpeedMs: 180 },
+  mythic:      { rounds: 16, colorCount: 8, showSpeedMs: 150 },
+  immortal:    { rounds: 17, colorCount: 8, showSpeedMs: 115 },
+  divine:      { rounds: 18, colorCount: 8, showSpeedMs: 80  },
 };
 
 export interface SimonState {

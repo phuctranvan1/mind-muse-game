@@ -30,17 +30,17 @@ interface AnagramConfig {
 }
 
 const CONFIGS: Record<Difficulty, AnagramConfig> = {
-  easy:        { rounds: 5  },
-  medium:      { rounds: 7  },
-  hard:        { rounds: 8  },
-  expert:      { rounds: 10 },
-  master:      { rounds: 12 },
-  grandmaster: { rounds: 14 },
-  genius:      { rounds: 16 },
-  legend:      { rounds: 20 },
-  mythic:      { rounds: 22 },
-  immortal:    { rounds: 24 },
-  divine:      { rounds: 25 },
+  easy:        { rounds: 6  },
+  medium:      { rounds: 8  },
+  hard:        { rounds: 10 },
+  expert:      { rounds: 12 },
+  master:      { rounds: 14 },
+  grandmaster: { rounds: 17 },
+  genius:      { rounds: 19 },
+  legend:      { rounds: 24 },
+  mythic:      { rounds: 26 },
+  immortal:    { rounds: 29 },
+  divine:      { rounds: 30 },
 };
 
 export interface AnagramProblem {

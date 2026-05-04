@@ -34,17 +34,17 @@ interface RomanConfig {
 }
 
 const CONFIGS: Record<Difficulty, RomanConfig> = {
-  easy:        { rounds: 5,  maxVal: 10,   includeReverse: false },
-  medium:      { rounds: 7,  maxVal: 50,   includeReverse: false },
-  hard:        { rounds: 8,  maxVal: 100,  includeReverse: true  },
-  expert:      { rounds: 10, maxVal: 500,  includeReverse: true  },
-  master:      { rounds: 12, maxVal: 1000, includeReverse: true  },
-  grandmaster: { rounds: 14, maxVal: 2000, includeReverse: true  },
-  genius:      { rounds: 16, maxVal: 2999, includeReverse: true  },
-  legend:      { rounds: 20, maxVal: 3999, includeReverse: true  },
-  mythic:      { rounds: 22, maxVal: 3999, includeReverse: true  },
-  immortal:    { rounds: 24, maxVal: 3999, includeReverse: true  },
-  divine:      { rounds: 25, maxVal: 3999, includeReverse: true  },
+  easy:        { rounds: 6,  maxVal: 20,   includeReverse: false },
+  medium:      { rounds: 8,  maxVal: 75,   includeReverse: true  },
+  hard:        { rounds: 10, maxVal: 150,  includeReverse: true  },
+  expert:      { rounds: 12, maxVal: 700,  includeReverse: true  },
+  master:      { rounds: 14, maxVal: 1500, includeReverse: true  },
+  grandmaster: { rounds: 17, maxVal: 2500, includeReverse: true  },
+  genius:      { rounds: 19, maxVal: 3500, includeReverse: true  },
+  legend:      { rounds: 24, maxVal: 3999, includeReverse: true  },
+  mythic:      { rounds: 26, maxVal: 3999, includeReverse: true  },
+  immortal:    { rounds: 29, maxVal: 3999, includeReverse: true  },
+  divine:      { rounds: 30, maxVal: 3999, includeReverse: true  },
 };
 
 export interface RomanProblem {

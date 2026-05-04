@@ -8,17 +8,17 @@ interface FloodFillConfig {
 }
 
 const CONFIGS: Record<Difficulty, FloodFillConfig> = {
-  easy:        { size: 6,  colors: 3, maxMoves: 15 },
-  medium:      { size: 7,  colors: 4, maxMoves: 16 },
-  hard:        { size: 8,  colors: 4, maxMoves: 17 },
-  expert:      { size: 9,  colors: 5, maxMoves: 18 },
-  master:      { size: 10, colors: 5, maxMoves: 20 },
-  grandmaster: { size: 11, colors: 6, maxMoves: 22 },
-  genius:      { size: 12, colors: 6, maxMoves: 24 },
-  legend:      { size: 12, colors: 6, maxMoves: 20 },
-  mythic:      { size: 13, colors: 7, maxMoves: 22 },
-  immortal:    { size: 13, colors: 7, maxMoves: 20 },
-  divine:      { size: 14, colors: 7, maxMoves: 22 },
+  easy:        { size: 7,  colors: 4, maxMoves: 14 },
+  medium:      { size: 8,  colors: 4, maxMoves: 15 },
+  hard:        { size: 9,  colors: 5, maxMoves: 16 },
+  expert:      { size: 10, colors: 5, maxMoves: 17 },
+  master:      { size: 11, colors: 6, maxMoves: 19 },
+  grandmaster: { size: 12, colors: 6, maxMoves: 20 },
+  genius:      { size: 13, colors: 7, maxMoves: 22 },
+  legend:      { size: 14, colors: 7, maxMoves: 19 },
+  mythic:      { size: 15, colors: 8, maxMoves: 20 },
+  immortal:    { size: 16, colors: 8, maxMoves: 19 },
+  divine:      { size: 17, colors: 8, maxMoves: 20 },
 };
 
 export const FLOOD_COLORS = ["#ef4444","#3b82f6","#22c55e","#f59e0b","#a855f7","#ec4899","#14b8a6"];

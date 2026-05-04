@@ -290,17 +290,17 @@ interface Config {
 
 function getConfig(difficulty: Difficulty): Config {
   switch (difficulty) {
-    case "easy": return { limit: 30, rounds: 3, maxMistakes: 5 };
-    case "medium": return { limit: 50, rounds: 4, maxMistakes: 4 };
-    case "hard": return { limit: 75, rounds: 5, maxMistakes: 3 };
-    case "expert": return { limit: 100, rounds: 6, maxMistakes: 3 };
-    case "master": return { limit: 150, rounds: 7, maxMistakes: 2 };
-    case "grandmaster": return { limit: 200, rounds: 8, maxMistakes: 2 };
-    case "genius": return { limit: 300, rounds: 10, maxMistakes: 1 };
-    case "legend": return { limit: 500, rounds: 12, maxMistakes: 1 };
-    case "mythic": return { limit: 750, rounds: 15, maxMistakes: 0 };
-    case "immortal": return { limit: 1000, rounds: 18, maxMistakes: 0 };
-    case "divine": return { limit: 1500, rounds: 20, maxMistakes: 0 };
+    case "easy": return { limit: 40, rounds: 4, maxMistakes: 4 };
+    case "medium": return { limit: 60, rounds: 5, maxMistakes: 3 };
+    case "hard": return { limit: 90, rounds: 6, maxMistakes: 2 };
+    case "expert": return { limit: 125, rounds: 7, maxMistakes: 2 };
+    case "master": return { limit: 180, rounds: 9, maxMistakes: 1 };
+    case "grandmaster": return { limit: 240, rounds: 10, maxMistakes: 1 };
+    case "genius": return { limit: 360, rounds: 12, maxMistakes: 1 };
+    case "legend": return { limit: 600, rounds: 15, maxMistakes: 0 };
+    case "mythic": return { limit: 900, rounds: 18, maxMistakes: 0 };
+    case "immortal": return { limit: 1200, rounds: 22, maxMistakes: 0 };
+    case "divine": return { limit: 1800, rounds: 25, maxMistakes: 0 };
     default: return { limit: 30, rounds: 3, maxMistakes: 5 };
   }
 }

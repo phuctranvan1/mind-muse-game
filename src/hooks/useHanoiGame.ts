@@ -3,11 +3,11 @@ import { useState, useCallback, useRef } from "react";
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const CONFIGS: Record<Difficulty, { discs: number; moveLimit: number | null }> = {
-  easy: { discs: 3, moveLimit: null }, medium: { discs: 4, moveLimit: null },
-  hard: { discs: 5, moveLimit: 40 }, expert: { discs: 6, moveLimit: 100 },
-  master: { discs: 7, moveLimit: 180 }, grandmaster: { discs: 8, moveLimit: 350 },
-  genius: { discs: 9, moveLimit: 600 }, legend: { discs: 10, moveLimit: 1200 },
-  mythic: { discs: 11, moveLimit: 2400 }, immortal: { discs: 12, moveLimit: 5000 }, divine: { discs: 13, moveLimit: 10000 },
+  easy: { discs: 4, moveLimit: null }, medium: { discs: 5, moveLimit: null },
+  hard: { discs: 6, moveLimit: 33 }, expert: { discs: 7, moveLimit: 83 },
+  master: { discs: 8, moveLimit: 150 }, grandmaster: { discs: 9, moveLimit: 290 },
+  genius: { discs: 10, moveLimit: 500 }, legend: { discs: 11, moveLimit: 1000 },
+  mythic: { discs: 12, moveLimit: 2000 }, immortal: { discs: 13, moveLimit: 4150 }, divine: { discs: 14, moveLimit: 8300 },
 };
 
 export interface HanoiState {

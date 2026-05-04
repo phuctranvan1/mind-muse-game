@@ -21,17 +21,17 @@ export interface BabylonianState {
 
 function getConfig(difficulty: Difficulty): { count: number; maxVal: number; tolerance: number } {
   switch (difficulty) {
-    case "easy": return { count: 3, maxVal: 50, tolerance: 1.0 };
-    case "medium": return { count: 5, maxVal: 200, tolerance: 0.5 };
-    case "hard": return { count: 7, maxVal: 1000, tolerance: 0.1 };
-    case "expert": return { count: 9, maxVal: 5000, tolerance: 0.05 };
-    case "master": return { count: 12, maxVal: 25000, tolerance: 0.01 };
-    case "grandmaster": return { count: 15, maxVal: 100000, tolerance: 0.001 };
-    case "genius": return { count: 18, maxVal: 500000, tolerance: 0.0001 };
-    case "legend": return { count: 25, maxVal: 1000000, tolerance: 0.00001 };
-    case "mythic": return { count: 30, maxVal: 10000000, tolerance: 0.000001 };
-    case "immortal": return { count: 36, maxVal: 100000000, tolerance: 0.0000001 };
-    case "divine": return { count: 45, maxVal: 1000000000, tolerance: 0.00000001 };
+    case "easy": return { count: 4, maxVal: 100, tolerance: 0.5 };
+    case "medium": return { count: 6, maxVal: 400, tolerance: 0.25 };
+    case "hard": return { count: 9, maxVal: 2500, tolerance: 0.05 };
+    case "expert": return { count: 11, maxVal: 12500, tolerance: 0.025 };
+    case "master": return { count: 15, maxVal: 60000, tolerance: 0.005 };
+    case "grandmaster": return { count: 18, maxVal: 250000, tolerance: 0.0005 };
+    case "genius": return { count: 22, maxVal: 1500000, tolerance: 0.00005 };
+    case "legend": return { count: 30, maxVal: 2500000, tolerance: 0.000005 };
+    case "mythic": return { count: 36, maxVal: 25000000, tolerance: 0.0000005 };
+    case "immortal": return { count: 44, maxVal: 250000000, tolerance: 0.00000005 };
+    case "divine": return { count: 55, maxVal: 2500000000, tolerance: 0.000000005 };
     default: return { count: 3, maxVal: 50, tolerance: 1.0 };
   }
 }

@@ -5,17 +5,17 @@ export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "gra
 interface Config { rows: number; cols: number; mines: number }
 
 const CONFIGS: Record<Difficulty, Config> = {
-  easy:        { rows: 8,  cols: 8,  mines: 10 },
-  medium:      { rows: 10, cols: 10, mines: 20 },
-  hard:        { rows: 12, cols: 12, mines: 30 },
-  expert:      { rows: 14, cols: 14, mines: 45 },
-  master:      { rows: 16, cols: 16, mines: 60 },
-  grandmaster: { rows: 18, cols: 18, mines: 80 },
-  genius:      { rows: 20, cols: 20, mines: 100 },
-  legend:      { rows: 24, cols: 24, mines: 130 },
-  mythic:      { rows: 28, cols: 28, mines: 180 },
-  immortal:    { rows: 30, cols: 30, mines: 220 },
-  divine:      { rows: 32, cols: 32, mines: 260 },
+  easy:        { rows: 10, cols: 10, mines: 14 },
+  medium:      { rows: 12, cols: 12, mines: 26 },
+  hard:        { rows: 14, cols: 14, mines: 40 },
+  expert:      { rows: 16, cols: 16, mines: 58 },
+  master:      { rows: 19, cols: 19, mines: 80 },
+  grandmaster: { rows: 22, cols: 22, mines: 105 },
+  genius:      { rows: 24, cols: 24, mines: 135 },
+  legend:      { rows: 28, cols: 28, mines: 175 },
+  mythic:      { rows: 33, cols: 33, mines: 235 },
+  immortal:    { rows: 36, cols: 36, mines: 290 },
+  divine:      { rows: 38, cols: 38, mines: 345 },
 };
 
 export interface CellState {

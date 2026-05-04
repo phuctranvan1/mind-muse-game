@@ -14,17 +14,17 @@ interface PipeConfig {
 }
 
 const CONFIGS: Record<Difficulty, PipeConfig> = {
-  easy:        { size: 4  },
-  medium:      { size: 5  },
-  hard:        { size: 5  },
-  expert:      { size: 6  },
-  master:      { size: 6  },
-  grandmaster: { size: 7  },
-  genius:      { size: 7  },
-  legend:      { size: 8  },
-  mythic:      { size: 8  },
-  immortal:    { size: 9  },
-  divine:      { size: 10 },
+  easy:        { size: 5  },
+  medium:      { size: 6  },
+  hard:        { size: 6  },
+  expert:      { size: 7  },
+  master:      { size: 7  },
+  grandmaster: { size: 8  },
+  genius:      { size: 9  },
+  legend:      { size: 10 },
+  mythic:      { size: 10 },
+  immortal:    { size: 11 },
+  divine:      { size: 12 },
 };
 
 // Connections as [N, E, S, W] booleans

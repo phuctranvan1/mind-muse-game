@@ -7,17 +7,17 @@ interface MathProblem {
 }
 
 const CONFIGS: Record<Difficulty, { count: number; maxNum: number; ops: string[]; timePerQ: number }> = {
-  easy: { count: 5, maxNum: 10, ops: ["+", "-"], timePerQ: 15 },
-  medium: { count: 8, maxNum: 20, ops: ["+", "-", "×"], timePerQ: 12 },
-  hard: { count: 12, maxNum: 50, ops: ["+", "-", "×"], timePerQ: 10 },
-  expert: { count: 15, maxNum: 100, ops: ["+", "-", "×", "÷"], timePerQ: 8 },
-  master: { count: 20, maxNum: 200, ops: ["+", "-", "×", "÷"], timePerQ: 6 },
-  grandmaster: { count: 25, maxNum: 500, ops: ["+", "-", "×", "÷"], timePerQ: 5 },
-  genius: { count: 30, maxNum: 1000, ops: ["+", "-", "×", "÷"], timePerQ: 4 },
-  legend: { count: 40, maxNum: 9999, ops: ["+", "-", "×", "÷"], timePerQ: 3 },
-  mythic: { count: 50, maxNum: 99999, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
-  immortal: { count: 65, maxNum: 9999999, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
-  divine: { count: 80, maxNum: 99999999, ops: ["+", "-", "×", "÷"], timePerQ: 1 },
+  easy: { count: 6, maxNum: 12, ops: ["+", "-"], timePerQ: 12 },
+  medium: { count: 10, maxNum: 25, ops: ["+", "-", "×"], timePerQ: 10 },
+  hard: { count: 14, maxNum: 60, ops: ["+", "-", "×"], timePerQ: 8 },
+  expert: { count: 18, maxNum: 120, ops: ["+", "-", "×", "÷"], timePerQ: 7 },
+  master: { count: 24, maxNum: 250, ops: ["+", "-", "×", "÷"], timePerQ: 5 },
+  grandmaster: { count: 30, maxNum: 600, ops: ["+", "-", "×", "÷"], timePerQ: 4 },
+  genius: { count: 36, maxNum: 1200, ops: ["+", "-", "×", "÷"], timePerQ: 3 },
+  legend: { count: 48, maxNum: 12000, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
+  mythic: { count: 60, maxNum: 120000, ops: ["+", "-", "×", "÷"], timePerQ: 2 },
+  immortal: { count: 78, maxNum: 12000000, ops: ["+", "-", "×", "÷"], timePerQ: 1 },
+  divine: { count: 96, maxNum: 120000000, ops: ["+", "-", "×", "÷"], timePerQ: 1 },
 };
 
 function randInt(min: number, max: number, rand: () => number = Math.random) {

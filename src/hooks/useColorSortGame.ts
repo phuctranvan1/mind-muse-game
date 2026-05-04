@@ -3,17 +3,17 @@ import { useState, useCallback, useRef } from "react";
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const CONFIGS: Record<Difficulty, { colors: number; tubeSize: number; extraTubes: number }> = {
-  easy: { colors: 3, tubeSize: 3, extraTubes: 1 },
-  medium: { colors: 4, tubeSize: 4, extraTubes: 1 },
-  hard: { colors: 6, tubeSize: 4, extraTubes: 2 },
-  expert: { colors: 8, tubeSize: 4, extraTubes: 2 },
-  master: { colors: 10, tubeSize: 4, extraTubes: 2 },
-  grandmaster: { colors: 12, tubeSize: 5, extraTubes: 2 },
-  genius: { colors: 14, tubeSize: 5, extraTubes: 2 },
-  legend: { colors: 16, tubeSize: 5, extraTubes: 2 },
-  mythic: { colors: 18, tubeSize: 5, extraTubes: 2 },
-  immortal: { colors: 20, tubeSize: 6, extraTubes: 2 },
-  divine: { colors: 22, tubeSize: 6, extraTubes: 1 },
+  easy: { colors: 4, tubeSize: 4, extraTubes: 1 },
+  medium: { colors: 5, tubeSize: 4, extraTubes: 1 },
+  hard: { colors: 7, tubeSize: 4, extraTubes: 2 },
+  expert: { colors: 10, tubeSize: 5, extraTubes: 2 },
+  master: { colors: 12, tubeSize: 5, extraTubes: 2 },
+  grandmaster: { colors: 14, tubeSize: 5, extraTubes: 2 },
+  genius: { colors: 17, tubeSize: 6, extraTubes: 2 },
+  legend: { colors: 19, tubeSize: 6, extraTubes: 2 },
+  mythic: { colors: 22, tubeSize: 6, extraTubes: 1 },
+  immortal: { colors: 24, tubeSize: 7, extraTubes: 1 },
+  divine: { colors: 26, tubeSize: 7, extraTubes: 1 },
 };
 
 const COLOR_NAMES = [

@@ -3,17 +3,17 @@ import { useState, useCallback, useRef, useEffect } from "react";
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const CONFIGS: Record<Difficulty, { gridSize: number; patternLength: number; showTime: number }> = {
-  easy: { gridSize: 3, patternLength: 4, showTime: 2000 },
-  medium: { gridSize: 4, patternLength: 6, showTime: 2000 },
-  hard: { gridSize: 4, patternLength: 8, showTime: 1500 },
-  expert: { gridSize: 5, patternLength: 10, showTime: 1200 },
-  master: { gridSize: 5, patternLength: 14, showTime: 1000 },
-  grandmaster: { gridSize: 6, patternLength: 18, showTime: 800 },
-  genius: { gridSize: 6, patternLength: 24, showTime: 600 },
-  legend: { gridSize: 7, patternLength: 30, showTime: 350 },
-  mythic: { gridSize: 8, patternLength: 40, showTime: 250 },
-  immortal: { gridSize: 8, patternLength: 52, showTime: 200 },
-  divine: { gridSize: 9, patternLength: 64, showTime: 150 },
+  easy: { gridSize: 4, patternLength: 5, showTime: 1660 },
+  medium: { gridSize: 4, patternLength: 8, showTime: 1660 },
+  hard: { gridSize: 5, patternLength: 10, showTime: 1250 },
+  expert: { gridSize: 5, patternLength: 12, showTime: 1000 },
+  master: { gridSize: 6, patternLength: 17, showTime: 830 },
+  grandmaster: { gridSize: 7, patternLength: 22, showTime: 660 },
+  genius: { gridSize: 7, patternLength: 29, showTime: 500 },
+  legend: { gridSize: 8, patternLength: 36, showTime: 290 },
+  mythic: { gridSize: 9, patternLength: 48, showTime: 200 },
+  immortal: { gridSize: 9, patternLength: 62, showTime: 165 },
+  divine: { gridSize: 10, patternLength: 76, showTime: 125 },
 };
 
 export interface PatternRecallState {

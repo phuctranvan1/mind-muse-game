@@ -2,7 +2,7 @@ import { useState, useCallback, useRef } from "react";
 
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10, mythic: 11, immortal: 12, divine: 14 };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 4, medium: 5, hard: 6, expert: 7, master: 8, grandmaster: 10, genius: 11, legend: 12, mythic: 13, immortal: 14, divine: 16 };
 
 function generateBoard(size: number, rand: () => number = Math.random): boolean[][] {
   // Start with all lights ON, then apply random toggles to turn some off

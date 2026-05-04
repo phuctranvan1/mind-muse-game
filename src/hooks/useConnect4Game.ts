@@ -8,17 +8,17 @@ interface Connect4Config {
 }
 
 const CONFIGS: Record<Difficulty, Connect4Config> = {
-  easy:        { rows: 6, cols: 7, winLen: 4 },
-  medium:      { rows: 6, cols: 7, winLen: 4 },
-  hard:        { rows: 6, cols: 7, winLen: 4 },
-  expert:      { rows: 7, cols: 8, winLen: 4 },
-  master:      { rows: 7, cols: 8, winLen: 4 },
-  grandmaster: { rows: 7, cols: 8, winLen: 5 },
-  genius:      { rows: 8, cols: 9, winLen: 4 },
-  legend:      { rows: 8, cols: 9, winLen: 5 },
-  mythic:      { rows: 8, cols: 9, winLen: 5 },
-  immortal:    { rows: 9, cols: 10,winLen: 5 },
-  divine:      { rows: 9, cols: 10,winLen: 5 },
+  easy:        { rows: 7, cols: 8, winLen: 4 },
+  medium:      { rows: 7, cols: 8, winLen: 4 },
+  hard:        { rows: 7, cols: 8, winLen: 5 },
+  expert:      { rows: 8, cols: 9, winLen: 4 },
+  master:      { rows: 8, cols: 9, winLen: 5 },
+  grandmaster: { rows: 8, cols: 9, winLen: 5 },
+  genius:      { rows: 9, cols: 10, winLen: 5 },
+  legend:      { rows: 9, cols: 10, winLen: 5 },
+  mythic:      { rows: 10, cols: 11, winLen: 5 },
+  immortal:    { rows: 10, cols: 11, winLen: 6 },
+  divine:      { rows: 11, cols: 12, winLen: 6 },
 };
 
 type Cell = null | 0 | 1; // 0=player, 1=AI

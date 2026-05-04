@@ -22,17 +22,17 @@ export interface ArcherState {
 }
 
 const CONFIGS: Record<string, { size: number; targets: number; walls: number; arrows: number }> = {
-  easy: { size: 5, targets: 3, walls: 2, arrows: 5 },
-  medium: { size: 6, targets: 4, walls: 4, arrows: 6 },
-  hard: { size: 7, targets: 6, walls: 6, arrows: 7 },
-  expert: { size: 8, targets: 8, walls: 8, arrows: 9 },
-  master: { size: 9, targets: 10, walls: 12, arrows: 11 },
-  grandmaster: { size: 10, targets: 13, walls: 16, arrows: 14 },
-  genius: { size: 11, targets: 16, walls: 20, arrows: 17 },
-  legend: { size: 12, targets: 20, walls: 26, arrows: 21 },
-  mythic: { size: 14, targets: 26, walls: 35, arrows: 27 },
-  immortal: { size: 16, targets: 34, walls: 48, arrows: 35 },
-  divine: { size: 18, targets: 44, walls: 64, arrows: 45 },
+  easy: { size: 6, targets: 4, walls: 3, arrows: 4 },
+  medium: { size: 7, targets: 5, walls: 5, arrows: 5 },
+  hard: { size: 8, targets: 7, walls: 7, arrows: 6 },
+  expert: { size: 9, targets: 10, walls: 10, arrows: 7 },
+  master: { size: 11, targets: 12, walls: 14, arrows: 9 },
+  grandmaster: { size: 12, targets: 16, walls: 19, arrows: 11 },
+  genius: { size: 13, targets: 19, walls: 24, arrows: 14 },
+  legend: { size: 14, targets: 24, walls: 31, arrows: 17 },
+  mythic: { size: 17, targets: 31, walls: 42, arrows: 22 },
+  immortal: { size: 19, targets: 41, walls: 58, arrows: 28 },
+  divine: { size: 22, targets: 53, walls: 77, arrows: 36 },
 };
 
 function generateLevel(cfg: typeof CONFIGS.easy, rng: () => number) {

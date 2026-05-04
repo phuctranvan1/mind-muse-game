@@ -13,17 +13,17 @@ const COLORS = [
 ];
 
 const CONFIGS: Record<Difficulty, { colorCount: number; rounds: number; timePerRound: number }> = {
-  easy:        { colorCount: 3, rounds: 6,  timePerRound: 8   },
-  medium:      { colorCount: 4, rounds: 8,  timePerRound: 6   },
-  hard:        { colorCount: 5, rounds: 10, timePerRound: 5   },
-  expert:      { colorCount: 6, rounds: 12, timePerRound: 4   },
-  master:      { colorCount: 6, rounds: 15, timePerRound: 3   },
-  grandmaster: { colorCount: 7, rounds: 18, timePerRound: 2.5 },
-  genius:      { colorCount: 8, rounds: 20, timePerRound: 2   },
-  legend:      { colorCount: 8, rounds: 25, timePerRound: 1.5 },
-  mythic:      { colorCount: 8, rounds: 30, timePerRound: 1   },
-  immortal:    { colorCount: 8, rounds: 36, timePerRound: 0.8 },
-  divine:      { colorCount: 8, rounds: 45, timePerRound: 0.6 },
+  easy:        { colorCount: 4, rounds: 8,  timePerRound: 6.5 },
+  medium:      { colorCount: 5, rounds: 10, timePerRound: 5   },
+  hard:        { colorCount: 6, rounds: 12, timePerRound: 4   },
+  expert:      { colorCount: 7, rounds: 14, timePerRound: 3.3 },
+  master:      { colorCount: 7, rounds: 18, timePerRound: 2.5 },
+  grandmaster: { colorCount: 8, rounds: 22, timePerRound: 2   },
+  genius:      { colorCount: 9, rounds: 24, timePerRound: 1.6 },
+  legend:      { colorCount: 9, rounds: 30, timePerRound: 1.2 },
+  mythic:      { colorCount: 10, rounds: 36, timePerRound: 0.8 },
+  immortal:    { colorCount: 10, rounds: 44, timePerRound: 0.65 },
+  divine:      { colorCount: 10, rounds: 54, timePerRound: 0.5 },
 };
 
 export interface StroopRound {

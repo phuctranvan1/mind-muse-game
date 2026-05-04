@@ -33,17 +33,17 @@ interface CipherConfig {
 }
 
 const CONFIGS: Record<Difficulty, CipherConfig> = {
-  easy:        { rounds: 5,  usePhrases: false, shiftRange: [1, 5]   },
-  medium:      { rounds: 7,  usePhrases: false, shiftRange: [1, 10]  },
-  hard:        { rounds: 8,  usePhrases: true,  shiftRange: [1, 13]  },
-  expert:      { rounds: 10, usePhrases: true,  shiftRange: [1, 20]  },
-  master:      { rounds: 12, usePhrases: true,  shiftRange: [3, 23]  },
-  grandmaster: { rounds: 14, usePhrases: true,  shiftRange: [5, 25]  },
-  genius:      { rounds: 16, usePhrases: true,  shiftRange: [1, 25]  },
-  legend:      { rounds: 18, usePhrases: true,  shiftRange: [1, 25]  },
-  mythic:      { rounds: 20, usePhrases: true,  shiftRange: [1, 25]  },
-  immortal:    { rounds: 22, usePhrases: true,  shiftRange: [1, 25]  },
-  divine:      { rounds: 24, usePhrases: true,  shiftRange: [1, 25]  },
+  easy:        { rounds: 6,  usePhrases: false, shiftRange: [1, 8]   },
+  medium:      { rounds: 8,  usePhrases: true,  shiftRange: [1, 13]  },
+  hard:        { rounds: 10, usePhrases: true,  shiftRange: [1, 18]  },
+  expert:      { rounds: 12, usePhrases: true,  shiftRange: [1, 23]  },
+  master:      { rounds: 14, usePhrases: true,  shiftRange: [3, 25]  },
+  grandmaster: { rounds: 17, usePhrases: true,  shiftRange: [5, 25]  },
+  genius:      { rounds: 19, usePhrases: true,  shiftRange: [1, 25]  },
+  legend:      { rounds: 22, usePhrases: true,  shiftRange: [1, 25]  },
+  mythic:      { rounds: 24, usePhrases: true,  shiftRange: [1, 25]  },
+  immortal:    { rounds: 26, usePhrases: true,  shiftRange: [1, 25]  },
+  divine:      { rounds: 29, usePhrases: true,  shiftRange: [1, 25]  },
 };
 
 function caesarEncode(text: string, shift: number): string {
