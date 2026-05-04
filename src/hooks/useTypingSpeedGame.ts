@@ -25,17 +25,17 @@ interface TypingConfig {
 }
 
 const CONFIGS: Record<Difficulty, TypingConfig> = {
-  easy:        { rounds: 8,  timePerWord: 10000, words: WORDS_EASY   },
-  medium:      { rounds: 10, timePerWord: 8000,  words: WORDS_MEDIUM },
-  hard:        { rounds: 12, timePerWord: 7000,  words: WORDS_HARD   },
-  expert:      { rounds: 14, timePerWord: 6000,  words: WORDS_EXPERT },
-  master:      { rounds: 16, timePerWord: 5000,  words: WORDS_MASTER },
-  grandmaster: { rounds: 18, timePerWord: 4500,  words: WORDS_LONG   },
-  genius:      { rounds: 20, timePerWord: 4000,  words: WORDS_LONG   },
-  legend:      { rounds: 22, timePerWord: 3500,  words: WORDS_VLONG  },
-  mythic:      { rounds: 24, timePerWord: 3000,  words: WORDS_VLONG  },
-  immortal:    { rounds: 26, timePerWord: 2500,  words: WORDS_VLONG  },
-  divine:      { rounds: 28, timePerWord: 2000,  words: WORDS_VLONG  },
+  easy:        { rounds: 10, timePerWord: 8300, words: WORDS_EASY   },
+  medium:      { rounds: 12, timePerWord: 6650, words: WORDS_MEDIUM },
+  hard:        { rounds: 14, timePerWord: 5800, words: WORDS_HARD   },
+  expert:      { rounds: 17, timePerWord: 5000, words: WORDS_EXPERT },
+  master:      { rounds: 19, timePerWord: 4150, words: WORDS_MASTER },
+  grandmaster: { rounds: 22, timePerWord: 3750, words: WORDS_LONG   },
+  genius:      { rounds: 24, timePerWord: 3300, words: WORDS_LONG   },
+  legend:      { rounds: 26, timePerWord: 2900, words: WORDS_VLONG  },
+  mythic:      { rounds: 29, timePerWord: 2500, words: WORDS_VLONG  },
+  immortal:    { rounds: 31, timePerWord: 2080, words: WORDS_VLONG  },
+  divine:      { rounds: 34, timePerWord: 1660, words: WORDS_VLONG  },
 };
 
 export interface TypingState {

@@ -13,17 +13,17 @@ interface ReflexConfig {
 }
 
 const CONFIGS: Record<Difficulty, ReflexConfig> = {
-  easy:        { gridSize: 4, totalTargets: 10, lives: 5, targetMs: 2500 },
-  medium:      { gridSize: 4, totalTargets: 12, lives: 4, targetMs: 2000 },
-  hard:        { gridSize: 5, totalTargets: 15, lives: 3, targetMs: 1500 },
-  expert:      { gridSize: 5, totalTargets: 18, lives: 3, targetMs: 1200 },
-  master:      { gridSize: 6, totalTargets: 20, lives: 3, targetMs: 1000 },
-  grandmaster: { gridSize: 6, totalTargets: 22, lives: 2, targetMs: 800  },
-  genius:      { gridSize: 7, totalTargets: 25, lives: 2, targetMs: 650  },
-  legend:      { gridSize: 7, totalTargets: 28, lives: 2, targetMs: 500  },
-  mythic:      { gridSize: 8, totalTargets: 30, lives: 2, targetMs: 400  },
-  immortal:    { gridSize: 8, totalTargets: 35, lives: 1, targetMs: 300  },
-  divine:      { gridSize: 8, totalTargets: 40, lives: 1, targetMs: 250  },
+  easy:        { gridSize: 5, totalTargets: 12, lives: 4, targetMs: 2080 },
+  medium:      { gridSize: 5, totalTargets: 14, lives: 3, targetMs: 1660 },
+  hard:        { gridSize: 6, totalTargets: 18, lives: 3, targetMs: 1250 },
+  expert:      { gridSize: 6, totalTargets: 22, lives: 2, targetMs: 1000 },
+  master:      { gridSize: 7, totalTargets: 24, lives: 2, targetMs: 830  },
+  grandmaster: { gridSize: 7, totalTargets: 26, lives: 2, targetMs: 660  },
+  genius:      { gridSize: 8, totalTargets: 30, lives: 2, targetMs: 540  },
+  legend:      { gridSize: 8, totalTargets: 34, lives: 1, targetMs: 415  },
+  mythic:      { gridSize: 9, totalTargets: 36, lives: 1, targetMs: 330  },
+  immortal:    { gridSize: 9, totalTargets: 42, lives: 1, targetMs: 250  },
+  divine:      { gridSize: 10, totalTargets: 48, lives: 1, targetMs: 200 },
 };
 
 export interface ReflexTarget {

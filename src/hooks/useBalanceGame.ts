@@ -27,17 +27,17 @@ interface BalanceConfig {
 }
 
 const CONFIGS: Record<Difficulty, BalanceConfig> = {
-  easy:        { rounds: 5  },
-  medium:      { rounds: 7  },
-  hard:        { rounds: 8  },
-  expert:      { rounds: 10 },
-  master:      { rounds: 12 },
-  grandmaster: { rounds: 14 },
-  genius:      { rounds: 16 },
-  legend:      { rounds: 18 },
-  mythic:      { rounds: 20 },
-  immortal:    { rounds: 22 },
-  divine:      { rounds: 24 },
+  easy:        { rounds: 6  },
+  medium:      { rounds: 8  },
+  hard:        { rounds: 10 },
+  expert:      { rounds: 12 },
+  master:      { rounds: 14 },
+  grandmaster: { rounds: 17 },
+  genius:      { rounds: 19 },
+  legend:      { rounds: 22 },
+  mythic:      { rounds: 24 },
+  immortal:    { rounds: 26 },
+  divine:      { rounds: 29 },
 };
 
 function buildBalanceProblem(difficulty: Difficulty, rand: () => number): BalanceProblem {

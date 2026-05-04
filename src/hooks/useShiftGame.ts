@@ -2,9 +2,9 @@ import { useState, useCallback, useRef } from "react";
 
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
-const GRID_SIZES: Record<Difficulty, number> = { easy: 3, medium: 4, hard: 5, expert: 6, master: 7, grandmaster: 8, genius: 9, legend: 10, mythic: 11, immortal: 12, divine: 14 };
+const GRID_SIZES: Record<Difficulty, number> = { easy: 4, medium: 5, hard: 6, expert: 7, master: 8, grandmaster: 10, genius: 11, legend: 12, mythic: 13, immortal: 14, divine: 16 };
 const LABELS: Record<Difficulty, string> = { easy: "Easy", medium: "Medium", hard: "Hard", expert: "Expert", master: "Master", grandmaster: "Grandmaster", genius: "Genius", legend: "Legend", mythic: "Mythic", immortal: "Immortal", divine: "Divine" };
-const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 200, expert: 350, master: null, grandmaster: 500, genius: 300, legend: 150, mythic: 120, immortal: 100, divine: 80 };
+const MOVE_LIMITS: Record<Difficulty, number | null> = { easy: null, medium: null, hard: 165, expert: 290, master: 400, grandmaster: 415, genius: 250, legend: 125, mythic: 100, immortal: 83, divine: 66 };
 
 function isSolvable(arr: (number | null)[], size: number): boolean {
   const flat = arr.filter((n): n is number => n !== null);

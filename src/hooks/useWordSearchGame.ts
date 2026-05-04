@@ -32,17 +32,17 @@ interface WordSearchConfig {
 }
 
 const CONFIGS: Record<Difficulty, WordSearchConfig> = {
-  easy:        { gridSize: 7,  wordCount: 3,  wordLengths: [3,3,4]         },
-  medium:      { gridSize: 8,  wordCount: 4,  wordLengths: [3,4,4,5]       },
-  hard:        { gridSize: 9,  wordCount: 5,  wordLengths: [4,4,5,5,6]     },
-  expert:      { gridSize: 10, wordCount: 6,  wordLengths: [4,5,5,6,6,7]   },
-  master:      { gridSize: 11, wordCount: 7,  wordLengths: [5,5,6,6,7,7,8] },
-  grandmaster: { gridSize: 12, wordCount: 8,  wordLengths: [5,5,6,6,6,7,7,8] },
-  genius:      { gridSize: 13, wordCount: 9,  wordLengths: [5,5,5,6,6,7,7,8,8] },
-  legend:      { gridSize: 14, wordCount: 10, wordLengths: [5,5,5,6,6,6,7,7,8,8] },
-  mythic:      { gridSize: 14, wordCount: 11, wordLengths: [5,5,5,5,6,6,6,7,7,7,8] },
-  immortal:    { gridSize: 15, wordCount: 12, wordLengths: [5,5,5,5,6,6,6,6,7,7,8,8] },
-  divine:      { gridSize: 15, wordCount: 13, wordLengths: [5,5,5,5,6,6,6,6,7,7,7,8,8] },
+  easy:        { gridSize: 8,  wordCount: 4,  wordLengths: [3,3,4,4]         },
+  medium:      { gridSize: 9,  wordCount: 5,  wordLengths: [3,4,4,5,5]       },
+  hard:        { gridSize: 10, wordCount: 6,  wordLengths: [4,4,5,5,6,6]     },
+  expert:      { gridSize: 11, wordCount: 7,  wordLengths: [4,5,5,6,6,7,7]   },
+  master:      { gridSize: 13, wordCount: 8,  wordLengths: [5,5,6,6,7,7,8,8] },
+  grandmaster: { gridSize: 14, wordCount: 10, wordLengths: [5,5,6,6,6,7,7,7,8,8] },
+  genius:      { gridSize: 15, wordCount: 11, wordLengths: [5,5,5,6,6,7,7,7,8,8,9] },
+  legend:      { gridSize: 16, wordCount: 12, wordLengths: [5,5,5,6,6,6,7,7,7,8,8,9] },
+  mythic:      { gridSize: 17, wordCount: 13, wordLengths: [5,5,5,6,6,6,7,7,7,8,8,8,9] },
+  immortal:    { gridSize: 18, wordCount: 14, wordLengths: [5,5,5,6,6,6,6,7,7,7,8,8,9,9] },
+  divine:      { gridSize: 18, wordCount: 16, wordLengths: [5,5,5,6,6,6,6,7,7,7,7,8,8,8,9,9] },
 };
 
 export interface WordInGrid {

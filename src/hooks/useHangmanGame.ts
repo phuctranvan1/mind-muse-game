@@ -91,10 +91,10 @@ const WORD_BANK: Record<Difficulty, { word: string; category: string }[]> = {
 };
 
 const MAX_WRONG_BY_DIFFICULTY: Record<Difficulty, number> = {
-  easy: 6, medium: 6, hard: 6,
-  expert: 5, master: 5, grandmaster: 5,
-  genius: 4, legend: 4, mythic: 4,
-  immortal: 3, divine: 3,
+  easy: 6, medium: 5, hard: 5,
+  expert: 5, master: 4, grandmaster: 4,
+  genius: 4, legend: 3, mythic: 3,
+  immortal: 3, divine: 2,
 };
 
 export interface HangmanState {

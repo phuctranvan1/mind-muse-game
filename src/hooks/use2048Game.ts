@@ -5,17 +5,17 @@ export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "gra
 interface Config { size: number; target: number; moveLimit: number | null }
 
 const CONFIGS: Record<Difficulty, Config> = {
-  easy:        { size: 4, target: 2048,  moveLimit: null },
-  medium:      { size: 4, target: 4096,  moveLimit: null },
-  hard:        { size: 4, target: 8192,  moveLimit: 500  },
-  expert:      { size: 5, target: 2048,  moveLimit: null },
-  master:      { size: 5, target: 4096,  moveLimit: 600  },
-  grandmaster: { size: 5, target: 8192,  moveLimit: 700  },
-  genius:      { size: 6, target: 2048,  moveLimit: 600  },
-  legend:      { size: 6, target: 4096,  moveLimit: 800  },
-  mythic:      { size: 6, target: 8192,  moveLimit: 900  },
-  immortal:    { size: 7, target: 4096,  moveLimit: 900  },
-  divine:      { size: 7, target: 8192,  moveLimit: 1000 },
+  easy:        { size: 4, target: 4096,  moveLimit: null },
+  medium:      { size: 4, target: 8192,  moveLimit: null },
+  hard:        { size: 4, target: 8192,  moveLimit: 415  },
+  expert:      { size: 5, target: 4096,  moveLimit: 700  },
+  master:      { size: 5, target: 8192,  moveLimit: 500  },
+  grandmaster: { size: 5, target: 8192,  moveLimit: 580  },
+  genius:      { size: 6, target: 4096,  moveLimit: 500  },
+  legend:      { size: 6, target: 8192,  moveLimit: 660  },
+  mythic:      { size: 6, target: 16384, moveLimit: 750  },
+  immortal:    { size: 7, target: 8192,  moveLimit: 750  },
+  divine:      { size: 7, target: 16384, moveLimit: 830  },
 };
 
 export interface Game2048State {

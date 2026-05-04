@@ -25,17 +25,17 @@ interface MentalConfig {
 }
 
 const CONFIGS: Record<Difficulty, MentalConfig> = {
-  easy:        { rounds: 5,  ops: 2, maxStart: 10,  maxOp: 5,   allowDiv: false },
-  medium:      { rounds: 7,  ops: 3, maxStart: 20,  maxOp: 10,  allowDiv: false },
-  hard:        { rounds: 8,  ops: 3, maxStart: 30,  maxOp: 15,  allowDiv: false },
-  expert:      { rounds: 10, ops: 4, maxStart: 50,  maxOp: 20,  allowDiv: true  },
-  master:      { rounds: 12, ops: 4, maxStart: 100, maxOp: 25,  allowDiv: true  },
-  grandmaster: { rounds: 14, ops: 5, maxStart: 100, maxOp: 30,  allowDiv: true  },
-  genius:      { rounds: 16, ops: 5, maxStart: 200, maxOp: 40,  allowDiv: true  },
-  legend:      { rounds: 20, ops: 6, maxStart: 300, maxOp: 50,  allowDiv: true  },
-  mythic:      { rounds: 22, ops: 7, maxStart: 500, maxOp: 75,  allowDiv: true  },
-  immortal:    { rounds: 24, ops: 7, maxStart: 500, maxOp: 100, allowDiv: true  },
-  divine:      { rounds: 25, ops: 8, maxStart: 999, maxOp: 100, allowDiv: true  },
+  easy:        { rounds: 6,  ops: 3, maxStart: 12,  maxOp: 8,   allowDiv: false },
+  medium:      { rounds: 8,  ops: 3, maxStart: 25,  maxOp: 15,  allowDiv: true  },
+  hard:        { rounds: 10, ops: 4, maxStart: 40,  maxOp: 20,  allowDiv: true  },
+  expert:      { rounds: 12, ops: 4, maxStart: 60,  maxOp: 25,  allowDiv: true  },
+  master:      { rounds: 14, ops: 5, maxStart: 120, maxOp: 30,  allowDiv: true  },
+  grandmaster: { rounds: 17, ops: 5, maxStart: 150, maxOp: 40,  allowDiv: true  },
+  genius:      { rounds: 19, ops: 6, maxStart: 240, maxOp: 50,  allowDiv: true  },
+  legend:      { rounds: 24, ops: 7, maxStart: 360, maxOp: 60,  allowDiv: true  },
+  mythic:      { rounds: 26, ops: 8, maxStart: 600, maxOp: 90,  allowDiv: true  },
+  immortal:    { rounds: 29, ops: 8, maxStart: 700, maxOp: 120, allowDiv: true  },
+  divine:      { rounds: 30, ops: 9, maxStart: 999, maxOp: 150, allowDiv: true  },
 };
 
 export interface MentalProblem {

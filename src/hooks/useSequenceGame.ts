@@ -127,17 +127,17 @@ function generateSequence(
 }
 
 const CONFIGS: Record<Difficulty, { rounds: number; termCount: number; types: SeqType[] }> = {
-  easy:        { rounds: 5,  termCount: 4, types: ["arithmetic"] },
-  medium:      { rounds: 7,  termCount: 4, types: ["arithmetic", "geometric"] },
-  hard:        { rounds: 8,  termCount: 5, types: ["arithmetic", "geometric", "square", "triangular"] },
-  expert:      { rounds: 10, termCount: 5, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "prime"] },
-  master:      { rounds: 12, termCount: 5, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2"] },
-  grandmaster: { rounds: 14, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic"] },
-  genius:      { rounds: 16, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
-  legend:      { rounds: 20, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
-  mythic:      { rounds: 25, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
-  immortal:    { rounds: 30, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
-  divine:      { rounds: 40, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
+  easy:        { rounds: 6,  termCount: 4, types: ["arithmetic", "geometric"] },
+  medium:      { rounds: 8,  termCount: 5, types: ["arithmetic", "geometric", "square"] },
+  hard:        { rounds: 10, termCount: 5, types: ["arithmetic", "geometric", "square", "triangular", "fibonacci"] },
+  expert:      { rounds: 12, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "prime", "cube"] },
+  master:      { rounds: 14, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2"] },
+  grandmaster: { rounds: 17, termCount: 6, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic"] },
+  genius:      { rounds: 19, termCount: 7, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
+  legend:      { rounds: 24, termCount: 7, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
+  mythic:      { rounds: 30, termCount: 7, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
+  immortal:    { rounds: 36, termCount: 7, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
+  divine:      { rounds: 48, termCount: 7, types: ["arithmetic", "geometric", "fibonacci", "triangular", "square", "cube", "prime", "power2", "doubly_arithmetic", "alternating"] },
 };
 
 function generateOptions(answer: number, rand: () => number): number[] {

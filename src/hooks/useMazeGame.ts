@@ -6,17 +6,17 @@ interface MazeConfig {
 }
 
 const CONFIGS: Record<Difficulty, MazeConfig> = {
-  easy:        { size: 7  },
-  medium:      { size: 9  },
-  hard:        { size: 11 },
-  expert:      { size: 13 },
-  master:      { size: 15 },
-  grandmaster: { size: 17 },
-  genius:      { size: 19 },
-  legend:      { size: 21 },
-  mythic:      { size: 23 },
-  immortal:    { size: 25 },
-  divine:      { size: 27 },
+  easy:        { size: 9  },
+  medium:      { size: 11 },
+  hard:        { size: 13 },
+  expert:      { size: 15 },
+  master:      { size: 17 },
+  grandmaster: { size: 19 },
+  genius:      { size: 23 },
+  legend:      { size: 25 },
+  mythic:      { size: 27 },
+  immortal:    { size: 29 },
+  divine:      { size: 33 },
 };
 
 // Cell walls: bit 0=N, 1=E, 2=S, 3=W

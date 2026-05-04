@@ -7,17 +7,17 @@ interface TTTConfig {
 }
 
 const CONFIGS: Record<Difficulty, TTTConfig> = {
-  easy:        { size: 3, winLen: 3 },
-  medium:      { size: 4, winLen: 3 },
-  hard:        { size: 4, winLen: 4 },
-  expert:      { size: 5, winLen: 4 },
-  master:      { size: 5, winLen: 5 },
-  grandmaster: { size: 6, winLen: 4 },
-  genius:      { size: 6, winLen: 5 },
-  legend:      { size: 7, winLen: 5 },
-  mythic:      { size: 7, winLen: 6 },
-  immortal:    { size: 8, winLen: 5 },
-  divine:      { size: 8, winLen: 6 },
+  easy:        { size: 4, winLen: 3 },
+  medium:      { size: 4, winLen: 4 },
+  hard:        { size: 5, winLen: 4 },
+  expert:      { size: 5, winLen: 5 },
+  master:      { size: 6, winLen: 5 },
+  grandmaster: { size: 6, winLen: 5 },
+  genius:      { size: 7, winLen: 5 },
+  legend:      { size: 7, winLen: 6 },
+  mythic:      { size: 8, winLen: 6 },
+  immortal:    { size: 9, winLen: 6 },
+  divine:      { size: 10, winLen: 7 },
 };
 
 function checkWinner(board: (0 | 1 | null)[], size: number, winLen: number): 0 | 1 | null {

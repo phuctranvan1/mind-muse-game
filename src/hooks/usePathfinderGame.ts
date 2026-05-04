@@ -17,17 +17,17 @@ interface PathfinderConfig {
 }
 
 const CONFIGS: Record<Difficulty, PathfinderConfig> = {
-  easy:        { size: 4, maxFlips: 5  },
-  medium:      { size: 4, maxFlips: 4  },
-  hard:        { size: 5, maxFlips: 5  },
-  expert:      { size: 5, maxFlips: 4  },
-  master:      { size: 6, maxFlips: 5  },
-  grandmaster: { size: 6, maxFlips: 4  },
-  genius:      { size: 7, maxFlips: 5  },
-  legend:      { size: 7, maxFlips: 4  },
-  mythic:      { size: 8, maxFlips: 5  },
-  immortal:    { size: 8, maxFlips: 4  },
-  divine:      { size: 9, maxFlips: 5  },
+  easy:        { size: 5, maxFlips: 4  },
+  medium:      { size: 5, maxFlips: 3  },
+  hard:        { size: 6, maxFlips: 4  },
+  expert:      { size: 6, maxFlips: 3  },
+  master:      { size: 7, maxFlips: 4  },
+  grandmaster: { size: 7, maxFlips: 3  },
+  genius:      { size: 8, maxFlips: 4  },
+  legend:      { size: 8, maxFlips: 3  },
+  mythic:      { size: 9, maxFlips: 4  },
+  immortal:    { size: 10, maxFlips: 3 },
+  divine:      { size: 11, maxFlips: 4 },
 };
 
 function generateGrid(size: number, rand: () => number): ArrowDir[][] {

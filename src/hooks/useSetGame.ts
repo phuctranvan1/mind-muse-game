@@ -67,17 +67,17 @@ interface SetConfig {
 }
 
 const CONFIGS: Record<Difficulty, SetConfig> = {
-  easy:        { boardSize: 9,  setsToFind: 2 },
-  medium:      { boardSize: 9,  setsToFind: 3 },
-  hard:        { boardSize: 12, setsToFind: 4 },
-  expert:      { boardSize: 12, setsToFind: 5 },
-  master:      { boardSize: 12, setsToFind: 6 },
-  grandmaster: { boardSize: 15, setsToFind: 7 },
-  genius:      { boardSize: 15, setsToFind: 8 },
-  legend:      { boardSize: 15, setsToFind: 9 },
-  mythic:      { boardSize: 18, setsToFind: 10 },
-  immortal:    { boardSize: 18, setsToFind: 11 },
-  divine:      { boardSize: 18, setsToFind: 12 },
+  easy:        { boardSize: 9,  setsToFind: 3 },
+  medium:      { boardSize: 12, setsToFind: 4 },
+  hard:        { boardSize: 12, setsToFind: 5 },
+  expert:      { boardSize: 12, setsToFind: 6 },
+  master:      { boardSize: 15, setsToFind: 8 },
+  grandmaster: { boardSize: 15, setsToFind: 9 },
+  genius:      { boardSize: 15, setsToFind: 10 },
+  legend:      { boardSize: 18, setsToFind: 11 },
+  mythic:      { boardSize: 18, setsToFind: 12 },
+  immortal:    { boardSize: 18, setsToFind: 14 },
+  divine:      { boardSize: 21, setsToFind: 15 },
 };
 
 export interface SetGameState {

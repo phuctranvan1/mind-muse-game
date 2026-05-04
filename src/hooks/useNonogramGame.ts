@@ -8,14 +8,15 @@ export type Difficulty =
 // Each puzzle is a 2D boolean grid (true = filled)
 // We store them as flat arrays of 0/1 strings for conciseness, then expand
 
-type RawGrid = string[]; // each string = one row of '0'/'1'
+type RawRow = string[]; // wrapped row, e.g. ["11111"]
+type RawGrid = RawRow[]; // a puzzle = array of wrapped rows
 
 function expand(raw: RawGrid): boolean[][] {
-  return raw.map(row => row.split("").map(c => c === "1"));
+  return raw.map(row => row[0].split("").map(c => c === "1"));
 }
 
 // 5×5 puzzles
-const PUZZLES_5: RawGrid[][] = [
+const PUZZLES_5: RawGrid[] = [
   [["11111"],["10001"],["10001"],["10001"],["11111"]], // square outline
   [["00100"],["01010"],["10001"],["01010"],["00100"]], // diamond
   [["11100"],["10000"],["11100"],["10000"],["10000"]], // F-shape
@@ -27,7 +28,7 @@ const PUZZLES_5: RawGrid[][] = [
 ];
 
 // 7×7 puzzles
-const PUZZLES_7: RawGrid[][] = [
+const PUZZLES_7: RawGrid[] = [
   [["0011100"],["0100010"],["1000001"],["1000001"],["1000001"],["0100010"],["0011100"]], // circle
   [["1111111"],["1000001"],["1011101"],["1010101"],["1011101"],["1000001"],["1111111"]], // nested square
   [["0001000"],["0011100"],["0111110"],["1111111"],["0111110"],["0011100"],["0001000"]], // diamond solid
@@ -39,7 +40,7 @@ const PUZZLES_7: RawGrid[][] = [
 ];
 
 // 10×10 puzzles
-const PUZZLES_10: RawGrid[][] = [
+const PUZZLES_10: RawGrid[] = [
   // Heart
   [["0110011000"],["1111111000"],["1111111100"],["0111111100"],["0011111000"],["0001110000"],["0000100000"],["0000000000"],["0000000000"],["0000000000"]],
   // Arrow right
@@ -53,7 +54,7 @@ const PUZZLES_10: RawGrid[][] = [
 ];
 
 // 12×12 puzzles (partial, rest zeros)
-const PUZZLES_12: RawGrid[][] = [
+const PUZZLES_12: RawGrid[] = [
   // Large diamond
   [["000001100000"],["000011110000"],["000111111000"],["001111111100"],["011111111110"],["111111111111"],["011111111110"],["001111111100"],["000111111000"],["000011110000"],["000001100000"],["000000000000"]],
   // Large X
@@ -70,17 +71,17 @@ function generateProceduralGrid(size: number, density: number, rand: () => numbe
 }
 
 const DIFF_CONFIG: Record<Difficulty, { size: number; density: number; usePreset: boolean }> = {
-  easy:        { size: 5,  density: 0.55, usePreset: true },
-  medium:      { size: 7,  density: 0.55, usePreset: true },
-  hard:        { size: 10, density: 0.55, usePreset: true },
-  expert:      { size: 10, density: 0.50, usePreset: false },
-  master:      { size: 12, density: 0.50, usePreset: true },
-  grandmaster: { size: 12, density: 0.45, usePreset: false },
-  genius:      { size: 15, density: 0.45, usePreset: false },
-  legend:      { size: 15, density: 0.40, usePreset: false },
-  mythic:      { size: 18, density: 0.42, usePreset: false },
-  immortal:    { size: 20, density: 0.40, usePreset: false },
-  divine:      { size: 25, density: 0.38, usePreset: false },
+  easy:        { size: 6,  density: 0.55, usePreset: true },
+  medium:      { size: 8,  density: 0.55, usePreset: true },
+  hard:        { size: 10, density: 0.50, usePreset: false },
+  expert:      { size: 12, density: 0.48, usePreset: false },
+  master:      { size: 14, density: 0.46, usePreset: false },
+  grandmaster: { size: 15, density: 0.44, usePreset: false },
+  genius:      { size: 17, density: 0.43, usePreset: false },
+  legend:      { size: 18, density: 0.40, usePreset: false },
+  mythic:      { size: 21, density: 0.40, usePreset: false },
+  immortal:    { size: 24, density: 0.38, usePreset: false },
+  divine:      { size: 28, density: 0.36, usePreset: false },
 };
 
 function computeClues(grid: boolean[][]): { rowClues: number[][]; colClues: number[][] } {
@@ -109,7 +110,7 @@ function computeClues(grid: boolean[][]): { rowClues: number[][]; colClues: numb
   return { rowClues, colClues };
 }
 
-function pickPreset(presets: RawGrid[][], rand: () => number): boolean[][] {
+function pickPreset(presets: RawGrid[], rand: () => number): boolean[][] {
   const idx = Math.floor(rand() * presets.length);
   return expand(presets[idx]);
 }

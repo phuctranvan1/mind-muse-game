@@ -905,9 +905,9 @@ const Index = () => {
     if (selectedPuzzle === "binary" && binary.game?.won) return { won: true, moves: binary.game.score };
     if (selectedPuzzle === "roman" && roman.game?.won) return { won: true, moves: roman.game.score };
     if (selectedPuzzle === "mentalmath" && mentalmath.game?.won) return { won: true, moves: mentalmath.game.score };
-    if (selectedPuzzle === "simon" && simon.game?.won) return { won: true, moves: simon.game.round };
+    if (selectedPuzzle === "simon" && simon.game?.won) return { won: true, moves: simon.game.currentRound };
     if (selectedPuzzle === "reflex" && reflex.game?.won) return { won: true, moves: reflex.game.score };
-    if (selectedPuzzle === "typing" && typing.game?.won) return { won: true, moves: typing.game.correct };
+    if (selectedPuzzle === "typing" && typing.game?.won) return { won: true, moves: typing.game.score };
     if (selectedPuzzle === "cipher" && cipher.game?.won) return { won: true, moves: cipher.game.score };
     if (selectedPuzzle === "wordsearch" && wordsearch.game?.won) return { won: true, moves: wordsearch.game.moves };
     if (selectedPuzzle === "anagram" && anagram.game?.won) return { won: true, moves: anagram.game.score };
@@ -1023,9 +1023,9 @@ const Index = () => {
     if (selectedPuzzle === "binary" && binary.game?.won) checkWin(true, binary.game.score);
     if (selectedPuzzle === "roman" && roman.game?.won) checkWin(true, roman.game.score);
     if (selectedPuzzle === "mentalmath" && mentalmath.game?.won) checkWin(true, mentalmath.game.score);
-    if (selectedPuzzle === "simon" && simon.game?.won) checkWin(true, simon.game.round);
+    if (selectedPuzzle === "simon" && simon.game?.won) checkWin(true, simon.game.currentRound);
     if (selectedPuzzle === "reflex" && reflex.game?.won) checkWin(true, reflex.game.score);
-    if (selectedPuzzle === "typing" && typing.game?.won) checkWin(true, typing.game.correct);
+    if (selectedPuzzle === "typing" && typing.game?.won) checkWin(true, typing.game.score);
     if (selectedPuzzle === "cipher" && cipher.game?.won) checkWin(true, cipher.game.score);
     if (selectedPuzzle === "wordsearch" && wordsearch.game?.won) checkWin(true, wordsearch.game.moves);
     if (selectedPuzzle === "anagram" && anagram.game?.won) checkWin(true, anagram.game.score);

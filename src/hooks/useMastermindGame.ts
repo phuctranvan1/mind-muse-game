@@ -19,17 +19,17 @@ interface MastermindConfig {
 }
 
 const CONFIGS: Record<Difficulty, MastermindConfig> = {
-  easy:        { colors: 4, pegs: 4, maxGuesses: 12 },
-  medium:      { colors: 5, pegs: 4, maxGuesses: 10 },
-  hard:        { colors: 6, pegs: 4, maxGuesses: 10 },
-  expert:      { colors: 6, pegs: 4, maxGuesses: 8  },
-  master:      { colors: 7, pegs: 4, maxGuesses: 8  },
-  grandmaster: { colors: 7, pegs: 5, maxGuesses: 8  },
-  genius:      { colors: 8, pegs: 5, maxGuesses: 7  },
-  legend:      { colors: 8, pegs: 5, maxGuesses: 6  },
-  mythic:      { colors: 8, pegs: 6, maxGuesses: 6  },
-  immortal:    { colors: 8, pegs: 6, maxGuesses: 5  },
-  divine:      { colors: 8, pegs: 6, maxGuesses: 5  },
+  easy:        { colors: 5, pegs: 4, maxGuesses: 10 },
+  medium:      { colors: 6, pegs: 4, maxGuesses: 8  },
+  hard:        { colors: 7, pegs: 4, maxGuesses: 8  },
+  expert:      { colors: 7, pegs: 5, maxGuesses: 7  },
+  master:      { colors: 8, pegs: 5, maxGuesses: 7  },
+  grandmaster: { colors: 8, pegs: 5, maxGuesses: 7  },
+  genius:      { colors: 9, pegs: 5, maxGuesses: 6  },
+  legend:      { colors: 9, pegs: 6, maxGuesses: 5  },
+  mythic:      { colors: 9, pegs: 6, maxGuesses: 5  },
+  immortal:    { colors: 10, pegs: 6, maxGuesses: 4 },
+  divine:      { colors: 10, pegs: 7, maxGuesses: 4 },
 };
 
 export interface MastermindGuess {

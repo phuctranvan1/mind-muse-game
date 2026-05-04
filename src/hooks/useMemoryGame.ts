@@ -3,12 +3,12 @@ import { useState, useCallback, useRef, useEffect } from "react";
 export type Difficulty = "easy" | "medium" | "hard" | "expert" | "master" | "grandmaster" | "genius" | "legend" | "mythic" | "immortal" | "divine";
 
 const GRID_CONFIGS: Record<Difficulty, { pairs: number; cols: number }> = {
-  easy: { pairs: 4, cols: 4 }, medium: { pairs: 8, cols: 4 }, hard: { pairs: 12, cols: 6 },
-  expert: { pairs: 18, cols: 6 }, master: { pairs: 24, cols: 8 },
-  grandmaster: { pairs: 30, cols: 10 }, genius: { pairs: 36, cols: 12 },
-  legend: { pairs: 42, cols: 14 },
-  mythic: { pairs: 48, cols: 16 },
-  immortal: { pairs: 54, cols: 18 },
+  easy: { pairs: 5, cols: 5 }, medium: { pairs: 10, cols: 5 }, hard: { pairs: 14, cols: 7 },
+  expert: { pairs: 22, cols: 6 }, master: { pairs: 28, cols: 8 },
+  grandmaster: { pairs: 36, cols: 12 }, genius: { pairs: 44, cols: 11 },
+  legend: { pairs: 50, cols: 10 },
+  mythic: { pairs: 56, cols: 14 },
+  immortal: { pairs: 60, cols: 15 },
   divine: { pairs: 60, cols: 20 },
 };
 

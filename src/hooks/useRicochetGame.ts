@@ -20,17 +20,17 @@ export interface RicochetState {
 }
 
 const CONFIGS: Record<string, { size: number; obstacles: number; moveLimit: number | null }> = {
-  easy: { size: 5, obstacles: 3, moveLimit: null },
-  medium: { size: 6, obstacles: 5, moveLimit: null },
-  hard: { size: 7, obstacles: 7, moveLimit: 20 },
-  expert: { size: 8, obstacles: 10, moveLimit: 18 },
-  master: { size: 9, obstacles: 14, moveLimit: 16 },
-  grandmaster: { size: 10, obstacles: 18, moveLimit: 14 },
-  genius: { size: 11, obstacles: 22, moveLimit: 12 },
-  legend: { size: 12, obstacles: 28, moveLimit: 10 },
-  mythic: { size: 13, obstacles: 34, moveLimit: 9 },
-  immortal: { size: 14, obstacles: 40, moveLimit: 8 },
-  divine: { size: 16, obstacles: 50, moveLimit: 7 },
+  easy: { size: 6, obstacles: 4, moveLimit: null },
+  medium: { size: 7, obstacles: 6, moveLimit: 30 },
+  hard: { size: 8, obstacles: 8, moveLimit: 17 },
+  expert: { size: 9, obstacles: 12, moveLimit: 15 },
+  master: { size: 11, obstacles: 17, moveLimit: 13 },
+  grandmaster: { size: 12, obstacles: 22, moveLimit: 12 },
+  genius: { size: 13, obstacles: 26, moveLimit: 10 },
+  legend: { size: 14, obstacles: 34, moveLimit: 9 },
+  mythic: { size: 16, obstacles: 41, moveLimit: 8 },
+  immortal: { size: 17, obstacles: 48, moveLimit: 7 },
+  divine: { size: 19, obstacles: 60, moveLimit: 6 },
 };
 
 function seededRandom(seed: number) {
